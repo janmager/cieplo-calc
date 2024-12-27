@@ -64,7 +64,6 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
             map.removeLayer(vectorLayer);
             if(pinInfo){
                 let data = await pinInfo.json();
-                console.log(formData)
                 setClickedMap({
                     lat: x[1],
                     lng: x[0],
