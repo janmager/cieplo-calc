@@ -1,15 +1,17 @@
 import React from 'react'
+import arrowRight from '@/assets/svg/arrow-right.svg'
+import Image from 'next/image'
 
 function NextButton({active, setViewId, nextView}: {active: boolean, setViewId: any, nextView: number}) {
     const nextStep = () => {
-        active && setViewId(2)
+        active && setViewId(nextView)
     }
 
     return (
-        <div onClick={nextStep} className={`${active ? '' : 'grayscale'} w-[80px] flex flex-col gap-5`}>
+        <div onClick={nextStep} className={`${active ? 'cursor-pointer' : 'cursor-default grayscale opacity-60'} w-[80px] flex flex-col gap-5`}>
             <div className='flex flex-row justify-between'>
-                <span className='text-[15px] text-[#FF4510]'>Dalej</span>
-
+                <span className='text-[15px] text-[#FF4510] uppercase'>Dalej</span>
+                <Image src={arrowRight.src} height={15} width={15} alt="Arrow right icon" />
             </div>
             <div className='w-full h-[2px] bg-[#FF4510]'></div>
         </div>

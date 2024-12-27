@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import arrowDropdown from '@/assets/png/arrow-dropdown-down.png'
+import arrowDropdown from '@/assets/svg/arrow-dropdown-down.svg'
 import Image from 'next/image'
 
 function CustomDropdownSelect({placeholder, options, formDataValue, formData, setFormData}: {placeholder: any, formDataValue: any, options: any, formData: any, setFormData: any}) {
@@ -22,7 +22,7 @@ function CustomDropdownSelect({placeholder, options, formDataValue, formData, se
                     <Image src={arrowDropdown} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} />
                 </div>
             </div>
-            {open && <div className='absolute mt-[59px] left-0 top-0 h-full max-h-[200px]  bg-white flex flex-col w-full'>
+            {open && <div className='absolute mt-[59px] z-20 left-0 top-0 h-full max-h-[200px] bg-white flex flex-col w-full'>
                 {
                     options.map((option: any, idx: any) => {
                         if(formData[formDataValue] != option.value) return (
