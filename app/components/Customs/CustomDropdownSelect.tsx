@@ -16,13 +16,13 @@ function CustomDropdownSelect({placeholder, options, formDataValue, formData, se
     return (
         <div className='w-full relative'>
             <div onClick={() => setOpen(!open)} className='w-full cursor-pointer flex justify-between items-center flex-row border h-[60px]'>
-                {!currValue && <span className='pl-5 text-[16px] flex-1'>{placeholder}</span>}
+                {!currValue && <span className='pl-5 text-[16px] opacity-30 flex-1'>{placeholder}</span>}
                 {currValue && <span className='pl-5 text-[16px] flex-1'>{formData[formDataValue]}</span>}
                 <div className='h-full flex w-[60px] items-center justify-center'>
                     <Image src={arrowDropdown} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} />
                 </div>
             </div>
-            {open && <div className='absolute mt-[59px] z-20 left-0 top-0 h-full max-h-[200px] bg-white flex flex-col w-full'>
+            {open && <div className='absolute mt-[59px] z-20 left-0 top-0 min-h-[150px] overflow-y-auto max-h-[220px] bg-white flex flex-col w-full'>
                 {
                     options.map((option: any, idx: any) => {
                         if(formData[formDataValue] != option.value) return (

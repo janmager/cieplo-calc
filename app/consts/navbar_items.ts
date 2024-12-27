@@ -1,10 +1,18 @@
 export const navbar_items = [
     {
-        name: 'Strona główna',
-        href: '/'
+        name: 'Produkty',
+        href: '#'
     },
     {
-        name: 'Kalkulator',
-        href: '/kalkulator'
+        name: 'Rozwiązania',
+        href: '#'
+    },
+    {
+        name: 'Wsparcie',
+        href: '#'
+    },
+    {
+        name: 'Gree',
+        href: '#'
     }
 ]

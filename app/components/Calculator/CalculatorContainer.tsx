@@ -9,7 +9,8 @@ function CalculatorContainer() {
     const [ formData, setFormData ] = useState<any>({})
 
     useEffect(() => {
-        console.log(viewId, formData)
+        console.log('view: ',viewId)
+        console.log('formData: ',formData)
     }, [viewId])
 
     if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
