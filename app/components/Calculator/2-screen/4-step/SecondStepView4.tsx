@@ -1,15 +1,9 @@
-import CustomLabel from '@/app/components/Customs/CustomLabel'
 import React from 'react'
 import info from '@/assets/svg/info-icon.svg'
 import Image from 'next/image'
-import CustomRadioInput from '@/app/components/Customs/CustomRadioInput'
 import InputWithPlaceholder from '@/app/components/Customs/InputWithPlaceholder'
 
 import CustomDropdownSelect from '@/app/components/Customs/CustomDropdownSelect'
-import { doors_type } from '@/app/consts/doors_type'
-import { is_roof_isolation } from '@/app/consts/is_roof_isolation'
-import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
-import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'
 import { main_heat_sources } from '@/app/consts/main_heat_sources'
 import { vent_type } from '@/app/consts/vent_type'
 

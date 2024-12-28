@@ -6,7 +6,6 @@ import CustomRadioInput from '@/app/components/Customs/CustomRadioInput'
 import InputWithPlaceholder from '@/app/components/Customs/InputWithPlaceholder'
 
 import CustomDropdownSelect from '@/app/components/Customs/CustomDropdownSelect'
-import { doors_type } from '@/app/consts/doors_type'
 import { is_roof_isolation } from '@/app/consts/is_roof_isolation'
 import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
 import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'

@@ -1,5 +1,4 @@
 import CustomLabel from '@/app/components/Customs/CustomLabel'
-import { building_types } from '@/app/consts/building_types'
 import React from 'react'
 import info from '@/assets/svg/info-icon.svg'
 import Image from 'next/image'
