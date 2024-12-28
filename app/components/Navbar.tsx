@@ -20,7 +20,7 @@ function Navbar() {
 
     return (
         <>
-        <div className='w-full fixed z-50 bg-white justify-between items-center max-w-[1410px] hidden lg:flex flex-row h-[62px]'>
+        <div className='w-full shadow fixed z-40 bg-white justify-between items-center max-w-[1550px] hidden lg:flex flex-row h-[62px]'>
             <div className='w-full h-full flex flex-row flex-1'>
                 <Link href={'/'} className='bg-black w-[240px] h-full flex items-center justify-center'>
                     <Image src={logo.src} alt="Logo Gree" width={160} height={40} />
@@ -29,10 +29,10 @@ function Navbar() {
                     {
                         navbar_items.map((item, idx) => {
                             return (
-                                <div key={idx} className='flex flex-row gap-2 px-[15px] xl:px-[20px] items-center justify-start'>
+                                <Link href={item.href} key={idx} className='flex flex-row gap-2 px-[15px] xl:px-[20px] items-center justify-start'>
                                     <span className='text-[16px] font-medium'>{item.name}</span>
                                     <Image src={arrowDown} height={6} width={6} alt="Arrow down icon " />
-                                </div>
+                                </Link>
                             )
                         })
                     }

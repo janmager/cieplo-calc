@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NextButton from '../../Customs/NextButton'
 import SecondStepView0 from './0-step/SecondStepView0'
 import SecondStepView1 from './1-step/SecondStepView1'
+import SecondStepView2 from './2-step/SecondStepView2'
 
 const steps: any = {
   0: {
@@ -37,14 +38,24 @@ const steps: any = {
 }
 
 function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setViewId: any, setFormData: any}) {
-  const [ step, setStep ] = useState(0)
+  const [ step, setStep ] = useState(1)
   const [ validButton, setValidButton ] = useState(false)
 
   useEffect(() => {
+    let valid = false;
     if(step == 0){
-      if(formData.building_type) setValidButton(true) 
-      else setValidButton(false)
+      if(formData.building_type) valid = true
+      else valid = false
     }
+    if(step == 1){
+      if(formData.building_outline){
+        if(formData.building_outline == 'Znam powierzchnię zabudowy' && formData.building_mkw && parseInt(formData.building_mkw) > 0) valid = true
+        else if(formData.building_outline == 'Znam powierzchnię zabudowy' && (parseInt(formData.building_mkw) <= 0 || !formData.building_mkw || Number(formData.building_mkw) <= 0)) valid = false;
+        else if(formData.building_outline != 'Znam powierzchnię zabudowy') valid = true
+      }
+      else valid = false
+    }
+    setValidButton(valid)
   }, [formData])
 
   useEffect(() => {
@@ -78,8 +89,10 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
       <div className='max-w-[1172px] px-5 w-full mx-auto mt-10 mb-5'>
         {/* step 0 */}
         {step == 0 && <SecondStepView0 formData={formData} setFormData={setFormData} />}
-        {/* step 0 */}
+        {/* step 1 */}
         {step == 1 && <SecondStepView1 formData={formData} setFormData={setFormData} />}
+        {/* step 2 */}
+        {step == 2 && <SecondStepView2 formData={formData} setFormData={setFormData} />}
       </div>
       <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
         <NextButton active={validButton} setViewId={setStep} nextView={step+1} />

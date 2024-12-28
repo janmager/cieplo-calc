@@ -5,7 +5,7 @@ import FirstCalcView from './1-screen/FirstCalcView'
 import SecondCalcView from './2-screen/SecondCalcView'
 
 function CalculatorContainer() {
-    const [ viewId, setViewId ] = useState<Number>(2)
+    const [ viewId, setViewId ] = useState<Number>(1)
     const [ formData, setFormData ] = useState<any>({})
 
     useEffect(() => {
