@@ -3,6 +3,8 @@ import NextButton from '../../Customs/NextButton'
 import SecondStepView0 from './0-step/SecondStepView0'
 import SecondStepView1 from './1-step/SecondStepView1'
 import SecondStepView2 from './2-step/SecondStepView2'
+import SecondStepView3 from './3-step/SecondStepView3'
+import SecondStepView4 from './4-step/SecondStepView4'
 
 const steps: any = {
   0: {
@@ -38,9 +40,10 @@ const steps: any = {
 }
 
 function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setViewId: any, setFormData: any}) {
-  const [ step, setStep ] = useState(1)
+  const [ step, setStep ] = useState(3)
   const [ validButton, setValidButton ] = useState(false)
 
+  // forms validations
   useEffect(() => {
     let valid = false;
     if(step == 0){
@@ -48,12 +51,38 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
       else valid = false
     }
     if(step == 1){
+
       if(formData.building_outline){
         if(formData.building_outline == 'Znam powierzchnię zabudowy' && formData.building_mkw && parseInt(formData.building_mkw) > 0) valid = true
         else if(formData.building_outline == 'Znam powierzchnię zabudowy' && (parseInt(formData.building_mkw) <= 0 || !formData.building_mkw || Number(formData.building_mkw) <= 0)) valid = false;
         else if(formData.building_outline != 'Znam powierzchnię zabudowy') valid = true
       }
       else valid = false
+    }
+    if(step == 2){
+      if(
+        formData.building_construction_type &&
+        (formData.total_wall_thickness && parseInt(formData.total_wall_thickness) > 0) &&
+        formData.basic_construction_material &&
+        ((formData.house_insulation && formData.outside_insulation && parseInt(formData.insulation_thickness) > 0) || !formData.house_insulation) && 
+        formData.windows_type && 
+        parseInt(formData.windows_number) >= 0 &&
+        parseInt(formData.large_glazings_number) >= 0 &&
+        parseInt(formData.taras_doors_number) >= 0 &&
+        formData.doors_type
+      ){
+        valid = true
+      }
+      else valid = false;
+    }
+    if(step == 3){
+      if(
+        formData.is_roof_isolation && ((formData.is_roof_isolation.indexOf('Tak') >= 0 && formData.isolation_roof_material && parseInt(formData.isolation_roof_thickness) > 0) || formData.is_roof_isolation.indexOf('Nie') >= 0) &&
+        formData.is_parter_floor_isolation && ((formData.is_parter_floor_isolation.indexOf('Tak') >= 0 && formData.isolation_parter_floor_material && parseInt(formData.isolation_parter_floor_thickness) > 0) || formData.is_parter_floor_isolation.indexOf('Nie') >= 0)
+      ){
+        valid = true
+      }
+      else valid = false;
     }
     setValidButton(valid)
   }, [formData])
@@ -70,11 +99,11 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
         {
           Object.keys(steps).map((item: any, idx) => {
             return (
-              <>
+              <div key={idx} className='flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center'>
                 <span className={`${item == step ? 'font-bold text-[#FF4510] text-center' : 'hidden md:block'}`}>{steps[item].breadcrumbTitle}</span>
                 {item != step && <span className={`rounded-full border ${parseInt(item) < step ? 'bg-[#FF4510] border-[#FF4510] text-white' : 'border-[#CACACA] text-gray-600'} font-[600] w-[28px] h-[28px] flex items-center justify-center md:hidden`}>{parseInt(item)+1}</span>}
                 {item < Object.keys(steps).length-1 && <div className='h-[1px] w-[10px] md:w-[30px] lg:w-[55px] bg-[#CACACA]'></div>}
-              </>
+              </div>
             )
           })
         }
@@ -93,6 +122,10 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
         {step == 1 && <SecondStepView1 formData={formData} setFormData={setFormData} />}
         {/* step 2 */}
         {step == 2 && <SecondStepView2 formData={formData} setFormData={setFormData} />}
+        {/* step 3 */}
+        {step == 3 && <SecondStepView3 formData={formData} setFormData={setFormData} />}
+        {/* step 4 */}
+        {step == 4 && <SecondStepView4 formData={formData} setFormData={setFormData} />}
       </div>
       <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
         <NextButton active={validButton} setViewId={setStep} nextView={step+1} />

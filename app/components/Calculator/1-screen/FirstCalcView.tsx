@@ -174,7 +174,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                             <div>
                                 <div className='mt-5 md:mt-10 flex flex-col gap-2'>
                                     <label>Podaj projektową temperaturę pomieszczenia.</label>
-                                    <InputWithPlaceholder type={'number'} placeholder={'C°'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
                                     <span className='mt-1 text-[14px] font-light opacity-50'>Informację odczytaj z projektu budowlanego lub audytu energetycznego</span>
                                 </div>
                             </div>

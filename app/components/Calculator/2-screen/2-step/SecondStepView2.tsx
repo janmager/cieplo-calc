@@ -12,6 +12,7 @@ import CustomDropdownSelect from '@/app/components/Customs/CustomDropdownSelect'
 import { doors_type } from '@/app/consts/doors_type'
 import { additional_construction_material } from '@/app/consts/additional_construction_material'
 import { outside_insulation } from '@/app/consts/outside_insulation'
+import { windows_type } from '@/app/consts/windows_type'
 
 function SecondStepView2({formData, setFormData}: {formData: any, setFormData: any}) {
   return (
@@ -82,6 +83,26 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                 </div>
                 <div>
                     <CustomLabel label='Okna' />
+                    <div className='flex w-full flex-col mt-5 gap-2'>
+                        <span>Rodzaj okien</span>
+                        <CustomDropdownSelect formDataValue={'windows_type'} options={windows_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                    </div>
+                    <div className='mt-5 flex flex-col gap-2'>
+                        <label>Liczba okien</label>
+                        <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'windows_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                    </div>
+                    <div className='flex flex-row gap-4 w-full px-2.5 items-center mt-5'>
+                        <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
+                        <p className='w-full flex-1'>W części ogrzewanej</p>
+                    </div>
+                    <div className='mt-5 flex flex-col gap-2'>
+                        <label>Liczba drzwi balkonowych</label>
+                        <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'taras_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                    </div>
+                    <div className='mt-5 flex flex-col gap-2'>
+                        <label>Liczba dużych przeszkleń</label>
+                        <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'large_glazings_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                    </div>
                 </div>
             </div>
             <div className='flex h-fit flex-col pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full'>
