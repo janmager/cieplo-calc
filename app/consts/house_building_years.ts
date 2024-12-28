@@ -1,4 +1,4 @@
-export const house_building_years = [
+export const house_building_years: any = [
     {
         name: '2025+',
         value: '2025+', 

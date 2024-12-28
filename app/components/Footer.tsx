@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import logo from '@/assets/png/logo.png'
 import arrow from '@/assets/svg/white-arrow-right.svg'
 import Image from 'next/image'
@@ -9,11 +11,14 @@ import facebookIcon from '@/assets/svg/fb-icon.svg'
 import linkedInIcon from '@/assets/svg/linkedin-icon.svg'
 import instagramIcon from '@/assets/svg/instagram-icon.svg'
 import youtubeIcon from '@/assets/svg/youtube-icon.svg'
+import check from '@/assets/svg/check.svg'
 
 function Footer() {
+  const [ checkbox, setCheckbox ] = useState(false)
+
   return (
     <div className='px-10 bg-black w-full mt-10'>
-      <div className='w-full gap-0 mt-[80px] mb-[25px] grid grid-cols-1 lg:grid-cols-4 max-w-[1450px] mx-auto text-white'>
+      <div className='w-full gap-0 mt-[80px] mb-[50px] md:mb-[25px] grid grid-cols-1 lg:grid-cols-4 max-w-[1450px] mx-auto text-white'>
           <div className='flex flex-col col-span-1'>
             <Image src={logo.src} height={35} width={154} alt="Logo Gree" />
             <Link href={'#'} className='text-white mt-16 rounded-sm bg-[#FF4510] text-center flex flex-row gap-3 text-[15px] h-[60px] items-center justify-center uppercase'>
@@ -26,14 +31,16 @@ function Footer() {
           <div className='col-span-1 lg:col-span-3 lg:pl-16 mt-5 lg:mt-0'>
             <div className='grid pb-10 border-b border-[#97979733] grid-cols-1 lg:grid-cols-2 gap-5'>
               <div className='flex flex-col gap-2.5'>
-                <span className='text-[26px] font-[600]'>Dołącz do naszego newslettera</span>
-                <div className='flex flex-row items-center gap-2.5'>
-                  <div className='min-h-[14px] max-h-[14px] min-w-[14px] max-w-[14px] border border-[#737479]'></div>
+                <span className='text-[18px] md:text-[26px] font-[600]'>Dołącz do naszego newslettera</span>
+                <div onClick={() => setCheckbox(!checkbox)} className='flex cursor-pointer flex-row items-center gap-2.5'>
+                  <div className='min-h-[14px] max-h-[14px] min-w-[14px] max-w-[14px] flex relative items-center justify-center border border-[#737479]'>
+                    {checkbox && <Image src={check.src} height={9} width={9} className='opacity-60' alt="check" />}
+                  </div>
                   <span className='text-[12px] text-[#737479]'>Wyrażam zgodę na przetwarzanie moich danych osobowych.&nbsp;&nbsp;&nbsp; <span className='underline cursor-pointer text-[#737479] text-[12px]'>Czytaj więcej</span></span>
                 </div>
               </div>
               <div className='border border-[#737479] py-2.5 flex flex-row h-[62px]'>
-                <input type="email" className='w-full outline-none pl-5 placeholder:opacity-50 bg-transparent' placeholder='Wpisz swój adres e-mail' />
+                <input type="email" className='w-full outline-none pl-2.5 md:pl-5 placeholder:opacity-50 bg-transparent' placeholder='Wpisz swój adres e-mail' />
                 <div className='border-l items-center cursor-pointer justify-center gap-2.5 px-7 border-[#737479] flex flex-row'>
                   <span className='uppercase font-medium'>wyślij</span>
                   <Image src={arrow.src} height={15} width={15} alt="arrow" />
