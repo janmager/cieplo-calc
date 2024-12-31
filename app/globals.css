@@ -41,3 +41,12 @@ input[type=number]::-webkit-outer-spin-button {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.triangle-poddasze{
+  width: 0; 
+  height: 0; 
+  border-left: 110px solid transparent;
+  border-right: 110px solid transparent;
+  
+  border-bottom: 80px solid rgb(200,245,255);
+}

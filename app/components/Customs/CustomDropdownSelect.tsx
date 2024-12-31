@@ -7,7 +7,7 @@ import Image from 'next/image'
 function CustomDropdownSelect({placeholder, options, formDataValue, formData, setFormData}: {placeholder: any, formDataValue: any, options: any, formData: any, setFormData: any}) {
     const [ open, setOpen ] = useState(false)
 
-    const [ currValue, setCurrValue ] = useState()
+    const [ currValue, setCurrValue ] = useState(formData[formDataValue] ? formData[formDataValue] : '')
 
     useEffect(() => {
         if(formData[formDataValue] != currValue) setFormData({...formData, [formDataValue]: currValue})

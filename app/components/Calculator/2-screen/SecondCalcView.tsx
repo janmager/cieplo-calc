@@ -40,7 +40,7 @@ const steps: any = {
 }
 
 function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setViewId: any, setFormData: any}) {
-  const [ step, setStep ] = useState(3)
+  const [ step, setStep ] = useState(0)
   const [ validButton, setValidButton ] = useState(false)
 
   // forms validations
