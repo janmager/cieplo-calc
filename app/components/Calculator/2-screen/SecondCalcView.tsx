@@ -5,6 +5,7 @@ import SecondStepView1 from './1-step/SecondStepView1'
 import SecondStepView2 from './2-step/SecondStepView2'
 import SecondStepView3 from './3-step/SecondStepView3'
 import SecondStepView4 from './4-step/SecondStepView4'
+import SecondStepView5 from './5-step/SecondStepView5'
 
 const steps: any = {
   0: {
@@ -40,7 +41,7 @@ const steps: any = {
 }
 
 function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setViewId: any, setFormData: any}) {
-  const [ step, setStep ] = useState(0)
+  const [ step, setStep ] = useState(5)
   const [ validButton, setValidButton ] = useState(false)
 
   // forms validations
@@ -110,10 +111,10 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
         </div>
       </div>
       {/* dynamic box */}
-      <div className="max-w-[1172px] px-5 w-full mx-auto mt-10 mb-3">
+      {step < 5 && <div className="max-w-[1172px] px-5 w-full mx-auto mt-10 mb-3">
         <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>{steps[step].title}</div>
         <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{steps[step].desc}</div>
-      </div>
+      </div>}
       {/* user interactive zone */}
       <div className='max-w-[1172px] px-5 w-full mx-auto mt-10 mb-5'>
         {/* step 0 */}
@@ -126,10 +127,12 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
         {step == 3 && <SecondStepView3 formData={formData} setFormData={setFormData} />}
         {/* step 4 */}
         {step == 4 && <SecondStepView4 formData={formData} setFormData={setFormData} />}
+        {/* step 5 */}
+        {step == 5 && <SecondStepView5 formData={formData} setFormData={setFormData} />}
       </div>
-      <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
+      {step < 5 && <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
         <NextButton active={validButton} setViewId={setStep} nextView={step+1} />
-      </div>
+      </div>}
     </div>
   )
 }
