@@ -85,6 +85,7 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
       }
       else valid = false;
     }
+    else valid = true
     setValidButton(valid)
   }, [formData])
 

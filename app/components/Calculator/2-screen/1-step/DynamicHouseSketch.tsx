@@ -1,6 +1,6 @@
 import React from 'react'
 
-function DynamicHouseSketch({formData, setFormData}: {formData: any, setFormData: any}) {
+function DynamicHouseSketch({formData, setFormData, paddingLeft = true}: {formData: any, setFormData: any, paddingLeft?: boolean}) {
     const levels: any = {
         'Parterowy': {
             counter: 0,
@@ -28,7 +28,7 @@ function DynamicHouseSketch({formData, setFormData}: {formData: any, setFormData
     const currentCounter: any = formData['house_floor_plan'] ? levels[formData['house_floor_plan']].counter : 0
 
     return (
-        <div className='flex flex-col text-[14px] mt-10 pb-5 items-center justify-center gap-1 ml-[-44px]'>
+        <div className={`flex flex-col text-[14px] mt-10 pb-5 items-center justify-center gap-1 ${paddingLeft ? 'ml-[-44px]' : ''}`}>
             {
                 formData['house_roof_plan'] == 'Skośny z poddaszem' ? 
                 <div className={`h-[80px] w-[200px] triangle-poddasze flex flex-col items-center justify-center gap-0`} style={{borderBottomColor: formData['heating_levels'].indexOf('Poddasze') >= 0 ? 'rgb(254,174,174)' : 'rgb(200,245,255)'}}>

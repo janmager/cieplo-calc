@@ -9,7 +9,12 @@ function CalculatorContainer() {
     const [ formData, setFormData ] = useState<any>({
         house_floor_plan: 'Parterowy',
         house_roof_plan: 'Płaski',
-        heating_levels: []
+        heating_levels: [],
+        heat_demand: {
+            know: false,
+            temp: '',
+            kW: ''
+        }
     })
 
     useEffect(() => {
