@@ -14,7 +14,6 @@ import Map from "ol/map";
 import View from "ol/View.js";
 import TileLayer from "ol/layer/Tile.js";
 import OSM from "ol/source/OSM";
-import * as olProj from 'ol/proj';
 import VectorSource from 'ol/source/Vector'
 import VectorLayer from 'ol/layer/Vector'
 import Icon from 'ol/style/Icon'
