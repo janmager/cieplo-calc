@@ -120,7 +120,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
             <div className='flex w-full flex-col gap-3 lg:col-span-2 mt-7'>
                 <CustomLabel label={'Wybierz lokalizację budynku'} />
                 {
-                    formData['house_location'] ?
+                    formData['house_location'].full_name ?
                     <div className='border font-bold bg-[#FF4510]/5 border-[#FF4510] text-[#FF4510] mt-1 min-h-[50px] flex items-center px-5 py-2'>
                         {formData['house_location']['full_name']}
                     </div> : 

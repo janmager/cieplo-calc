@@ -50,3 +50,60 @@ input[type=number]::-webkit-outer-spin-button {
   
   border-bottom: 80px solid rgb(200,245,255);
 }
+
+@page { size: A5;  margin: 40mm; }
+@media print {
+  html, body {
+    width: 210mm;
+    height: 297mm;
+  }
+  p{
+    font-size: 24px !important;
+  }
+  .onPrintMargin{
+    margin-top: 5px;
+  }
+  .onPrintLabel{
+    font-size: 14px !important;
+  }
+  .mt-20{
+    margin-top: 0px;
+  }
+  .mt-10{
+    margin-top: 15px;
+  }
+  .hideOnPrint{
+    display: none;
+  }
+  .showOnPrint{
+    display: flex !important;
+  }
+  .onPrintTopMargin{
+    margin-top: 5px;
+  }
+  .onPrintTopMarginExtra{
+    margin-top: 40px;
+  }
+  .onPrintMarginBottom{
+    margin-bottom: 20px;
+  }
+  .onPrintHardGrid3{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .onPrintText20{
+    font-size: 20px;
+  }
+  .onPrintText14{
+    font-size: 14px !important
+  }
+  .grid-cols-1{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .onPrintDontCol{
+    flex-direction: row;
+  }
+  @page {
+    margin: 30px 15px;
+  }
+  .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+}

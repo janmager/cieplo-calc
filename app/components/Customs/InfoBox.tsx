@@ -8,7 +8,7 @@ function InfoBox({title, value}: {title: string, value: any}) {
 
     return (
         <div className='flex flex-col gap-1 mt-5'>
-            <span className='font-[400]'>{title}</span>
+            <span className='font-[400] onPrintLabel'>{title}</span>
             <span className={value ? 'font-[700]' : 'opacity-30 font-light'}>
                 {print ? print : 'brak danych'}
             </span>

@@ -19,15 +19,15 @@ function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {f
             <div className='flex flex-col gap-2.5'>
                 <div className='flex flex-col xl:flex-row justify-start items-start xl:items-center'>
                     <p className='w-[350px]'>Zapotrzebowanie cieplne budynku</p>
-                    <span className='font-bold'>12,34 kW</span>
+                    <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : 'nie znam'}</span>
                 </div>
                 <div className='flex flex-col xl:flex-row justify-start items-start xl:items-center'>
                     <p className='w-[350px]'>Projektowa temperatura pomieszczenia</p>
-                    <span className='font-bold'>20 °C</span>
+                    <span className='font-bold'>{formData.heat_demand && formData.heat_demand.temp ? `${formData.heat_demand.temp}°C` : 'nie podano'}</span>
                 </div>
                 <div className='flex flex-col xl:flex-row justify-start items-start xl:items-center'>
                     <p className='w-[350px]'>Lokalizacja budynku</p>
-                    <span className='font-bold'>Kraków</span>
+                    <span className='font-bold'>{formData.house_location['full_name']}</span>
                 </div>
             </div>
             <div className='flex items-center justify-center'>

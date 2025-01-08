@@ -20,7 +20,7 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                 <div className='flex flex-col w-full'>
                     <div className='flex w-full flex-col mt-0 gap-2'>
                         <span>Główne źródło ciepła</span>
-                        <CustomDropdownSelect formDataValue={'main_heat_source'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        <CustomDropdownSelect formDataValue={'main_heat_sources'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>  
                     <div className='flex w-full flex-col mt-5 gap-2'>
                         <span>Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)</span>
@@ -30,7 +30,7 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                         <span>Rodzaj wentylacji</span>
                         <CustomDropdownSelect formDataValue={'vent_type'} options={vent_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>
-                    <div className='flex mt-5 w-full flex-col mt-0 gap-2'>
+                    <div className='flex mt-5 w-full flex-col gap-2'>
                         <span>Materiał</span>
                         <CustomDropdownSelect formDataValue={'heating_isolation_material'} options={isolation_parter_floor_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>  
@@ -58,7 +58,7 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                     <CustomLabel label='Instalacja grzewcza' />
                     <div className='flex w-full flex-col mt-5 mb-8 gap-2'>
                         <span>Rodzaj instalacji centralnego ogrzewania</span>
-                        <CustomDropdownSelect formDataValue={'main_heat_source'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        <CustomDropdownSelect formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div> 
                     <CustomLabel label='Ciepła woda kranowa' />
                     <div className='flex w-full flex-col mt-5 gap-2'>
@@ -92,9 +92,9 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                                 </div>
                                 <span>Instalacja fotowoltaiczna</span>
                             </div>
-                            <div onClick={() => setFormData({...formData, how_water_steroid_kolektor: !formData.how_water_steroid_kolektor})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
+                            <div onClick={() => setFormData({...formData, hot_water_steroid_kolektor: !formData.hot_water_steroid_kolektor})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
                                 <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
-                                    {formData.how_water_steroid_kolektor && <Image src={check.src} height={15} width={15} alt="check" />}
+                                    {formData.hot_water_steroid_kolektor && <Image src={check.src} height={15} width={15} alt="check" />}
                                 </div>
                                 <span>Kolektory słoneczne</span>
                             </div>

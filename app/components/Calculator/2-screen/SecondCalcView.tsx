@@ -41,7 +41,7 @@ const steps: any = {
 }
 
 function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setViewId: any, setFormData: any}) {
-  const [ step, setStep ] = useState(5)
+  const [ step, setStep ] = useState(0)
   const [ validButton, setValidButton ] = useState(false)
 
   // forms validations
@@ -51,32 +51,63 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
       if(formData.building_type) valid = true
       else valid = false
     }
-    if(step == 1){
+    else if(step == 1){
+      if(formData.building_outline != ''){
+        if(
+          formData.building_outline == 'Regularny – prostokątny' && 
+          formData.building_outline_sizes == 'Znam wymiary zewnętrzne budynku' && 
+          Number(formData.building_outline_length_m) > 0 && 
+          Number(formData.building_outline_width_m) > 0
+        ){
+          valid = true
+        }
+        else if(
+          formData.building_outline == 'Regularny – prostokątny' && 
+          formData.building_outline_sizes == 'Znam powierzchnię zabudowy' && 
+          Number(formData.building_area) > 0
+        ){
+          valid = true
+        }
+        else if(
+          formData.building_outline == 'Nieregularny (wszelkie inne kształty)' && 
+          Number(formData.building_area) > 0 && 
+          Number(formData.building_outline_m) > 0
+        ){
+          valid = true
+        }
+        else valid = false;
 
-      if(formData.building_outline){
-        if(formData.building_outline == 'Znam powierzchnię zabudowy' && formData.building_mkw && parseInt(formData.building_mkw) > 0) valid = true
-        else if(formData.building_outline == 'Znam powierzchnię zabudowy' && (parseInt(formData.building_mkw) <= 0 || !formData.building_mkw || Number(formData.building_mkw) <= 0)) valid = false;
-        else if(formData.building_outline != 'Znam powierzchnię zabudowy') valid = true
+        if(valid){
+          if(
+            formData.house_floor_plan.length > 0 && 
+            formData.house_roof_plan.length > 0 &&
+            formData.house_levels_height.length > 0 &&
+            formData.house_garage.length > 0
+          ){
+            valid = true;
+          }
+          else valid = false;
+        }
       }
       else valid = false
     }
-    if(step == 2){
+    else if(step == 2){
       if(
-        formData.building_construction_type &&
-        (formData.total_wall_thickness && parseInt(formData.total_wall_thickness) > 0) &&
-        formData.basic_construction_material &&
-        ((formData.house_insulation && formData.outside_insulation && parseInt(formData.insulation_thickness) > 0) || !formData.house_insulation) && 
-        formData.windows_type && 
-        parseInt(formData.windows_number) >= 0 &&
-        parseInt(formData.large_glazings_number) >= 0 &&
-        parseInt(formData.taras_doors_number) >= 0 &&
-        formData.doors_type
+        formData.building_construction_type.length > 0 &&
+        Number(formData.total_wall_thickness) >= 0 &&
+        formData.basic_construction_material.length > 0 &&
+        formData.windows_type.length > 0 &&
+        Number(formData.windows_number) >= 0 &&
+        Number(formData.taras_doors_number) >= 0 &&
+        Number(formData.large_glazings_number) >= 0 &&
+        formData.doors_type.length > 0
       ){
-        valid = true
+        if((formData.house_insulation && formData.outside_insulation.length > 0 && Number(formData.insulation_thickness) > 0) || !formData.house_insulation){ valid = true }
+        else valid = false;
       }
       else valid = false;
     }
-    if(step == 3){
+    else if(step == 3){
       if(
         formData.is_roof_isolation && ((formData.is_roof_isolation.indexOf('Tak') >= 0 && formData.isolation_roof_material && parseInt(formData.isolation_roof_thickness) > 0) || formData.is_roof_isolation.indexOf('Nie') >= 0) &&
         formData.is_parter_floor_isolation && ((formData.is_parter_floor_isolation.indexOf('Tak') >= 0 && formData.isolation_parter_floor_material && parseInt(formData.isolation_parter_floor_thickness) > 0) || formData.is_parter_floor_isolation.indexOf('Nie') >= 0)
@@ -85,7 +116,21 @@ function SecondCalcView({formData, setFormData,setViewId}: {formData: any, setVi
       }
       else valid = false;
     }
-    else valid = true
+    else if(step == 4){
+      if(
+        formData.main_heat_sources.length > 0 &&
+        Number(formData.temp_in_heat_rooms) > 0 &&
+        formData.vent_type.length > 0 &&
+        formData.heating_isolation_material.length > 0 &&
+        Number(formData.heating_isolation_material_thickness) > 0 &&
+        formData.type_of_heating_instalation.length > 0
+      ){
+        if((formData.count_need_energy_cwu && Number(formData.hot_water_person_using) > 0 && formData.hot_water_using_style.length > 0) || !formData.count_need_energy_cwu){ valid = true }
+        else valid = false;
+      }
+      else valid = false;
+    }
+    else valid = false;
     setValidButton(valid)
   }, [formData])
 

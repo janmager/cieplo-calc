@@ -102,7 +102,7 @@ function SecondStepView1({formData, setFormData}: {formData: any, setFormData: a
                     formData.building_outline == 'Znam powierzchnię zabudowy' &&
                     <div className='mt-2.5 flex flex-col gap-2'>
                         <label>Powierzchnia zabudowy</label>
-                        <InputWithPlaceholder type={'number'} placeholder={'mkw.'} formDataValue1={'building_mkw'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        <InputWithPlaceholder type={'number'} placeholder={'mkw.'} formDataValue1={'building_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                     </div>
                 }
             </div>
