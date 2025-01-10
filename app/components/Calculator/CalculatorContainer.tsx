@@ -85,7 +85,7 @@ function CalculatorContainer() {
     })
 
     useEffect(() => {
-        console.log('formData: ',formData)
+        // console.log('formData: ',formData)
     }, [formData])
 
     if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;

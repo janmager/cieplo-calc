@@ -13,11 +13,11 @@ async function page({ params }: { params: {id: string }}) {
     let raport: any;
     const find = await fetchRaportData(id)
 
-    if(find.response){
+    if(find.response && find.data){
         raport = find.data;
     } 
     else{
-        return <div className='p-10 text-center'>
+        return <div className='pt-52 pb-32 opacity-50 text-center'>
             brak takiego raportu
         </div>
     }

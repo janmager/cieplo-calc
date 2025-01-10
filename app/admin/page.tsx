@@ -43,7 +43,7 @@ function page() {
     }
 
     return (
-        <div className='pt-32 pb-20 w-full'>
+        <div className='pt-20 md:pt-32 pb-20 w-full'>
             {
                 admin ? 
                 <AdminContainer /> : 

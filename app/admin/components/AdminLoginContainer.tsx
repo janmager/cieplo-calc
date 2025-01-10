@@ -1,7 +1,11 @@
+'use client'
+
 import { checkAdminPass } from '@/utils/supabase/checkAdminPass'
-import { setCookie } from 'cookies-next'
+import { getCookie, setCookie } from 'cookies-next'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import loadingIco from '@/assets/svg/loader.svg'
 
 function AdminLoginContainer() {
     const [ password, setPassword ] = useState('')

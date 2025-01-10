@@ -15,19 +15,20 @@ import { SuggestedProduct } from '@/app/types/SuggestedProduct';
 import { links } from '@/app/consts/links';
 import { useReactToPrint } from 'react-to-print';
 import logo from '@/assets/png/logo.png'
+import { getAllInstalators } from '@/utils/supabase/getAllInstalators';
 
-const instalators: Instalator[] = [
-    {
-        name: 'instratech-serwis Aleksander Kwiatkowski',
-        phone: '+48 811221297',
-        city: '05-825 Grodzisk Mazowiecki',
-    },
-    {
-        name: 'POMP Adam Nowak',
-        phone: '601 058 657',
-        city: '03-825 Warszawa',
-    },
-]
+// const instalators: Instalator[] = [
+//     {
+//         name: 'instratech-serwis Aleksander Kwiatkowski',
+//         phone: '+48 811221297',
+//         city: '05-825 Grodzisk Mazowiecki',
+//     },
+//     {
+//         name: 'POMP Adam Nowak',
+//         phone: '601 058 657',
+//         city: '03-825 Warszawa',
+//     },
+// ]
 
 const suggestedProductTemp: SuggestedProduct = {
     name: 'Pompa Ciepła Versati All in One',
@@ -37,7 +38,23 @@ const suggestedProductTemp: SuggestedProduct = {
 }
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean}) {
-    
+    const [instalators, setInstalators ] = useState<any>(null) 
+
+    const fetchAllInstalators = async () => {
+        const ins = await getAllInstalators();
+
+        if(ins.response){
+            setInstalators(ins.data)
+        }
+        else setInstalators([])
+    }
+
+    useEffect(() => {
+        if(instalators == null){
+            fetchAllInstalators()
+        }
+    }, [])
+
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({ 
         contentRef,
