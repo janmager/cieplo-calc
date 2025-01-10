@@ -10,7 +10,7 @@ import infoIcon from '@/assets/svg/red-info-icon.svg'
 // @ts-ignore
 import proj4 from 'proj4'
 import "ol/ol.css";
-import Map from "ol/map";
+import Map from "ol/Map";
 import View from "ol/View.js";
 import TileLayer from "ol/layer/Tile.js";
 import OSM from "ol/source/OSM";
@@ -48,6 +48,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
             image: new Icon({
                 anchor: [0.5, 0.5],
                 src: mapPin.src,
+                //@ts-ignore
                 height: 30,
                 width: 23,
             })
