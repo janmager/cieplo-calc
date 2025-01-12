@@ -52,7 +52,7 @@ function AllRaportsBrowse() {
                     <div className='pt-20 pb-28 flex items-center text-sm justify-center opacity-50'>
                         Brak raportów w bazie danych
                     </div> :
-                    <RaportsTable raports={raports} />
+                    <RaportsTable fetchAllRaports={fetchAllRaports} raports={raports} />
                 }
             </div>
         </div>

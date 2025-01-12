@@ -10,8 +10,8 @@ export const addNewRaport = async (raport: any) => {
                 created_at: raport.created_at,
                 house_building_years: raport.house_building_years,
                 house_location_full_name: raport.house_location.full_name,
-                house_location_lat: raport.house_location.lat,
-                house_location_lng: raport.house_location.lng,
+                house_location_lat: (raport.house_location.lat).toString(),
+                house_location_lng: (raport.house_location.lng).toString(),
                 heat_demand_know: raport.heat_demand.know,
                 heat_demand_temp: raport.heat_demand.temp,
                 heat_demand_kW: raport.heat_demand.kW,
@@ -66,6 +66,7 @@ export const addNewRaport = async (raport: any) => {
                 send_raport_email: raport.send_raport_email,
                 contact_phone_number: raport.contact_phone_number,
                 contact_email_address: raport.contact_email_address,
+                raport_url: raport.raport_url,
             }
         })
     

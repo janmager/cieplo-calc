@@ -1,21 +1,70 @@
+import { FileUploader } from "react-drag-drop-files";
 import React, { useState } from 'react'
+import trashIcon from '@/assets/svg/trash-icon.svg'
+
+const fileTypes = ["JPG", "PNG", "GIF"];
+import { createClient } from '@supabase/supabase-js';
+import toast from "react-hot-toast";
+import { addProduct } from "@/utils/supabase/addProduct";
+const supabaseUrl = 'https://opewhxnwoeymcltcxllc.supabase.co'
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZXdoeG53b2V5bWNsdGN4bGxjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQ1NTU3MTIsImV4cCI6MjA1MDEzMTcxMn0.KqVPY_6fR2O0zSqJtkR0b7xxgUdpil65cpNV8pIYj5Q'
+
+export const supabase: any = createClient(supabaseUrl as string, supabaseKey as string)
 
 function AddNewProductView() {
     const [ loading, setLoading ] = useState(false);
-    const [ valid, setValid ] = useState(false);
+    const [ valid, setValid ] = useState(true);
+    const [ successUpload, setSuccessUpload ] = useState(false);
     
     const [ newProduct, setNewProduct ] = useState<any>({
+        id: crypto.randomUUID(),
         name: '',
         desc: '',
         params: '',
+        image: '',
     })
 
-    const handleAddNewProduct = () => {
+    const handleAddNewProduct = async () => {
         if(loading) return false;
         if(!valid) return false;
 
-        alert('adding...')
+        let addProductResult: any = await addProduct(newProduct)
+
+        if(addProductResult.response){
+            alert('adding...')
+            setLoading(false)
+            setValid(false)
+        }
+        else {
+            console.log(addProductResult)
+            return false;
+        }
     }
+
+    const [file, setFile] = useState(null);
+    const handleChange = async (file: any) => {
+        setFile(file);
+        setLoading(true)
+
+        try{
+            const {data,error} = await supabase.storage.from("products").upload(`${newProduct.id}/image.${file.name.split(".").pop()}`, file);
+        
+            if (error) {
+                console.error("Error uploading file:", error.message);
+                setLoading(false)
+                toast.error('Wystąpił błąd podczas zapisywania zdjecia')
+            } else {
+                const { data: file } = await supabase.storage.from("products").getPublicUrl(data?.path);
+                setNewProduct({...newProduct, image: file.publicUrl})
+                setLoading(false)
+                setSuccessUpload(true)
+            }
+        }
+        catch(e){ 
+            setLoading(false)
+            toast.error('Wystąpił błąd podczas zapisywania zdjecia')
+        }
+    };
 
     return (
         <div className='flex flex-col gap-5 items-end'>
@@ -29,7 +78,17 @@ function AddNewProductView() {
             </div>
             <div className='flex w-full flex-1 flex-col gap-1'>
                 <label>Zdjęcie</label>
-                
+                {
+                    successUpload ? 
+                    <div>
+                        <img src={newProduct.image} alt="" width={300} />
+                        <div className="text-xs mt-4 opacity-80 duration-300 transition-all hover:opacity-100 cursor-pointer flex flex-row items-center justify-start gap-3" onClick={() => {setSuccessUpload(false);setFile(null);setNewProduct({...newProduct, image: ''})}}>
+                            <img src={trashIcon.src} height={15} width={15} alt="remove" />
+                            <span>usuń i wybierz inne</span>
+                        </div>
+                    </div> : 
+                    <FileUploader handleChange={handleChange} classes='file-product-uploader' name="file" types={fileTypes} />
+                }
             </div>
             <div onClick={handleAddNewProduct} className={`text-white bg-[#FF4510] py-3 px-8 ${valid ? 'cursor-pointer' : 'opacity-50 grayscale'}`}>{loading ? 'Trwa dodawanie...' : 'Dodaj nowy produkt'}</div>
         </div>

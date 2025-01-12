@@ -1,0 +1,52 @@
+import { raportEmailTemplate } from "@/templates/emails/raportEmailTemplate";
+const nodemailer = require('nodemailer');
+import { fetchRaportData } from "@/utils/supabase/fetchRaportData";
+import { NextResponse, NextRequest } from 'next/server'
+
+export async function POST(request) {
+    const formData = await request.json()
+    const email = formData.email
+    const raportId = formData.raportId
+
+    let getRaportData = await fetchRaportData(raportId);
+
+    if(getRaportData.response && getRaportData.data){
+        const username = 'GreeCalc';
+        const myEmail = 'greekalkulator@gmail.com';
+
+        const email = getRaportData.data.send_raport_email
+
+        const transporter = nodemailer.createTransport({
+            service: "Gmail",
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+            user: myEmail,
+            pass: "anst jhzh pdak pyhv",
+            },
+        });
+
+        const d = new Date()
+
+        let printDate = `${d.getHours() > 10 ? '' : '0'}${d.getHours()}:${d.getMinutes() > 10 ? '' : '0'}${d.getMinutes()} ${d.getDate() > 10 ? '' : '0'}${d.getDate()}.${d.getMonth()+1 > 10 ? '' : '0'}${d.getMonth()+1}.${d.getFullYear()}`
+
+        try {
+            const mail = await transporter.sendMail({
+                from: username,
+                to: email,
+                subject: `Twój raport wyceny doboru pompy ciepła na GreeCalc | ${printDate}`,
+                html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url})
+            })
+            
+            return NextResponse.json({ message: "Success: email was sent" })
+        } catch (error) {
+            console.log(error)
+            NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" })
+        }
+    }
+    else{
+        NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" })
+    }
+
+}

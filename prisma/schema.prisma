@@ -70,6 +70,8 @@ model Raport {
   send_raport_email                    String?
   contact_phone_number                 String?
   contact_email_address                String?
+  raport_url String?
+  recommendedProducts String?
 }
 
 model Admin {

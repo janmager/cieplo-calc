@@ -14,11 +14,11 @@ function RecommendedInstalators({instalators}: {instalators: Instalators[]}) {
                         {instalator.name}
                     </div>
                     <div className='flex flex-row gap-3 items-center md:pl-10'>
-                        <Image src={phoneIcon.src} height={24} width={18} alt='phone' />
+                        <Image src={phoneIcon.src} className="pdf-margin-top" height={24} width={18} alt='phone' />
                         <span className='text-[#FF4510] onPrintText14 text-[16px] font-[400]'>{instalator.phone}</span>
                     </div>
                     <div className='flex flex-row gap-3 items-center md:pl-10'>
-                        <Image src={postIcon.src} height={30} width={24} alt='phone' />
+                        <Image src={postIcon.src} className="pdf-margin-top" height={30} width={24} alt='phone' />
                         <span className='text-[#FF4510] onPrintText14 text-[16px] font-[400]'>{instalator.postalAndCity}</span>
                     </div>
                 </div>

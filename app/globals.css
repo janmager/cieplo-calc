@@ -51,6 +51,23 @@ input[type=number]::-webkit-outer-spin-button {
   border-bottom: 80px solid rgb(200,245,255);
 }
 
+.file-product-uploader{
+  width: 100%;
+  color: #FF4510 !important;
+  margin-top: 5px !important;
+  padding-top: 50px !important;
+  padding-left: 25px !important;
+  padding-right: 25px !important;
+  border-width: 2px !important;
+  border-color: #FF4510 !important;
+  padding-bottom: 50px !important;
+  max-width: 100% !important;
+}
+
+.file-product-uploader svg{
+  display: none !important;
+}
+
 @page { size: A5;  margin: 40mm; }
 @media print {
   html, body {

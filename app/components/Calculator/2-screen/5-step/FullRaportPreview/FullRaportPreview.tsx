@@ -17,36 +17,60 @@ import { useReactToPrint } from 'react-to-print';
 import logo from '@/assets/png/logo.png'
 import { getAllInstalators } from '@/utils/supabase/getAllInstalators';
 
-// const instalators: Instalator[] = [
-//     {
-//         name: 'instratech-serwis Aleksander Kwiatkowski',
-//         phone: '+48 811221297',
-//         city: '05-825 Grodzisk Mazowiecki',
-//     },
-//     {
-//         name: 'POMP Adam Nowak',
-//         phone: '601 058 657',
-//         city: '03-825 Warszawa',
-//     },
-// ]
-
-const suggestedProductTemp: SuggestedProduct = {
-    name: 'Pompa Ciepła Versati All in One',
-    model: 'GRS-CQ4.0PdG/NhH2-E(I)',
-    link: 'https://google.com',
-    img: 'https://s3-alpha-sig.figma.com/img/12dd/d6bf/938660aca9957ffba5a33f8d1b8cfc78?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VDJfl~CXc6pSHX7cbvsfbV74yXdN91Y7ZMbyRQTHh6Qa2G7Mtx47vwY3fhH4qONJeE6cgVM7MrE3wGQoEwN3-vtCGc6gMCbi6o2fQ2ZwQZXcdllhwIW06lVRD0ta7hrwc7r8iCHuTXSFyss0OFQQtPJso1xMRnAJCWC1cUzU~780qBY7yjU7mCUR1FD9w3p84aXJ4sS8bubm68bV8ZjvdizpQGJPrLA9e7dD1AKX3QUrQEVMOHJ~w1GupXIqX7~0U~m7rzQB2fGzXOhCoeUZ2bgeRn4bumZvleiwjUz2rYLGpUCzcMf~844gzC~tZ~Sns35IBAKg7irV-JfaIXOGcA__',
-}
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import { supabase } from '@/utils/supabase/client';
+import { updateRaportUrl } from '@/utils/supabase/updateRaportUrl';
+import { getAllProducts } from '@/utils/supabase/getAllProducts';
+import { set } from 'ol/transform';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean}) {
-    const [instalators, setInstalators ] = useState<any>(null) 
+    const [ instalators, setInstalators ] = useState<any>(null) 
+    const [ suggestedProducts, setSuggestedProducts ] = useState<any>(null) 
+    const [ loading, setLoading ] = useState(false)
+
+    const hideOnGeneratePdf = () => {
+        document.querySelectorAll('.product-link').forEach((el: any) => {
+            el.style.display = 'none'
+        })
+        document.querySelectorAll('.pdf-margin-top').forEach((el: any) => {
+            el.style.marginTop = '13px'
+        })
+        document.querySelectorAll('.pdf-padding-bottom').forEach((el: any) => {
+            el.style.paddingBottom = '35px'
+        })
+        raportLinkRef.current.style.display = 'none';
+    }
+
+    const showOnGeneratePdf = () => {
+        document.querySelectorAll('.product-link').forEach((el: any) => {
+            el.style.display = 'flex'
+        })
+        document.querySelectorAll('.pdf-margin-top').forEach((el: any) => {
+            el.style.marginTop = '0px'
+        })
+        document.querySelectorAll('.pdf-padding-bottom').forEach((el: any) => {
+            el.style.paddingBottom = '10px'
+        })
+        raportLinkRef.current.style.display = 'flex';
+    }
 
     const fetchAllInstalators = async () => {
         const ins = await getAllInstalators();
+        const suggested = await getAllProducts();
 
-        if(ins.response){
+        if(ins.response && suggested.response){
             setInstalators(ins.data)
+            setSuggestedProducts(suggested.data)
+
+            if(!formData.raport_url && !loading){
+                setTimeout(() => savetoPDF({first: true}), 2_000);
+            }
         }
-        else setInstalators([])
+        else {
+            setInstalators([])
+            setSuggestedProducts([])
+        }
     }
 
     useEffect(() => {
@@ -56,15 +80,97 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
     }, [])
 
     const contentRef = useRef<HTMLDivElement>(null);
+    const raportLinkRef = useRef<any>(null);
+
     const reactToPrintFn = useReactToPrint({ 
         contentRef,
         onBeforePrint: async () => {
             document.title = `Raport-${links.host}-${formData.id}`;
         },
     });
+
+    // generate pdf, save pdf to db, send email with download pdf url
+    const savetoPDF = async ({first = false}: {first?: boolean}) => {
+        if(loading) return false;
+
+        if(formData.raport_url){
+            window.open(formData.raport_url);
+            return false;
+        }
+
+        hideOnGeneratePdf();
+        setLoading(true);
+        try{
+            const canvas = await html2canvas(contentRef.current!);
+            console.log('got screenshot')
+            const imgData = canvas.toDataURL('image/png');
+
+            const pdf = new jsPDF({
+                orientation: 'portrait',
+                unit: 'px',
+                format: [canvas.width, canvas.height],
+            })
+
+            const width = pdf.internal.pageSize.getWidth();
+            const height = (canvas.height * width) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, width, height, '', 'FAST');
+            const out = pdf.output('blob');
+            try{
+                const {data,error} = await supabase.storage.from("raports").upload(`${formData.id}/raport-${new Date().valueOf()}.pdf`, out, {upsert: true, contentType: "application/pdf"});
+            
+                if (error) {
+                    console.error("Error uploading file:", error.message);
+                    toast.error('Wystąpił błąd podczas przesyłania raportu')
+                } else {
+                    const { data: file } = await supabase.storage.from("raports").getPublicUrl(data?.path);
+                    setFormData({...formData, raport_url: file.publicUrl})
+                    const updateRaportUrlDb = await updateRaportUrl({raportId: formData.id, raportUrl: file.publicUrl});
+
+                    if(updateRaportUrlDb.response){
+                            try {
+                                const response = await fetch('/api/mail/raport/send', {
+                                    method: 'post',
+                                    body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
+                                });
+                    
+                                if (!response.ok) {
+                                    throw new Error(`response status: ${response.status}`);
+                                }
+                                const responseData = await response.json();
+
+                                setLoading(false);
+                                showOnGeneratePdf();
+                                setLoading(false)
+                                if(!first)toast.success('Poprawnie wygenerowano PDF')
+                            }
+                            catch(e){
+                                console.log(e);
+                                if(!first) toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
+                                    showOnGeneratePdf()
+                                setLoading(false)
+                        }   
+                    }
+                    else{
+                        if(!first) toast.error('Wystąpił błąd podczas generowania PDF')
+                        showOnGeneratePdf()
+                    }
+                }
+            }
+            catch(e){ 
+                toast.error('Wystąpił błąd podczas przesyłania raportu')
+                showOnGeneratePdf();
+                setLoading(false);
+            }
+            // pdf.save(`raport-${new Date().valueOf()}.pdf`);
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
     
     return (
-        <div className='flex flex-col gap-0 pb-10' ref={contentRef}>
+        <div className='flex flex-col gap-0 pb-10 px-10' ref={contentRef}>
             <Toaster position="top-center" />
             <div className='py-10 w-full hidden mt-[-30px] mb-10 bg-black items-center justify-center px-10 showOnPrint'>
                 <Image src={logo.src} className='mt-[20px]' alt="Logo Gree" width={160} height={40} />
@@ -75,7 +181,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
             </div>
 
             {<div className='mt-10 onPrintMarginBottom'>
-                <div className='flex flex-row items-center gap-2.5'>
+                <div className='flex flex-row items-center gap-2.5' ref={raportLinkRef}>
                     <p className='onPrintText14'>Raport jest dostępny pod adresem: <a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id}</a></p>
                     <Image 
                         onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
@@ -101,14 +207,14 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
             <div className='mt-20'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] onPrintTopMarginExtra leading-[110%]'>Szacunkowe zapotrzebowanie na moc i energię cieplną</p>
                 <div className='flex flex-col lg:flex-row mt-10 gap-5 lg:gap-16 items-start justify-start'>
-                    <div className='flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
+                    <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Moc grzewcza</span>
                         <div className='flex flex-row items-center gap-2.5'>
                             <span className='text-[30px] onPrintText20 font-[700]'>11,7kW</span>
                             <span className='font-[400] onPrintText20 text-[20px]'>(C.O. + CWU)</span>
                         </div>
                     </div>
-                    <div className='flex w-full lg:w-auto flex-col text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
+                    <div className='pdf-padding-bottom flex w-full lg:w-auto flex-col text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Energia cieplna</span>
                         <div className='flex flex-row items-center gap-2.5'>
                             <span className='text-[30px] onPrintText20 font-[700]'>~29 178kWh = 105GJ</span>
@@ -240,11 +346,11 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
 
             <div className='mt-20 pagebreak'>
                 <p className='text-[30px] text-[#FF4510] font-[700]'>Sugerowane urządzenia do Twojego budynku</p>
-                <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-10'>
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProductTemp} />
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProductTemp} />
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProductTemp} />
-                </div>
+                {suggestedProducts && <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-10'>
+                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
+                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
+                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
+                </div>}
             </div>
 
             <div className='mt-20 pagebreak'>
@@ -252,13 +358,13 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
                 <RecommendedInstalators instalators={instalators} />
             </div>
 
-            <div className='flex flex-row gap-7 mt-14 hideOnPrint'>
-                <div onClick={() => reactToPrintFn()} className='uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+            <div className={`flex flex-row gap-7 mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
+                <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div>
-                <div onClick={() => reactToPrintFn()} className='uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
-                    <span>pobierz pdf</span>
-                </div>
+                {formData.raport_url && <div onClick={() => savetoPDF({first: false})} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                    <span>{loading ? 'trwa pobieranie...' : 'pobierz pdf'}</span>
+                </div>}
             </div>
         </div>
     )

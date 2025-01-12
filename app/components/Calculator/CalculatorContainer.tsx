@@ -82,6 +82,7 @@ function CalculatorContainer() {
         send_raport_email: '',
         contact_phone_number: '',
         contact_email_address: '',
+        raport_url: '',
     })
 
     useEffect(() => {
