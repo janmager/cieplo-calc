@@ -58,7 +58,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
             if(loading) return false;
             setLoading(true)
             let x = proj4('EPSG:3857', 'EPSG:4326',evt.coordinate);
-            const pinInfo: any = await fetch('http://nominatim.openstreetmap.org/reverse?format=json&lon=' + x[0] + '&lat=' + x[1])
+            const pinInfo: any = await fetch('https://nominatim.openstreetmap.org/reverse?format=json&lon=' + x[0] + '&lat=' + x[1])
 
             // @ts-ignore
             map.removeLayer(vectorLayer);
