@@ -3,33 +3,32 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image';
 import loadingIco from '@/assets/svg/loader.svg'
+import { getAllInstalators } from '@/utils/supabase/getAllInstalators';
 import InstalatorsTable from './InstalatorsTable';
 import AddNewInstalatorModal from './AddNewInstalatorModal';
-import ProductsTable from './ProductsTable';
-import { getAllProducts } from '@/utils/supabase/getAllProducts';
 
-function EditProductsView() {
-    const [ products, setProducts ] = useState<any>(null)
+function EditInstalatorsView() {
+    const [ instalators, setInstalators ] = useState<any>(null)
     const [ loading, setLoading ] = useState(false)
     const [ error, setError ] = useState<any>(null)
 
 
-    const fetchAllProducts = async () => {
+    const fetchAllInstalators = async () => {
         setLoading(true)
-        let productsResponse = await getAllProducts()
+        let productsResponse = await getAllInstalators()
         if(productsResponse.response){
-            setProducts(productsResponse.data)
+            setInstalators(productsResponse.data)
             setLoading(false)
         }
         else{
-            setError('Wystąpił błąd podczas pobierania listy produktów.')
+            setError('Wystąpił błąd podczas pobierania listy instalatorów.')
             setLoading(false)
         } 
     }
 
     useEffect(() => {
-        if(products == null && !loading){
-            fetchAllProducts()
+        if(instalators == null && !loading){
+            fetchAllInstalators()
         }
     }, [])
 
@@ -45,19 +44,22 @@ function EditProductsView() {
         <div>
             <div>
                 {
-                    (error || products == null) ? 
+                    (error || instalators == null) ? 
                     <div className='pt-20 pb-28 flex items-center text-sm justify-center opacity-50'>
                         {error}
                     </div> : 
-                    products.length == 0 ? 
+                    instalators.length == 0 ? 
                     <div className='pt-20 pb-28 flex items-center text-sm justify-center opacity-50'>
-                        Brak produktów w bazie danych
+                        Brak instalatorów w bazie danych
                     </div> :
-                    <ProductsTable products={products} fetchAllProducts={fetchAllProducts} />
+                    <InstalatorsTable instalators={instalators} fetchAllInstalators={fetchAllInstalators} />
                 }
+            </div>
+            <div>
+                <AddNewInstalatorModal fetchAllInstalators={fetchAllInstalators} />
             </div>
         </div>
     )
 }
 
-export default EditProductsView
+export default EditInstalatorsView

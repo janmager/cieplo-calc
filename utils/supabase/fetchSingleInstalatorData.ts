@@ -2,17 +2,26 @@
 
 import prisma from '@/app/libs/db';
 
-export const deleteRaportFromDb = async (raportId: any) => {
+export const fetchSingleInstalatorData = async (id: string) => {
     try{
-        const del = await prisma.raport.delete({
+        const find: any = await prisma.instalators.findFirst({
             where: {
-                id: raportId
+                id: id
             }
         })
     
-        return {
-            response: true
+        if(find){
+            return {
+                response: true,
+                data: find
+            }
         }
+        else{
+            return {
+                response: false
+            }
+        }
+    
     }
     catch(error) {
         if (error instanceof Error){

@@ -31,12 +31,15 @@ function AddNewProductView() {
         let addProductResult: any = await addProduct(newProduct)
 
         if(addProductResult.response){
-            alert('adding...')
+            toast.success('Zapisano poprawnie nowy produkt')
+            setSuccessUpload(false)
             setLoading(false)
+            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', params: '', image: ''})
             setValid(false)
         }
         else {
             console.log(addProductResult)
+            toast.error('Wystąpił błąd podczas zapisywania nowego produktu')
             return false;
         }
     }
@@ -47,7 +50,7 @@ function AddNewProductView() {
         setLoading(true)
 
         try{
-            const {data,error} = await supabase.storage.from("products").upload(`${newProduct.id}/image.${file.name.split(".").pop()}`, file);
+            const {data,error} = await supabase.storage.from("products").upload(`${newProduct.id}/image.${file.name.split(".").pop()}`, file, { upsert: true });
         
             if (error) {
                 console.error("Error uploading file:", error.message);

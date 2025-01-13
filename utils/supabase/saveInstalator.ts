@@ -2,12 +2,14 @@
 
 import prisma from '@/app/libs/db';
 
-export const deleteRaportFromDb = async (raportId: any) => {
+
+export const saveInstalator = async (newInstalator: any) => {
     try{
-        const del = await prisma.raport.delete({
+        const add = await prisma.instalators.update({
             where: {
-                id: raportId
-            }
+                id: newInstalator.id
+            },
+            data: newInstalator
         })
     
         return {

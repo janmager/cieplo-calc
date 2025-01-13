@@ -75,11 +75,11 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
     return (
         <div className='text-[14px]'>
             {/* header */}
-            <div className='flex flex-row flex-nowrap border py-2 font-bold'>
-                <div className='w-full min-w-[130px] max-w-[130px] border-r px-4'>
+            <div className='hidden md:flex flex-row flex-nowrap border py-2 font-bold'>
+                <div className='w-full min-w-[120px] max-w-[120px] border-r px-4'>
                     ID
                 </div>
-                <div className='w-full min-w-[180px] max-w-[180px] border-r px-4'>
+                <div className='w-full min-w-[170px] max-w-[170px] border-r px-4'>
                     Utworzono
                 </div>
                 <div className="w-full px-4">
@@ -91,24 +91,24 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
             </div>
 
             {/* content */}
-            <div className='border-t md:border-0 w-full'>
+            <div className='md:border-0 flex flex-col gap-2.5 md:gap-0 w-full'>
             {
                 raports.map((raport) => {
                     return (
-                        <div key={raport.id} className='flex w-full text-[11px] flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
-                            <div className='w-full min-w-[130px] max-w-[130px] px-4 border-r flex items-center'>
+                        <div key={raport.id} className='grid grid-cols-2 md:flex border-t md:border-t-0 w-full text-[11px] flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
+                            <div className='w-full md:min-w-[120px] md:max-w-[120px] px-4 border-r flex items-center'>
                                 {cutStartAndEndString(raport.id, 5)}
                             </div>
-                            <div className='md:col-span-3 px-4 border-r flex w-full min-w-[180px] max-w-[180px] items-center'>
+                            <div className='pl-4 pr-0 md:pr-4 md:border-r flex w-full min-w-[170px] max-w-[170px] items-center justify-end md:justify-start'>
                                 {new Date(raport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}
                             </div>
-                            <div className='w-full px-4 border-r flex truncate items-center overflow-auto'>
+                            <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-4 border-r flex truncate items-center overflow-auto'>
                                 {raport.send_raport_email}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}
                             </div>
-                            <div className='w-fit col-span-2 min-w-[250px] md:col-span-1 flex justify-center mt-5 md:mt-0 lg:justify-end pl-5 pr-3 lg:items-end'>
-                                <span className='text-[11px] border-r pr-5 mr-5 ml-5 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
-                                <Link target='_blank' href={`/wynik/${raport.id}`} className='text-[11px] opacity-70 hover:opacity-100 border-r pr-5 mr-3'>Otwórz</Link>
-                                {loading ? '' : <Image onClick={() => sendRaportToMail(raport)} src={sendIcon.src} height={19} width={19} alt="Send icon" className='opacity-20 hover:opacity-80 mr-3 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />}
+                            <div className='w-full md:w-fit col-span-2 min-w-[240px] md:col-span-1 flex justify-center mt-5 md:mt-0 flex-row gap-3 lg:justify-end pl-5 pr-3 lg:items-end'>
+                                <span className='text-[11px] border-r pr-5 ml-5 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
+                                <Link target='_blank' href={`/wynik/${raport.id}`} className='text-[11px] opacity-70 hover:opacity-100 border-r pr-5'>Otwórz</Link>
+                                {loading ? '' : <Image onClick={() => sendRaportToMail(raport)} src={sendIcon.src} height={19} width={19} alt="Send icon" className='opacity-20 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />}
                                 <Image onClick={() => confirmDelete(raport)} src={trashIcon.src} height={19} width={19} alt="Trash icon" className='opacity-30 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
                             </div>
                         </div>

@@ -2,11 +2,11 @@
 
 import prisma from '@/app/libs/db';
 
-export const deleteRaportFromDb = async (raportId: any) => {
+export const deleteInstalatorFromDb = async (instalatorId: any) => {
     try{
-        const del = await prisma.raport.delete({
+        const del = await prisma.instalators.delete({
             where: {
-                id: raportId
+                id: instalatorId
             }
         })
     

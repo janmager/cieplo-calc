@@ -2,11 +2,11 @@
 
 import prisma from '@/app/libs/db';
 
-export const deleteRaportFromDb = async (raportId: any) => {
+export const deleteProductFromDb = async (productId: any) => {
     try{
-        const del = await prisma.raport.delete({
+        const del = await prisma.product.delete({
             where: {
-                id: raportId
+                id: productId
             }
         })
     
