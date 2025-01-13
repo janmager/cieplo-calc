@@ -1,12 +1,13 @@
 import React from 'react'
 import SuggestedProductThumbnail from '../SuggestedProductThumbnail/SuggestedProductThumbnail'
-import { SuggestedProduct } from '@/app/types/SuggestedProduct'
+import { Product } from '@prisma/client'
 
-const suggestedProductTemp: SuggestedProduct = {
+const suggestedProductTemp: Product = {
+    id: '1',
     name: 'Pompa Ciepła Versati All in One',
-    model: 'GRS-CQ4.0PdG/NhH2-E(I)',
-    link: 'https://google.com',
-    img: 'https://s3-alpha-sig.figma.com/img/12dd/d6bf/938660aca9957ffba5a33f8d1b8cfc78?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VDJfl~CXc6pSHX7cbvsfbV74yXdN91Y7ZMbyRQTHh6Qa2G7Mtx47vwY3fhH4qONJeE6cgVM7MrE3wGQoEwN3-vtCGc6gMCbi6o2fQ2ZwQZXcdllhwIW06lVRD0ta7hrwc7r8iCHuTXSFyss0OFQQtPJso1xMRnAJCWC1cUzU~780qBY7yjU7mCUR1FD9w3p84aXJ4sS8bubm68bV8ZjvdizpQGJPrLA9e7dD1AKX3QUrQEVMOHJ~w1GupXIqX7~0U~m7rzQB2fGzXOhCoeUZ2bgeRn4bumZvleiwjUz2rYLGpUCzcMf~844gzC~tZ~Sns35IBAKg7irV-JfaIXOGcA__',
+    desc: 'GRS-CQ4.0PdG/NhH2-E(I)',
+    params: '',
+    image: 'https://s3-alpha-sig.figma.com/img/12dd/d6bf/938660aca9957ffba5a33f8d1b8cfc78?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=VDJfl~CXc6pSHX7cbvsfbV74yXdN91Y7ZMbyRQTHh6Qa2G7Mtx47vwY3fhH4qONJeE6cgVM7MrE3wGQoEwN3-vtCGc6gMCbi6o2fQ2ZwQZXcdllhwIW06lVRD0ta7hrwc7r8iCHuTXSFyss0OFQQtPJso1xMRnAJCWC1cUzU~780qBY7yjU7mCUR1FD9w3p84aXJ4sS8bubm68bV8ZjvdizpQGJPrLA9e7dD1AKX3QUrQEVMOHJ~w1GupXIqX7~0U~m7rzQB2fGzXOhCoeUZ2bgeRn4bumZvleiwjUz2rYLGpUCzcMf~844gzC~tZ~Sns35IBAKg7irV-JfaIXOGcA__',
 }
 
 function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {formData: any, step: any, setStep: any, setFormData: any}) {
