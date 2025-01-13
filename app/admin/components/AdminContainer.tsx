@@ -62,6 +62,8 @@ function AdminContainer() {
         const lastView = getCookie('last-view');
         if (typeof lastView === 'string') {
             setView(parseInt(lastView))
+        } else{
+            setView(2)
         }
     }, [])
 

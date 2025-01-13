@@ -21,8 +21,9 @@ import { supabase } from '@/utils/supabase/client';
 import { updateRaportUrl } from '@/utils/supabase/updateRaportUrl';
 import { getAllProducts } from '@/utils/supabase/getAllProducts';
 import ShowRaportDetailsAdminModal from '@/app/admin/components/ShowRaportDetailsAdminModal';
+import { Product } from '@prisma/client';
 
-function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean}) {
+function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
     const [ suggestedProducts, setSuggestedProducts ] = useState<any>(null) 
     const [ loading, setLoading ] = useState(false)
@@ -56,11 +57,15 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
 
     const fetchAllInstalators = async () => {
         const ins = await getAllInstalators();
-        const suggested = await getAllProducts();
+        // const suggested = await getAllProducts();
+        console.log(formData.recommendedProducts)
+        let suggested: any = formData.recommendedProducts ? JSON.parse(formData.recommendedProducts) : await getAllProducts();
+        console.log(suggested)
+        autoDownload && handleOpenModalRaport(true);
 
-        if(ins.response && suggested.response){
+        if(ins.response && (suggested.length || suggested.response)){
             setInstalators(ins.data)
-            setSuggestedProducts(suggested.data)
+            setSuggestedProducts(suggested.data ? suggested.data : suggested)
 
             if(!formData.raport_url && !loading){
                 setTimeout(() => savetoPDF({first: true}), 2_000);
@@ -167,7 +172,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
         }
     }
 
-    const handleOpenModalRaport = () => {
+    const handleOpenModalRaport = (force = false) => {
         setOpenModalRaport(true)
     }
     
@@ -348,11 +353,13 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
 
             <div className='mt-20 pagebreak'>
                 <p className='text-[30px] text-[#FF4510] font-[700]'>Sugerowane urządzenia do Twojego budynku</p>
-                {suggestedProducts && <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-10'>
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
-                    <SuggestedProductThumbnail suggestedProduct={suggestedProducts[0]} />
-                </div>}
+                <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-10'>
+                {suggestedProducts && suggestedProducts.map((p: any) => {
+                    return (
+                        <SuggestedProductThumbnail suggestedProduct={p} />
+                    )})
+                }
+                </div>
             </div>
 
             <div className='mt-20 pagebreak'>

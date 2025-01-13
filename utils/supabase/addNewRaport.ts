@@ -67,6 +67,7 @@ export const addNewRaport = async (raport: any) => {
                 contact_phone_number: raport.contact_phone_number,
                 contact_email_address: raport.contact_email_address,
                 raport_url: raport.raport_url,
+                recommendedProducts: raport.recommendedProducts
             }
         })
     

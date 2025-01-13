@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function CustomAdminDetailsInputData({label, data, checkBox = false, smallValue = false}: {label: string, data: any, checkBox?: boolean, smallValue?: boolean}) {
     return (
-        <div className={`${checkBox ? 'md:grid-cols-2 flex md:grid flex-row' : smallValue ? 'md:grid-cols-6 grid' : 'md:grid-cols-4 grid'} gap-2 md:gap-10 items-center`}>
+        <div className={`${checkBox ? `md:grid-cols-2 flex items-start md:grid ${(data == 'yes' || data == 'no') ? 'flex-row' : 'flex-col'}` : smallValue ? 'md:grid-cols-6 grid' : 'md:grid-cols-4 grid'} gap-2 md:gap-10`}>
             <span className={`text-left md:text-right font-[500] ${smallValue ? 'md:col-span-4' : ''}`}>{label}:</span>
             {
                 data == 'yes' ? 

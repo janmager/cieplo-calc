@@ -5,7 +5,7 @@ import FirstCalcView from './1-screen/FirstCalcView'
 import SecondCalcView from './2-screen/SecondCalcView'
 
 function CalculatorContainer() {
-    const [ viewId, setViewId ] = useState<Number>(1)
+    const [ viewId, setViewId ] = useState<Number>(2)
     const [ formData, setFormData ] = useState<any>({
         // first step
         house_building_years: '',
@@ -83,6 +83,7 @@ function CalculatorContainer() {
         contact_phone_number: '',
         contact_email_address: '',
         raport_url: '',
+        recommendedProducts: '',
     })
 
     if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
