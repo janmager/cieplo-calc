@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     description: "Raport | " + process.env.NEXT_PUBLIC_SITE_NAME,
 };
 
-async function page({ params }: { params: {id: string }}) {
-    const { id } = params
+async function page({ params }: { params: Promise<{id: string }>}) {
+    const { id } = await params
     let raport: any;
     const find = await fetchRaportData(id)
 
