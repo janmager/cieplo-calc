@@ -101,7 +101,6 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
         setLoading(true);
         try{
             const canvas = await html2canvas(contentRef.current!);
-            console.log('got screenshot')
             const imgData = canvas.toDataURL('image/png');
 
             const pdf = new jsPDF({

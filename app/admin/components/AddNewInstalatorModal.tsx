@@ -56,7 +56,6 @@ function AddNewInstalatorModal({ fetchAllInstalators, hideModal, edit = {on: fal
             toast.success('Zapisano poprawnie nowego instalatora')
         }
         else {
-            console.log(addInstalatorResult)
             toast.error('Wystąpił błąd podczas zapisywania nowego instalatora')
             setLoading(false)
             setValid(false)
@@ -66,7 +65,6 @@ function AddNewInstalatorModal({ fetchAllInstalators, hideModal, edit = {on: fal
     }
 
     const handleEditInstalator = async () => {
-        console.log(loading, valid)
         if(loading || !valid) return false;
 
         setLoading(true)
@@ -81,7 +79,6 @@ function AddNewInstalatorModal({ fetchAllInstalators, hideModal, edit = {on: fal
             toast.success('Zapisano poprawnie zmiany')
         }
         else {
-            console.log(saveInstalatorResult)
             toast.error('Wystąpił błąd podczas zapisywania zmian')
             setLoading(false)
             setValid(false)

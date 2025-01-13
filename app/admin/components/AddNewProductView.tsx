@@ -8,7 +8,6 @@ import toast from "react-hot-toast";
 import { addProduct } from "@/utils/supabase/addProduct";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY as string;
-console.log(supabaseUrl)
 export const supabase: any = createClient(supabaseUrl, supabaseKey);
 
 function AddNewProductView() {
@@ -38,7 +37,6 @@ function AddNewProductView() {
             setValid(false)
         }
         else {
-            console.log(addProductResult)
             toast.error('Wystąpił błąd podczas zapisywania nowego produktu')
             return false;
         }

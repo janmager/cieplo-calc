@@ -1,3 +1,3 @@
 export const links = {
-    host: 'http://localhost:3000'
+    host: process.env.NEXT_PUBLIC_HOST
 }

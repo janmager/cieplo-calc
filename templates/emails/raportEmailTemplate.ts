@@ -1,4 +1,4 @@
-export const raportEmailTemplate = ({email, raport_url}: {email: string, raport_url: string}) => {
+export const raportEmailTemplate = ({email, raport_url, raportId}: {email: string, raport_url: string, raportId: string}) => {
     let html = ''
     html = /*html*/`
     <!doctype html>
@@ -109,7 +109,7 @@ export const raportEmailTemplate = ({email, raport_url}: {email: string, raport_
                                     <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px 24px 38px 24px;" valign="top">
                                     <p style="color: black; font-family: Helvetica, sans-serif; font-size: 17px; font-weight: bold; margin: 0; margin-bottom: 16px;">Nowy raport</p>
                                     <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px;">Twój raport wyceny został wygenerowany</p><br/>
-                                    <a style="background: #FF4510; text-decoration: none; color: white; padding: 10px 30px; border-radius: 5px;" href="${raport_url}">Pobierz Raport</a>
+                                    <a style="background: #FF4510; text-decoration: none; color: white; padding: 10px 30px; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
                                     </td>
                                 </tr>
                             </table>
