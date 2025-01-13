@@ -9,22 +9,11 @@ import { deleteInstalatorFromDb } from '@/utils/supabase/deleteInstalatorFromDb'
 import AddNewInstalatorModal from './AddNewInstalatorModal'
 import editIco from '@/assets/svg/pencil.svg'
 import { deleteProductFromDb } from '@/utils/supabase/deleteProductFromDb copy'
+import ShowRaportDetailsAdminModal from './ShowRaportDetailsAdminModal'
 
 function ProductsTable({products, fetchAllProducts}: {products: Product[], fetchAllProducts: any}) {
     const [ showConfirm, setShowConfirm ] = useState<any>(false)
     const [ loading, setLoading ] = useState(false)
-    const [ editProductMode, setEditProductMode ] = useState<any>(false)
-    const [ currentEditingId, setCurrentEditingId ] = useState<any>(null)
-
-    const editProduct = (id: any) => {
-        setCurrentEditingId(id)
-        setEditProductMode(true)
-    }
-
-    const hideModalEdit = () => {
-        setCurrentEditingId(null)
-        setEditProductMode(false)
-    }
 
     const confirmDelete = (raport: any) => {
         setShowConfirm(raport)
@@ -76,7 +65,7 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
             {
                 products.map((product) => {
                     return (
-                        <div key={product.id} className='flex border-t md:border-t-0 w-full text-[11px] flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
+                        <div key={product.id} className='flex border-t md:border-t-0 w-full text-xs flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
                             <div className='md:col-span-3 px-4 md:border-r flex w-full min-w-[260px] max-w-[260px] items-center'>
                                 {product.name}
                             </div>
@@ -84,7 +73,6 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
                                 {product.desc}
                             </div>
                             <div className='w-full col-span-2 md:col-span-1 flex justify-center flex-row gap-4 mt-2 md:mt-0 lg:justify-end pl-5 pr-3 lg:items-center'>
-                                <Image onClick={() => editProduct(product.id)} src={editIco.src} height={19} width={19} alt="Edit icon" className='opacity-20 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
                                 <Image onClick={() => confirmDelete(product)} src={trashIcon.src} height={19} width={19} alt="Trash icon" className='opacity-30 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
                             </div>
                         </div>
@@ -93,7 +81,6 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
             }
             </div>
             {showConfirm && <ConfirmModal title='Czy na pewno chcesz usunąć produkt?' desc='Produkt zostanie trwale usunięty.' yesButtonText='Tak' noButtonText='Nie' onClose={() => setShowConfirm(false)} onConfirm={() => deleteProduct()} />}
-            {editProductMode && <AddNewInstalatorModal hideModal={hideModalEdit} fetchAllInstalators={fetchAllProducts} edit={{on: true, id: currentEditingId}} />}
         </div>
     )
 }

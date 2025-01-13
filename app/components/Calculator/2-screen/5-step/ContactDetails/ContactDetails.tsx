@@ -14,8 +14,8 @@ function ContactDetails({formData, setFormData, step, setStep}: {formData: any, 
 
     useEffect(() => {
         if(
-            formData.rules_1 &&
-            formData.rules_2 && 
+            formData.rules1 &&
+            formData.rules2 && 
             formData.send_raport_to_email && 
             formData.send_raport_to_near_companies
         ){
@@ -93,18 +93,18 @@ function ContactDetails({formData, setFormData, step, setStep}: {formData: any, 
             </div>
 
             <div>
-                <div onClick={() => setFormData({...formData, rules_1: !formData.rules_1})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
+                <div onClick={() => setFormData({...formData, rules1: !formData.rules1})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
                     <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
-                        {formData.rules_1 && <Image src={check.src} height={15} width={15} alt="check" />}
+                        {formData.rules1 && <Image src={check.src} height={15} width={15} alt="check" />}
                     </div>
                     <span>Zgadzam się dobrowolnie na kontakt mailowy i telefoniczny od firm w liczbie w/w, w celu przedstawienia mi ofert dot. w/w zakresu zlecenia. Potwierdzenie tej zgody wraz z listą firm, którym cieplo.app przekazuje moje dane kontaktowe, otrzymam mailowo na podany przeze mnie powyżej adres e-mail. Zapoznawszy się z <a href='https://cieplo.app/prywatnosc' className='underline' target="_blank">Polityką Prywatności Cieplo.app</a>, akceptuję ją.</span>
                 </div>
             </div>
 
             <div>
-                <div onClick={() => setFormData({...formData, rules_2: !formData.rules_2})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
+                <div onClick={() => setFormData({...formData, rules2: !formData.rules2})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
                     <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
-                        {formData.rules_2 && <Image src={check.src} height={15} width={15} alt="check" />}
+                        {formData.rules2 && <Image src={check.src} height={15} width={15} alt="check" />}
                     </div>
                     <span>Poinformowano mnie, że powyższą zgodę mogę w każdej chwili wycofać i zażądać usunięcia moich danych od tych firm, którym zostały one przekazane, a od których kontaktu już sobie nie życzę. Wystarczy do tego moje oświadczenie w trakcie rozmowy z przedstawicielem danej firmy lub przesłane mailowo na adres kontaktowy firmy, który otrzymuję w mailowym potwierdzeniu wysłania zapytania.</span>
                 </div>

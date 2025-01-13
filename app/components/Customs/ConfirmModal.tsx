@@ -25,7 +25,7 @@ function ConfirmModal({title, desc, yesButtonText, noButtonText, onConfirm, onCl
                     <div className='text-[#FF4510] cursor-pointer hover:bg-[#FF4510]/10 rounded transition-all duration-300 py-2.5 px-10 border-[#FF4510] border flex items-center justify-center text-center' onClick={close}>{noButtonText}</div>
                 </div>
             </div>
-            <div className='z-40 bg-black/80 w-full h-full left-0 top-0 absolute'></div>
+            <div style={{backdropFilter: 'blur(3px)'}} className='z-40 bg-black/90 w-full h-full left-0 top-0 absolute'></div>
         </div>
     )
 }

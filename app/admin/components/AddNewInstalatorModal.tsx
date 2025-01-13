@@ -128,7 +128,7 @@ function AddNewInstalatorModal({ fetchAllInstalators, hideModal, edit = {on: fal
                         <div onClick={edit.on ? handleEditInstalator : handleAddNewInstalator} className={`text-white font-semibold bg-[#FF4510] mt-3 text-center rounded py-3 px-8 ${valid ? 'cursor-pointer' : 'opacity-50 grayscale'}`}>{loading ? edit.on ? 'Trwa zapisywanie...' : 'Trwa dodawanie...' : edit.on ? 'Zapisz informacje' : 'Dodaj instalatora'}</div>
                     </div> }
                 </div>
-                <div className='bg-black/80 w-full h-full absolute' onClick={edit.on ? () => hideModal() : () => setVisible(false)}></div>
+                <div style={{backdropFilter: 'blur(3px)'}} className='bg-black/90 w-full h-full absolute' onClick={edit.on ? () => hideModal() : () => setVisible(false)}></div>
             </div> }
         </div>
     )

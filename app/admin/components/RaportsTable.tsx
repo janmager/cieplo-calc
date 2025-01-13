@@ -9,13 +9,27 @@ import ConfirmModal from '@/app/components/Customs/ConfirmModal'
 import toast from 'react-hot-toast'
 import { deleteRaportFromDb } from '@/utils/supabase/deleteRaportFromDb'
 import loadingIco from '@/assets/svg/loader.svg'
+import ShowRaportDetailsAdminModal from './ShowRaportDetailsAdminModal'
 
 function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRaports: any}) {
     const [ showConfirm, setShowConfirm ] = useState<any>(false)
     const [ loading, setLoading ] = useState(false)
+    const [ currentDetailsRaport, setCurrentDetailsRaport ] = useState<any>(null)
+    const [ showDetails, setShowDetails ] = useState(false)
 
     const confirmDelete = (raport: any) => {
         setShowConfirm(raport)
+    }
+
+    const findRaport = (id: string) => {
+        const find = raports.find((item: any) => item.id === id)
+        return find
+    }
+
+    const handleShowDetails = (id: string) => {
+        setShowDetails(true);
+        let find = findRaport(id)
+        setCurrentDetailsRaport(find)
     }
 
     const sendRaportToMail = async (raport: any) => {
@@ -95,7 +109,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
             {
                 raports.map((raport) => {
                     return (
-                        <div key={raport.id} className='grid grid-cols-2 md:flex border-t md:border-t-0 w-full text-[11px] flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
+                        <div key={raport.id} className='grid grid-cols-2 md:flex border-t md:border-t-0 w-full text-xs flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
                             <div className='w-full md:min-w-[120px] md:max-w-[120px] px-4 border-r flex items-center'>
                                 {cutStartAndEndString(raport.id, 5)}
                             </div>
@@ -106,7 +120,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                                 {raport.send_raport_email}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}
                             </div>
                             <div className='w-full md:w-fit col-span-2 min-w-[240px] md:col-span-1 flex justify-center mt-5 md:mt-0 flex-row gap-3 lg:justify-end pl-5 pr-3 lg:items-end'>
-                                <span className='text-[11px] border-r pr-5 ml-5 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
+                                <span onClick={() => handleShowDetails(raport.id)} className='text-[11px] border-r pr-5 ml-5 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
                                 <Link target='_blank' href={`/wynik/${raport.id}`} className='text-[11px] opacity-70 hover:opacity-100 border-r pr-5'>Otwórz</Link>
                                 {loading ? '' : <Image onClick={() => sendRaportToMail(raport)} src={sendIcon.src} height={19} width={19} alt="Send icon" className='opacity-20 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />}
                                 <Image onClick={() => confirmDelete(raport)} src={trashIcon.src} height={19} width={19} alt="Trash icon" className='opacity-30 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
@@ -117,6 +131,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
             }
             </div>
             {showConfirm && <ConfirmModal title='Czy na pewno chcesz usunąć raport?' desc='Raport zostanie trwale usunięty.' yesButtonText='Tak' noButtonText='Nie' onClose={() => setShowConfirm(false)} onConfirm={() => deleteRaport()} />}
+            {showDetails && <ShowRaportDetailsAdminModal visible={showDetails} setVisible={setShowDetails} data={currentDetailsRaport} />}
         </div>
     )
 }

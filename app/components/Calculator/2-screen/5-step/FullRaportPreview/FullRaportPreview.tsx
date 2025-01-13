@@ -10,8 +10,6 @@ import InfoBox from '@/app/components/Customs/InfoBox';
 import DynamicHouseSketch from '../../1-step/DynamicHouseSketch';
 import SuggestedProductThumbnail from '../SuggestedProductThumbnail/SuggestedProductThumbnail';
 import RecommendedInstalators from '../RecommendedInstalators/RecommendedInstalators';
-import { Instalator } from '@/app/types/Instalator';
-import { SuggestedProduct } from '@/app/types/SuggestedProduct';
 import { links } from '@/app/consts/links';
 import { useReactToPrint } from 'react-to-print';
 import logo from '@/assets/png/logo.png'
@@ -22,12 +20,13 @@ import html2canvas from 'html2canvas';
 import { supabase } from '@/utils/supabase/client';
 import { updateRaportUrl } from '@/utils/supabase/updateRaportUrl';
 import { getAllProducts } from '@/utils/supabase/getAllProducts';
-import { set } from 'ol/transform';
+import ShowRaportDetailsAdminModal from '@/app/admin/components/ShowRaportDetailsAdminModal';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
     const [ suggestedProducts, setSuggestedProducts ] = useState<any>(null) 
     const [ loading, setLoading ] = useState(false)
+    const [ openModalRaport, setOpenModalRaport ] = useState(false)
 
     const hideOnGeneratePdf = () => {
         document.querySelectorAll('.product-link').forEach((el: any) => {
@@ -167,6 +166,10 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
         catch(e){
             console.log(e)
         }
+    }
+
+    const handleOpenModalRaport = () => {
+        setOpenModalRaport(true)
     }
     
     return (
@@ -359,13 +362,18 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView}: {
             </div>
 
             <div className={`flex flex-row gap-7 mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
-                <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
-                </div>
+                </div> */}
                 {formData.raport_url && <div onClick={() => savetoPDF({first: false})} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
-                    <span>{loading ? 'trwa pobieranie...' : 'pobierz pdf'}</span>
+                    <span>{loading ? 'trwa pobieranie...' : 'zapisz stronę'}</span>
                 </div>}
+                <div onClick={() => handleOpenModalRaport()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                    <span>{loading ? 'trwa pobieranie...' : 'pobierz raport'}</span>
+                </div>
             </div>
+
+            { openModalRaport && <ShowRaportDetailsAdminModal automaticDownload={true} visible={openModalRaport} setVisible={setOpenModalRaport} data={formData} /> }
         </div>
     )
 }

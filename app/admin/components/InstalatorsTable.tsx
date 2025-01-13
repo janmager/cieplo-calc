@@ -59,7 +59,7 @@ function InstalatorsTable({instalators, fetchAllInstalators}: {instalators: Inst
         <div className='text-[14px]'>
             {/* header */}
             <div className='hidden md:flex flex-row flex-nowrap border py-2 font-bold'>
-                <div className='w-full min-w-[260px] max-w-[260px] border-r px-4'>
+                <div className='w-full min-w-[270px] max-w-[270px] border-r px-4'>
                     Nazwa
                 </div>
                 <div className="w-full min-w-[130px] max-w-[130px] border-r px-4">
@@ -78,8 +78,8 @@ function InstalatorsTable({instalators, fetchAllInstalators}: {instalators: Inst
             {
                 instalators.map((instalator) => {
                     return (
-                        <div key={instalator.id} className='flex border-t md:border-t-0 w-full text-[11px] flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
-                            <div className='md:col-span-3 px-4 md:border-r flex w-full min-w-[260px] max-w-[260px] items-center'>
+                        <div key={instalator.id} className='flex border-t md:border-t-0 w-full text-xs flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
+                            <div className='md:col-span-3 px-4 md:border-r flex w-full min-w-[270px] max-w-[270px] items-center'>
                                 {instalator.name}
                             </div>
                             <div className='w-full min-w-[130px] max-w-[130px] px-4 md:border-r flex truncate items-center overflow-auto'>
