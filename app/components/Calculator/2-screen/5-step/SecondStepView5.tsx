@@ -36,6 +36,7 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
     }
 
     const handleCountCieploAPI = async () => {
+        console.log(formData)
         setLoading(true)
 
         const result = await fetch(`/api/cieplo`, {
@@ -47,7 +48,14 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
         });
 
         let res = await result.json();
-        console.log(res)
+        if(res.response){
+            setLoading(false)
+            toast.success('Pobrawanie obliczono z API')
+        }
+        else{
+            setLoading(false)
+            toast.error('Wystąpił błąd podczas pobierania danych z API')
+        }
     }
 
     useEffect(() => {

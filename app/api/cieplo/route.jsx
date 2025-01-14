@@ -80,7 +80,7 @@ export async function POST(request) {
 
     } catch (e) {
         console.log(e);
-        NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" })
+        NextResponse.status(500).json({ response: false })
 
     }
 }
