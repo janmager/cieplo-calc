@@ -7,9 +7,8 @@ export async function POST(request) {
     const formData = await request.json()
     const token = formData.token
 
-    console.log(token)
     const formatedData = {
-        token
+        token: process.env.NEXT_PUBLIC_API_KEY,
     }
     console.log(formatedData)
     console.log(`https://cieplo.app/api/subscription?token=${token}`)
