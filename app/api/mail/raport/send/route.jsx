@@ -36,7 +36,7 @@ export async function POST(request) {
                 from: username,
                 to: email,
                 subject: `Twój raport wyceny doboru pompy ciepła na GreeCalc | ${printDate}`,
-                html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url})
+                html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url, raportId: getRaportData.data.id})
             })
             
             return NextResponse.json({ message: "Success: email was sent" })

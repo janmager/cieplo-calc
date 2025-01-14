@@ -47,7 +47,7 @@ function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {f
                         <p className='w-[350px]'>Projektowa temperatura pomieszczenia</p>
                         <span className='font-bold'>{formData.heat_demand && formData.heat_demand.temp ? `${formData.heat_demand.temp}°C` : 'nie podano'}</span>
                     </div>}
-                    <div className='flex flex-col justify-start items-start xl:items-center'>
+                    <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Lokalizacja budynku</p>
                         <span className='font-bold'>{formData.house_location['full_name']}</span>
                     </div>

@@ -145,7 +145,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                                 setLoading(false);
                                 showOnGeneratePdf();
                                 setLoading(false)
-                                if(!first)toast.success('Poprawnie wygenerowano PDF')
+                                // if(!first)toast.success('Poprawnie wygenerowano PDF')
                             }
                             catch(e){
                                 console.log(e);
