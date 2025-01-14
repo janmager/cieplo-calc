@@ -34,6 +34,9 @@ module.exports = {
         ]
       }
     ]
+  },
+  images: {
+    domains: ['opewhxnwoeymcltcxllc.supabase.co'],
   }
 };
 
