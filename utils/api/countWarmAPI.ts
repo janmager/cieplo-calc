@@ -7,13 +7,15 @@ export const countWarmAPI = async (data: any) => {
     }
 
     try {
-        const result = await fetch('https://cieplo.app/api/subscription?token=d45a59c760cf7aca5764a9aa7d9647093f797ca1', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formatedData),
-        });
+        const result = await fetch(
+            `https://cieplo.app/api/subscription`,
+            {
+                method: 'GET',
+                headers: {
+                    'token': 'd45a59c760cf7aca5764a9aa7d9647093f797ca1',
+                },
+            }
+        );
 
         if (!result.ok) {
             throw new Error(`response status: ${result.status}`);

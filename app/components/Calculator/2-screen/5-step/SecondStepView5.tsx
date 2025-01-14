@@ -38,17 +38,16 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
 
     const handleCountCieploAPI = async () => {
         setLoading(true)
-        alert('counting with cieplo.app API')
 
         const apiResponse = await countWarmAPI(formData);
         console.log(apiResponse)
 
-        if(apiResponse.response){
-            alert('success')
-        }
-        else{
-            alert(':(')
-        }
+        // if(apiResponse.response){
+        //     alert('success')
+        // }
+        // else{
+        //     alert(':(')
+        // }
     }
 
     useEffect(() => {
