@@ -9,7 +9,7 @@ import loadingIco from '@/assets/svg/loader.svg'
 
 function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, setFormData}: {formData: any, loadingUpper: boolean, step: any, setStep: any, setFormData: any}) {
     const [ suggestedProduct, setSuggestedProduct ] = useState<any>(null)
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
 
     const fetchAllProducts = async () => {
         setLoading(true)
@@ -53,7 +53,7 @@ function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, se
                     </div>
                 </div>
                 <div className='flex items-center justify-center'>
-                    <div onClick={() => loading ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] w-[160px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loading ? 'opacity-50 grayscale' : ''}`}>
+                    <div onClick={() => loading || loadingUpper ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] w-[160px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loading || loadingUpper ? 'opacity-50 grayscale' : ''}`}>
                         <span>{loading ? 'Ładowanie...' : 'Dalej'}</span>
                     </div>
                 </div>

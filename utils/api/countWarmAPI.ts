@@ -3,12 +3,11 @@ import { Raport } from "@prisma/client";
 export const countWarmAPI = async (data: any) => {
 
     const formatedData = {
-        ...data,
         token: process.env.NEXT_PUBLIC_API_KEY
     }
 
     try {
-        const result = await fetch('https://cieplo.app/api/calculation', {
+        const result = await fetch('/api/cieplo', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
