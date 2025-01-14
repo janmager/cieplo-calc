@@ -7,9 +7,9 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
 
-function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {formData: any, step: any, setStep: any, setFormData: any}) {
+function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, setFormData}: {formData: any, loadingUpper: boolean, step: any, setStep: any, setFormData: any}) {
     const [ suggestedProduct, setSuggestedProduct ] = useState<any>(null)
-    const [ loading, setLoading ] = useState(true)
+    const [ loading, setLoading ] = useState(false)
 
     const fetchAllProducts = async () => {
         setLoading(true)
@@ -53,8 +53,8 @@ function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {f
                     </div>
                 </div>
                 <div className='flex items-center justify-center'>
-                    <div onClick={() => setStep(step + 1)} className='border font-bold border-[#FF4510] w-[130px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center'>
-                        <span>dalej</span>
+                    <div onClick={() => loading ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] w-[160px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loading ? 'opacity-50 grayscale' : ''}`}>
+                        <span>{loading ? 'Ładowanie...' : 'Dalej'}</span>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { addNewRaport } from '@/utils/supabase/addNewRaport'
 import loaderImg from '@/assets/svg/loader.svg'
 import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast'
+import { countWarmAPI } from '@/utils/api/countWarmAPI'
 
 function SecondStepView5({formData, setFormData}: {formData: any, setFormData: any}) {
     const [ currentStep, setCurrentStep ] = useState(1)
@@ -35,9 +36,29 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
         }
     }
 
+    const handleCountCieploAPI = async () => {
+        setLoading(true)
+        alert('counting with cieplo.app API')
+
+        const apiResponse = await countWarmAPI(formData);
+        console.log(apiResponse)
+
+        if(apiResponse.response){
+            alert('success')
+        }
+        else{
+            alert(':(')
+        }
+    }
+
     useEffect(() => {
         if(currentStep == 3){
             handleAddNewRaport()
+        }
+        if(currentStep == 2){
+            // count with cieplo app API
+            // ...
+            handleCountCieploAPI()
         }
     }, [currentStep])
   
@@ -52,7 +73,7 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
     return (
         <div className='flex flex-col gap-14 w-full'>           
             <Toaster position="top-center" />
-            {currentStep == 1 && <RaportOverviewWithSuggestion formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
+            {currentStep == 1 && <RaportOverviewWithSuggestion loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 2 && <ContactDetails formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 3 && <FullRaportPreview formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
         </div>
