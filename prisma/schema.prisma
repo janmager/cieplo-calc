@@ -38,6 +38,8 @@ model Raport {
   basic_construction_material          String?
   additional_construction_material     String?
   wall_insulation                      Boolean?
+  wall_inside_insulation String?
+  wall_insulation_thickness String?
   house_insulation                     Boolean?
   outside_insulation                   String?
   insulation_thickness                 String?
@@ -46,6 +48,7 @@ model Raport {
   taras_doors_number                   String?
   large_glazings_number                String?
   doors_type                           String?
+  outside_doors_number String?
   is_roof_isolation                    String?
   isolation_roof_material              String?
   isolation_roof_thickness             String?
@@ -58,6 +61,7 @@ model Raport {
   heating_isolation_material           String?
   heating_isolation_material_thickness String?
   type_of_heating_instalation          String?
+  max_temp_of_power_instalation String?
   count_need_energy_cwu                Boolean?
   hot_water_person_using               String?
   hot_water_using_style                String?

@@ -1,4 +1,4 @@
-export const outside_insulation: any = [
+export const wall_insulation: any = [
     {
         name: 'Celuloza',
         value: 'Celuloza'
@@ -28,6 +28,10 @@ export const outside_insulation: any = [
         value: 'PUR'
     },
     {
+        name: 'Pustka powietrzna',
+        value: 'Pustka powietrzna'
+    },
+    {
         name: 'Słoma',
         value: 'Słoma'
     },
@@ -54,5 +58,13 @@ export const outside_insulation: any = [
     {
         name: 'Wełna mineralna',
         value: 'Wełna mineralna'
+    },
+    {
+        name: 'Wełna mineralna granulowana',
+        value: 'Wełna mineralna granulowana'
+    },
+    {
+        name: 'Wiórobeton',
+        value: 'Wiórobeton'
     },
 ]

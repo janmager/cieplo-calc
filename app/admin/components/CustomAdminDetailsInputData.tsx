@@ -6,7 +6,7 @@ import Image from 'next/image'
 function CustomAdminDetailsInputData({label, data, checkBox = false, smallValue = false}: {label: string, data: any, checkBox?: boolean, smallValue?: boolean}) {
     return (
         <div className={`${checkBox ? `md:grid-cols-2 flex items-start md:items-center md:grid ${(data == 'yes' || data == 'no') ? 'flex-row' : 'flex-col'}` : smallValue ? 'md:grid-cols-6 grid' : `flex ${(data == 'yes' || data == 'no') ? 'flex-row' : 'flex-col'} md:grid-cols-4 md:grid`} gap-2 md:gap-5`}>
-            <span className={`text-left flex items-center justify-startmd:justify-end md:text-right font-[500] ${smallValue ? 'md:col-span-4' : ''}`}>{label}:</span>
+            <span className={`text-left flex items-center justify-start md:justify-end md:text-right font-[500] ${smallValue ? 'md:col-span-4' : ''}`}>{label}:</span>
             {
                 data == 'yes' ? 
                 <img src='data:image/svg+xml;base64,PHN2ZyAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiAgd2lkdGg9IjI0IiAgaGVpZ2h0PSIyNCIgIHZpZXdCb3g9IjAgMCAyNCAyNCIgIGZpbGw9Im5vbmUiICBzdHJva2U9IiMwMDgwMDAiICBzdHJva2Utd2lkdGg9IjIiICBzdHJva2UtbGluZWNhcD0icm91bmQiICBzdHJva2UtbGluZWpvaW49InJvdW5kIiAgY2xhc3M9Imljb24gaWNvbi10YWJsZXIgaWNvbnMtdGFibGVyLW91dGxpbmUgaWNvbi10YWJsZXItY2hlY2siPjxwYXRoIHN0cm9rZT0ibm9uZSIgZD0iTTAgMGgyNHYyNEgweiIgZmlsbD0ibm9uZSIvPjxwYXRoIGQ9Ik01IDEybDUgNWwxMCAtMTAiIC8+PC9zdmc+'/>

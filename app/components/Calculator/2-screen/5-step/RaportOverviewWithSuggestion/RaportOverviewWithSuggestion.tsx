@@ -39,11 +39,11 @@ function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {f
             </div>
             <div className='grid grid-cols-1 md:grid-cols-2'>
                 <div className='flex flex-col gap-2.5'>
-                    {formData.heat_demand.kW && <div className='flex flex-col xl:flex-row justify-start items-start xl:items-center'>
+                    {formData.heat_demand.kW && <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Zapotrzebowanie cieplne budynku</p>
                         <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : 'nie znam'}</span>
                     </div>}
-                    {formData.heat_demand.temp && <div className='flex flex-col xl:flex-row justify-start items-start xl:items-center'>
+                    {formData.heat_demand.temp && <div className='fflex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Projektowa temperatura pomieszczenia</p>
                         <span className='font-bold'>{formData.heat_demand && formData.heat_demand.temp ? `${formData.heat_demand.temp}°C` : 'nie podano'}</span>
                     </div>}
@@ -53,7 +53,7 @@ function RaportOverviewWithSuggestion({formData, step, setStep, setFormData}: {f
                     </div>
                 </div>
                 <div className='flex items-center justify-center'>
-                    <div onClick={() => setStep(step + 1)} className='border font-bold border-[#FF4510] w-[110px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center'>
+                    <div onClick={() => setStep(step + 1)} className='border font-bold border-[#FF4510] w-[130px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center'>
                         <span>dalej</span>
                     </div>
                 </div>

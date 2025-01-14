@@ -44,6 +44,8 @@ function CalculatorContainer() {
         basic_construction_material: '',
         additional_construction_material: '',
         wall_insulation: false,
+        wall_inside_insulation: '',
+        wall_insulation_thickness: '',
         house_insulation: false,
         outside_insulation: '',
         insulation_thickness: '',
@@ -52,6 +54,7 @@ function CalculatorContainer() {
         taras_doors_number: '',
         large_glazings_number: '',
         doors_type: '',
+        outside_doors_number: '',
 
         // forth step
         is_roof_isolation: '',
@@ -68,6 +71,7 @@ function CalculatorContainer() {
         heating_isolation_material: '',
         heating_isolation_material_thickness: '',
         type_of_heating_instalation: '',
+        max_temp_of_power_instalation: '',
         count_need_energy_cwu: false,
         hot_water_person_using: '',
         hot_water_using_style: '',
