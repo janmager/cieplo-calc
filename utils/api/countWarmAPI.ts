@@ -7,12 +7,11 @@ export const countWarmAPI = async (data: any) => {
     }
 
     try {
-        const result = await fetch('/api/cieplo', {
+        const result = await fetch('https://cieplo.app/api/subscription?token=d45a59c760cf7aca5764a9aa7d9647093f797ca1', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-
             body: JSON.stringify(formatedData),
         });
 
@@ -21,6 +20,7 @@ export const countWarmAPI = async (data: any) => {
         }
 
         let res = await result.json();
+        console.log(res)
 
         return {
             response: true,
