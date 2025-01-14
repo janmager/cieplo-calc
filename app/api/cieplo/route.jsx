@@ -14,7 +14,7 @@ export async function POST(request) {
     console.log(formatedData)
     console.log(`https://cieplo.app/api/subscription?token=${token}`)
     try {
-        const result = await fetch(`https://cieplo.app/api/calculation?subscription=${token}`, {
+        const result = await fetch(`https://cieplo.app/api/subscription?token=${token}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
