@@ -1,16 +1,12 @@
-import { raportEmailTemplate } from "@/templates/emails/raportEmailTemplate";
-const nodemailer = require('nodemailer');
-import { fetchRaportData } from "@/utils/supabase/fetchRaportData";
 import { NextResponse, NextRequest } from 'next/server'
 
 export async function POST(request) {
     const formData = await request.json()
-    const token = formData.token
+    console.log(formData)
 
     const formatedData = {
-        token: process.env.NEXT_PUBLIC_API_KEY,
         "building_type": "single_house",
-        "construction_year": 2020,
+        "construction_year": 2011,
         "construction_type": "traditional",
         "latitude": 51.4453433,
         "longitude": 16.2334445,
@@ -67,34 +63,20 @@ export async function POST(request) {
         "unheated_space_over_type": "great"
     }
 
-    console.log(formatedData)
+    // translate formData to data needed for calc api
+
+    // end translation
 
     try {
-        const result = await fetch(
-            `https://cieplo.app/api/calculation`,
-            {
-                method: 'GET',
-                headers: {
-                    'token': 'd45a59c760cf7aca5764a9aa7d9647093f797ca1',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                body: JSON.stringify(formatedData)
-            }
-        )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-        });
-
-        if (!result.ok) {
-            throw new Error(`response status: ${result.status}`);
-        }
-
-        let res = await result.json();
-
-        console.log(res)
-
-        return NextResponse.json({ message: "Success !!!" })
+        const result = await fetch(`https://cieplo.app/api/calculation?token=${process.env.NEXT_PUBLIC_API_KEY}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formatedData),
+        })
+        const res = await result.json();
+        return NextResponse.json({ response: true, data: res })
 
     } catch (e) {
         console.log(e);
