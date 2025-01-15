@@ -58,9 +58,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
     const fetchAllInstalators = async () => {
         const ins = await getAllInstalators();
         // const suggested = await getAllProducts();
-        console.log(formData.recommendedProducts)
         let suggested: any = formData.recommendedProducts ? JSON.parse(formData.recommendedProducts) : await getAllProducts();
-        console.log(suggested)
         autoDownload && handleOpenModalRaport(true);
 
         if(ins.response && (suggested.length || suggested.response)){

@@ -23,7 +23,7 @@ function CalculatorContainer() {
         // 
 
         // second step
-        building_type: '',
+        building_type: 'Budynek wielorodzinny',
         building_outline: '',
         building_area: '',
         building_outline_m: '',
@@ -88,6 +88,15 @@ function CalculatorContainer() {
         contact_email_address: '',
         raport_url: '',
         recommendedProducts: '',
+        whats_over: '',
+        whats_under: '',
+        whats_north: '',
+        whats_south: '',
+        whats_east: '',
+        whats_west: '',
+        on_corner: false,
+        number_stairways: '',
+        number_elevators: '',
     })
 
     if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;

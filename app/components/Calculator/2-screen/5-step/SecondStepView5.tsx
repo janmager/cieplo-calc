@@ -36,7 +36,6 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
     }
 
     const handleCountCieploAPI = async () => {
-        console.log(formData)
         setLoading(true)
 
         const result = await fetch(`/api/cieplo`, {
@@ -71,7 +70,8 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
   
     if(loading){
         return (
-            <div className='flex justify-center items-center py-40'>
+            <div className='flex justify-center items-center py-40'>          
+                <Toaster position="top-center" />
                 <Image src={loaderImg.src} height={24} width={24} className='animate-spin opacity-30' alt='loader' />
             </div>
         )

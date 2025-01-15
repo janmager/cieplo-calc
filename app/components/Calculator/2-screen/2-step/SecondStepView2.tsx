@@ -17,7 +17,7 @@ import { wall_insulation } from '@/app/consts/wall_insulation'
 
 function SecondStepView2({formData, setFormData}: {formData: any, setFormData: any}) {
     useEffect(() => {
-        if(formData.building_construction_type.indexOf('Tradycyjna') == -1) setFormData({...formData, basic_construction_material: '', additional_construction_material: ''})
+        if(formData.building_construction_type.indexOf('Tradycyjna') == -1) setFormData({...formData, basic_construction_material: '', additional_construction_material: '', wall_insulation: formData.building_construction_type.indexOf('Szkieletowa') >= 0 ? true : false})
     }, [formData.building_construction_type])
 
     return (
@@ -57,7 +57,7 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                     </div>}
                     <div>
                         <CustomLabel label='Izolacja wewnątrz ściany' />
-                        <div onClick={() => setFormData({...formData, wall_insulation: !formData.wall_insulation})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
+                        <div onClick={() => formData.building_construction_type.indexOf('Szkieletowa') == -1 ? setFormData({...formData, wall_insulation: !formData.wall_insulation}) : null} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-5'>
                             <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
                                 {formData.wall_insulation && <Image src={check.src} height={15} width={15} alt="check" />}
                             </div>
@@ -177,6 +177,17 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                             <p className='w-full flex-1'>W części ogrzewanej</p>
                         </div>
                     </div>
+                    {formData.building_type == 'Budynek wielorodzinny' && <div>
+                        <CustomLabel label='Budynek' />
+                        <div className='flex w-full flex-col mt-5 gap-2'>
+                            <span>Liczba klatek schodowych w budynku</span>
+                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'number_stairways'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        </div>
+                        <div className='mt-5 flex flex-col gap-2'>
+                            <label>Liczba wind w budynku</label>
+                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'number_elevators'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        </div>
+                    </div>}
                 </div>
                 <div className='flex flex-col pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full h-fit'>
                     <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>

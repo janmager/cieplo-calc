@@ -76,6 +76,15 @@ model Raport {
   contact_email_address                String?
   raport_url String?
   recommendedProducts String?
+  whats_over String?
+  whats_under String?
+  whats_north String?
+  whats_south String?
+  whats_east String?
+  whats_west String?
+  on_corner Boolean?
+  number_stairways String?
+  number_elevators String?
 }
 
 model Admin {

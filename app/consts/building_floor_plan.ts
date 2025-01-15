@@ -3,7 +3,6 @@ export const building_floor_plan: any = [
         name: 'Parterowy',
         value: 'Parterowy'
     },
-    
     {
         name: 'Jednopiętrowy',
         value: 'Jednopiętrowy',

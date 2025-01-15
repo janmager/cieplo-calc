@@ -71,7 +71,17 @@ export const addNewRaport = async (raport: any) => {
                 contact_phone_number: raport.contact_phone_number,
                 contact_email_address: raport.contact_email_address,
                 raport_url: raport.raport_url,
-                recommendedProducts: raport.recommendedProducts
+                recommendedProducts: raport.recommendedProducts,
+
+                whats_over: raport.whats_over,
+                whats_under: raport.whats_under,
+                whats_north: raport.whats_north,
+                whats_south: raport.whats_south,
+                whats_east: raport.whats_east,
+                whats_west: raport.whats_west,
+                on_corner: raport.on_corner,
+                number_stairways: raport.number_stairways,
+                number_elevators: raport.number_elevators,
             }
         })
     
