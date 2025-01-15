@@ -23,7 +23,7 @@ function CalculatorContainer() {
         // 
 
         // second step
-        building_type: 'Budynek wielorodzinny',
+        building_type: '',
         building_outline: '',
         building_area: '',
         building_outline_m: '',
@@ -97,6 +97,20 @@ function CalculatorContainer() {
         on_corner: false,
         number_stairways: '',
         number_elevators: '',
+
+        // from api
+        api_total_area: null,
+        api_heated_area: null,
+        api_max_heating_power: null,
+        api_avg_heating_power: null,
+        api_bivalent_point_heating_power: null,
+        api_hot_water_power: null,
+        api_annual_energy_consumption: null,
+        api_annual_energy_consumption_factor: null,
+        api_heating_power_factor: null,
+        api_design_outdoor_temperature: null,
+        api_avg_outdoor_temperature: null
+        
     })
 
     if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;

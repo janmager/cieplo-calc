@@ -82,6 +82,18 @@ export const addNewRaport = async (raport: any) => {
                 on_corner: raport.on_corner,
                 number_stairways: raport.number_stairways,
                 number_elevators: raport.number_elevators,
+
+                api_total_area: raport.api_total_area,
+                api_heated_area: raport.api_heated_area,
+                api_max_heating_power: raport.api_max_heating_power,
+                api_avg_heating_power: raport.api_avg_heating_power,
+                api_bivalent_point_heating_power: raport.api_bivalent_point_heating_power,
+                api_hot_water_power: raport.api_hot_water_power,
+                api_annual_energy_consumption: raport.api_annual_energy_consumption,
+                api_annual_energy_consumption_factor: raport.api_annual_energy_consumption_factor,
+                api_heating_power_factor: raport.api_heating_power_factor,
+                api_design_outdoor_temperature: raport.api_design_outdoor_temperature,
+                api_avg_outdoor_temperature: raport.api_avg_outdoor_temperature
             }
         })
     

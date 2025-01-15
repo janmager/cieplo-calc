@@ -85,6 +85,18 @@ model Raport {
   on_corner Boolean?
   number_stairways String?
   number_elevators String?
+
+  api_total_area Decimal?
+  api_heated_area Decimal?
+  api_max_heating_power Decimal?
+  api_avg_heating_power Decimal?
+  api_bivalent_point_heating_power Decimal?
+  api_hot_water_power Decimal?
+  api_annual_energy_consumption Int?
+  api_annual_energy_consumption_factor Decimal?
+  api_heating_power_factor Decimal?
+  api_design_outdoor_temperature Int?
+  api_avg_outdoor_temperature Decimal?
 }
 
 model Admin {

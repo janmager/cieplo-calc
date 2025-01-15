@@ -48,8 +48,21 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
 
         let res = await result.json();
         if(res.response){
+            toast.success('Pobrawanie obliczono z API');
+            setFormData({...formData, 
+                api_total_area: res.data.total_area,
+                api_heated_area: res.data.heated_area,
+                api_max_heating_power: res.data.max_heating_power,
+                api_avg_heating_power: res.data.avg_heating_power,
+                api_bivalent_point_heating_power: res.data.bivalent_point_heating_power,
+                api_hot_water_power: res.data.hot_water_power,
+                api_annual_energy_consumption: res.data.annual_energy_consumption,
+                api_annual_energy_consumption_factor: res.data.annual_energy_consumption_factor,
+                api_heating_power_factor: res.data.heating_power_factor,
+                api_design_outdoor_temperature: res.data.design_outdoor_temperature,
+                api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
+            })
             setLoading(false)
-            toast.success('Pobrawanie obliczono z API')
         }
         else{
             setLoading(false)
