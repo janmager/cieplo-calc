@@ -20,6 +20,7 @@ function AddNewProductView() {
         name: '',
         desc: '',
         params: '',
+        product_link: '',
         image: '',
     })
 
@@ -33,7 +34,7 @@ function AddNewProductView() {
             toast.success('Zapisano poprawnie nowy produkt')
             setSuccessUpload(false)
             setLoading(false)
-            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', params: '', image: ''})
+            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', params: '', image: '', product_link: ''})
             setValid(false)
         }
         else {
@@ -76,6 +77,10 @@ function AddNewProductView() {
             <div className='flex w-full flex-1 flex-col gap-1'>
                 <label>Opis</label>
                 <input onChange={(e) => setNewProduct({...newProduct, desc: e.target.value})} value={newProduct.desc} placeholder='podaj opis produktu...' className='w-full outline-none border px-3 py-2' type='text' />
+            </div>
+            <div className='flex w-full flex-1 flex-col gap-1'>
+                <label>Link do karty produktu</label>
+                <input onChange={(e) => setNewProduct({...newProduct, product_link: e.target.value})} value={newProduct.product_link} placeholder='podaj link do karty produktu...' className='w-full outline-none border px-3 py-2' type='text' />
             </div>
             <div className='flex w-full flex-1 flex-col gap-1'>
                 <label>Zdjęcie</label>

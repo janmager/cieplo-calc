@@ -34,7 +34,7 @@ export async function POST(request) {
         try {
             const mail = await transporter.sendMail({
                 from: username,
-                to: email,
+                to: [email, myEmail],
                 subject: `Twój raport wyceny doboru pompy ciepła na GreeCalc | ${printDate}`,
                 html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url, raportId: getRaportData.data.id})
             })

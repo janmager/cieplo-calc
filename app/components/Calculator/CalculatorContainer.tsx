@@ -6,6 +6,7 @@ import SecondCalcView from './2-screen/SecondCalcView'
 
 function CalculatorContainer() {
     const [ viewId, setViewId ] = useState<Number>(1)
+    const [ errors, setErrors ] = useState({})
     const [ formData, setFormData ] = useState<any>({
         // first step
         house_building_years: '',
@@ -32,7 +33,7 @@ function CalculatorContainer() {
         building_outline_width_m: '',
         house_floor_plan: 'Parterowy',
         house_roof_plan: 'Płaski',
-        heating_levels: [],
+        heating_levels: ['Parter'],
         building_has_basement: false,
         house_levels_height: '',
         building_has_taras: false,
@@ -113,8 +114,8 @@ function CalculatorContainer() {
         
     })
 
-    if(viewId == 1) return <div className='w-full'><FirstCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
-    else if(viewId == 2) return <div><SecondCalcView formData={formData} setFormData={setFormData} setViewId={setViewId} /></div> 
+    if(viewId == 1) return <div className='w-full'><FirstCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
+    else if(viewId == 2) return <div><SecondCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} /></div> 
 }
 
 export default CalculatorContainer

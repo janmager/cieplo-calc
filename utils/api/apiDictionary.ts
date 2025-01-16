@@ -143,4 +143,5 @@ export const apiDictionary: any = {
     'Nieogrzewany lokal / korytarz / klatka schodowa' : 'unheated_room',
 
     '' : null,
+    '-' : null
 }

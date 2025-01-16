@@ -35,6 +35,7 @@ function ChooseHeatingLeveles({formData, setFormData}: {formData: any, setFormDa
         if(old == undefined) old = []
 
         if(old.indexOf(name) >= 0){
+            if(old.length == 1) return false;
             old.splice(old.indexOf(name), 1)
         } else {
             old.push(name)

@@ -25,9 +25,15 @@ import checkSelectBorder from '@/assets/svg/select-border.svg'
 import checkSelectDot from '@/assets/svg/select-dot.svg'
 import InputWithPlaceholder from '../../Customs/InputWithPlaceholder'
 
-function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFormData: any, setViewId: any}) {  
+function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {formData: any, setFormData: any, setViewId: any, errors: any, setErrors: any}) {  
     const [ clickedMap, setClickedMap ] = useState<any>({})  
     const [ loading, setLoading ] = useState(false)
+
+    const removeFromErrors = (id: string) => {
+        let old = errors;
+        delete old[id];
+        setErrors(old);
+    }
 
     useEffect(() => {
         const map = new Map({
@@ -85,6 +91,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
               
                   map.addLayer(vectorLayer);
                   map.getView().setCenter(proj4('EPSG:4326', 'EPSG:3857', x));
+                  removeFromErrors('house_location')
                   setLoading(false)
             }
             
@@ -102,6 +109,51 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
             full_name: clickedMap.full_name
         }})
     }, [clickedMap])
+
+    const validation = () => {
+        let valid = true;
+
+        if(loading){
+            valid = false;
+            return false;
+        } 
+        
+        if(!formData['house_building_years']){
+            setErrors({...errors, 'house_building_years': true})
+            valid = false;
+            return false;
+        }
+
+        if(formData['house_location'].lng == '' || formData['house_location'].lon == ''){
+            setErrors({...errors, 'house_location': true})
+            valid = false;
+            return false;
+        }
+        else{
+            valid = true;
+            removeFromErrors('house_location')
+        }
+
+        if(formData.heat_demand.know){
+            if(!formData.heat_demand.kW || formData.heat_demand.kW  < 0){
+                setErrors({...errors, 'heat_demand.kW': true})
+                valid = false;
+                return false;
+            }
+        }
+        else if(!formData.heat_demand.know){
+            if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
+                setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
+                valid = false;
+                return false;
+            }
+        }
+
+        if(valid){
+            setViewId(2)
+            window.scrollTo(0, 0);
+        }
+    }
   
     return (
     <div className='flex flex-col items-center w-full'>
@@ -115,7 +167,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
         <div className='py-10 px-5 w-full max-w-[1172px] flex flex-col lg:grid grid-cols-1 lg:grid-cols-2'>
             <div className='flex w-full flex-col  gap-4'>
                 <CustomLabel label={'Lata budowy domu'} />
-                <CustomDropdownSelect formDataValue={'house_building_years'} options={house_building_years} setFormData={setFormData} formData={formData} placeholder={'2027+'} />
+                <CustomDropdownSelect formDataValue={'house_building_years'} setErrors={setErrors} errors={errors} options={house_building_years} setFormData={setFormData} formData={formData} placeholder={'2027+'} />
             </div>
             <div className='flex w-full flex-col gap-3 lg:col-span-2 mt-7'>
                 <CustomLabel label={'Wybierz lokalizację budynku'} />
@@ -129,11 +181,18 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                         <span className='tx-[16px]'>Wystarczy, że wskażesz miejscowość, w której znajduje się budynek.</span>
                     </div>
                 }
+                {
+                    errors['house_location'] ? 
+                    <div className='bg-red-500/10 w-full min-h-[50px] mt-1 py-2 flex-row gap-4 flex items-center pl-5'>
+                        <Image src={infoIcon.src} height={24} width={24} alt="info icon" />
+                        <span className='tx-[16px] text-red-600'>Wybierz punkt na mapie, aby przejść dalej</span>
+                    </div> : null
+                }
                 <div className={`max-h-[480px] transition-all relative cursor-pointer duration-300 bg-gray-100 ${!formData['house_location'] ? 'grayscale hover:grayscale-0' : ``}`}>
                     {/* {loading && <div className='flex bg-black/80 items-center justify-center z-30 w-full h-full absolute left-0 top-0'>
                         <Image src={loader.src} height={24} width={24} alt="loader icon" className='animate-spin' />
                     </div>} */}
-                    <div id="map" className='z-20' style={{width: "100%", height: "450px"}}/>
+                    <div id="map" className='z-20' style={{width: "100%", border: errors['house_location'] ? '2px solid red' : '', height: "450px"}}/>
                 </div>
             </div>
             <div className='flex w-full flex-col gap-3 lg:col-span-2 mt-10 mb-20'>
@@ -141,9 +200,9 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                 <div className='grid grid-cols-1 md:grid-cols-2 mt-5 gap-10 md:gap-10'>
                     <div className='flex flex-col pl-0'>
                         <div className='md:max-w-[275px] flex flex-row items-start gap-3 cursor-pointer opacity-90 hover:opacity-100 duration-200 transition-all' onClick={() => setFormData({...formData, heat_demand: {...formData.heat_demand, know: true, kW: '', temp: ''}})}>
-                            <div className='relative min-h-[18px] min-w-[18px] max-h-[18px] max-w-[18px]'>
-                                <Image src={checkSelectBorder.src} className={formData.heat_demand && formData.heat_demand.know ? '' : 'opacity-50'} height={18} width={18} alt={'border'} />
-                                {formData.heat_demand && formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[4.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
+                            <div className='relative min-h-[19px] min-w-[19px] max-h-[19px] max-w-[19px]'>
+                                <Image src={checkSelectBorder.src} className={formData.heat_demand && formData.heat_demand.know ? '' : 'opacity-50'} height={17} width={17} alt={'border'} />
+                                {formData.heat_demand && formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[3.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
                             </div>
                             <span className='mt-[-4px]'><b>Znam</b> zapotrzebowanie cieplne swojego budynku </span>
                         </div>
@@ -156,16 +215,16 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                                 </div>
                                 <div className='mt-5 flex flex-col gap-2'>
                                     <label>Zapotrzebowanie cieplne</label>
-                                    <InputWithPlaceholder type={'number'} placeholder={'kW'} formDataValue1={'heat_demand'} formDataValue2={'kW'} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'kW'} formDataValue1={'heat_demand'} formDataValue2={'kW'} setFormData={setFormData} formData={formData} />
                                 </div>
                             </div>
                         }
                     </div>
                     <div className='flex flex-col border-0 md:border-l-2 pl-0 md:pl-10'>
                         <div className='md:max-w-[320px] flex flex-row items-start gap-3 cursor-pointer opacity-90 hover:opacity-100 duration-200 transition-all' onClick={() => setFormData({...formData, heat_demand: {...formData.heat_demand, know: false, kW: '', temp: ''}})}>
-                            <div className='relative min-h-[18px] min-w-[18px] max-h-[18px] max-w-[18px]'>
-                                <Image src={checkSelectBorder.src} className={formData.heat_demand && !formData.heat_demand.know ? '' : 'opacity-50'} height={18} width={18} alt={'border'} />
-                                {formData.heat_demand && !formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[4.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
+                            <div className='relative min-h-[19px] min-w-[19px] max-h-[19px] max-w-[19px]'>
+                                <Image src={checkSelectBorder.src} className={formData.heat_demand && !formData.heat_demand.know ? '' : 'opacity-50'} height={17} width={17} alt={'border'} />
+                                {formData.heat_demand && !formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[3.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
                             </div>
                             <span className='mt-[-4px]'><b>Nie znam</b> zapotrzebowania cieplnego mojego budynku i chcę go policzyć</span>
                         </div>
@@ -174,7 +233,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                             <div>
                                 <div className='mt-5 md:mt-10 flex flex-col gap-2'>
                                     <label>Podaj projektową temperaturę pomieszczenia.</label>
-                                    <InputWithPlaceholder type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
                                     <span className='mt-1 text-[14px] font-light opacity-50'>Informację odczytaj z projektu budowlanego lub audytu energetycznego</span>
                                 </div>
                             </div>
@@ -183,7 +242,7 @@ function FirstCalcView({formData, setFormData, setViewId}: {formData: any, setFo
                 </div>
             </div>
             <div className='col-span-2 flex justify-end items-end'>
-                <NextButton active={!loading && formData['house_location'] && (formData.heat_demand && (parseFloat(formData.heat_demand.kW) > 0 || parseFloat(formData.heat_demand.temp) > 0)) && formData.house_building_years} setViewId={setViewId} nextView={2} />
+                <NextButton active={true} onClick={validation} />
             </div>
         </div>
     </div>

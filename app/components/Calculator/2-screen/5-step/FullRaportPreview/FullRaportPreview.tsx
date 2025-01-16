@@ -22,6 +22,7 @@ import { updateRaportUrl } from '@/utils/supabase/updateRaportUrl';
 import { getAllProducts } from '@/utils/supabase/getAllProducts';
 import ShowRaportDetailsAdminModal from '@/app/admin/components/ShowRaportDetailsAdminModal';
 import { Product } from '@prisma/client';
+import { numberWithSpaces } from '@/utils/globals/numberWithSpaces';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
@@ -65,9 +66,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             setInstalators(ins.data)
             setSuggestedProducts(suggested.data ? suggested.data : suggested)
 
-            if(!formData.raport_url && !loading){
-                setTimeout(() => savetoPDF({first: true}), 2_000);
-            }
+            // if(!formData.raport_url && !loading){
+            //     setTimeout(() => savetoPDF({first: true}), 2_000);
+            // }
         }
         else {
             setInstalators([])
@@ -124,37 +125,39 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     console.error("Error uploading file:", error.message);
                     toast.error('Wystąpił błąd podczas przesyłania raportu')
                 } else {
+                    showOnGeneratePdf();
                     const { data: file } = await supabase.storage.from("raports").getPublicUrl(data?.path);
                     setFormData({...formData, raport_url: file.publicUrl})
                     const updateRaportUrlDb = await updateRaportUrl({raportId: formData.id, raportUrl: file.publicUrl});
 
-                    if(updateRaportUrlDb.response){
-                            try {
-                                const response = await fetch('/api/mail/raport/send', {
-                                    method: 'post',
-                                    body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
-                                });
+                    // if(updateRaportUrlDb.response && formData.send_raport_email){
+                    //     try {
+                    //         const response = await fetch('/api/mail/raport/send', {
+                    //             method: 'post',
+                    //             body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
+                    //         });
                     
-                                if (!response.ok) {
-                                    throw new Error(`response status: ${response.status}`);
-                                }
-                                const responseData = await response.json();
+                    //         if (!response.ok) {
+                    //             throw new Error(`response status: ${response.status}`);
+                    //         }
+                    //         const responseData = await response.json();
 
-                                setLoading(false);
-                                showOnGeneratePdf();
-                                setLoading(false)
-                                // if(!first)toast.success('Poprawnie wygenerowano PDF')
-                            }
-                            catch(e){
-                                console.log(e);
-                                if(!first) toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
-                                    showOnGeneratePdf()
-                                setLoading(false)
-                        }   
-                    }
+                    //         setLoading(false);
+                    //         setLoading(false)
+                    //         // if(!first)toast.success('Poprawnie wygenerowano PDF')
+                    //     }
+                    //     catch(e){
+                    //         console.log(e);
+                    //         if(!first) toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
+                    //         setLoading(false)
+                    //     }   
+                    // }
+                    // else if(!updateRaportUrlDb.response){
+                    //     if(!first) toast.error('Wystąpił błąd podczas generowania PDF')
+                    // }
+                    if(updateRaportUrlDb.response) setLoading(false);
                     else{
-                        if(!first) toast.error('Wystąpił błąd podczas generowania PDF')
-                        showOnGeneratePdf()
+                        toast.error('Wystąpił błąd podczas generowania raportu')
                     }
                 }
             }
@@ -215,14 +218,14 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Moc grzewcza</span>
                         <div className='flex flex-row items-center gap-2.5'>
-                            <span className='text-[30px] onPrintText20 font-[700]'>11,7kW</span>
+                            <span className='text-[30px] onPrintText20 font-[700]'>{formData.api_bivalent_point_heating_power ? formData.api_bivalent_point_heating_power : '?'}kW</span>
                             <span className='font-[400] onPrintText20 text-[20px]'>(C.O. + CWU)</span>
                         </div>
                     </div>
                     <div className='pdf-padding-bottom flex w-full lg:w-auto flex-col text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Energia cieplna</span>
                         <div className='flex flex-row items-center gap-2.5'>
-                            <span className='text-[30px] onPrintText20 font-[700]'>~29 178kWh = 105GJ</span>
+                            <span className='text-[30px] onPrintText20 font-[700]'>~{formData.api_annual_energy_consumption ? numberWithSpaces(formData.api_annual_energy_consumption, 0) : '?'}kWh = {formData.api_annual_energy_consumption ? numberWithSpaces((formData.api_annual_energy_consumption * 0.0036), 2) : '?'}GJ</span>
                             <span className='font-[400] text-[20px]'>(C.O. + CWU)</span>
                         </div>
                     </div>
@@ -325,7 +328,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Ogrzewanie budynku</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
-                        <InfoBox title='Główne źródło ciepła' value={formData.main_heat_source ? formData.main_heat_source : ''} />
+                        <InfoBox title='Główne źródło ciepła' value={formData.main_heat_sources ? formData.main_heat_sources : ''} />
                         <InfoBox title='Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms}°C` : ''} />
                         <InfoBox title='Rodzaj wentylacji' value={formData.vent_type ? formData.vent_type : ''} />
                         <InfoBox title='Materiał' value={formData.heating_isolation_material ? formData.heating_isolation_material : ''} />
@@ -369,9 +372,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div> */}
-                {formData.raport_url && <div onClick={() => savetoPDF({first: false})} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                <div onClick={() => savetoPDF({first: false})} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>{loading ? 'trwa pobieranie...' : 'zapisz stronę'}</span>
-                </div>}
+                </div>
                 <div onClick={() => handleOpenModalRaport()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>{loading ? 'trwa pobieranie...' : 'pobierz raport'}</span>
                 </div>

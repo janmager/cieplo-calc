@@ -6,14 +6,17 @@ import { addNewRaport } from '@/utils/supabase/addNewRaport'
 import loaderImg from '@/assets/svg/loader.svg'
 import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
-function SecondStepView5({formData, setFormData}: {formData: any, setFormData: any}) {
+function SecondStepView5({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
     const [ currentStep, setCurrentStep ] = useState(1)
     const [ loading, setLoading ] = useState(false)
 
+    const router = useRouter();
+
     const handleAddNewRaport = async () => {
         setLoading(true)
-        try{
+    try{
             let data = formData;
             data.id = crypto.randomUUID();
             data.created_at =  new Date(),
@@ -21,7 +24,27 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
             const add = await addNewRaport(data);
     
             if(add.response){
-                toast.success('Zapisano poprawnie Twój raport')
+                // toast.success('Zapisano poprawnie Twój raport')
+                if(add.response && formData.send_raport_email){
+                    try {
+                        const response = await fetch('/api/mail/raport/send', {
+                            method: 'post',
+                            body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
+                        });
+                
+                        if (!response.ok) {
+                            throw new Error(`response status: ${response.status}`);
+                        }
+                        const responseData = await response.json();
+
+                        setLoading(false);
+                    }
+                    catch(e){
+                        console.log(e);
+                        toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
+                        setLoading(false)
+                    }   
+                }
             }
             else{
                 toast.error('Wystąpił błąd podczas zapisywania raportu')
@@ -48,7 +71,7 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
 
         let res = await result.json();
         if(res.response){
-            toast.success('Pobrawanie obliczono z API');
+            // toast.success('Pobrawanie obliczono z API');
             setFormData({...formData, 
                 api_total_area: res.data.total_area,
                 api_heated_area: res.data.heated_area,
@@ -65,8 +88,8 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
             setLoading(false)
         }
         else{
-            setLoading(false)
-            toast.error('Wystąpił błąd podczas pobierania danych z API')
+            toast.error('Błąd pobierania danych z API')
+            router.push('/error')
         }
     }
 
@@ -75,8 +98,6 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
             handleAddNewRaport()
         }
         if(currentStep == 2){
-            // count with cieplo app API
-            // ...
             handleCountCieploAPI()
         }
     }, [currentStep])
@@ -94,7 +115,7 @@ function SecondStepView5({formData, setFormData}: {formData: any, setFormData: a
         <div className='flex flex-col gap-14 w-full'>           
             <Toaster position="top-center" />
             {currentStep == 1 && <RaportOverviewWithSuggestion loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
-            {currentStep == 2 && <ContactDetails formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
+            {currentStep == 2 && <ContactDetails errors={errors} setErrors={setErrors} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 3 && <FullRaportPreview formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
         </div>
     )

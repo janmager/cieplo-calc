@@ -16,7 +16,7 @@ import { whats_over } from '@/app/consts/whats_over'
 import { whats_under } from '@/app/consts/whats_under'
 import { whats_near } from '@/app/consts/whats_near'
 
-function SecondStepView4({formData, setFormData}: {formData: any, setFormData: any}) {
+function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
     useEffect(() => {
         setFormData({...formData, type_of_heating_instalation: '', max_temp_of_power_instalation: ''})
     }, [formData.main_heat_sources])
@@ -27,15 +27,15 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Główne źródło ciepła</span>
-                            <CustomDropdownSelect formDataValue={'main_heat_sources'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'main_heat_sources'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>  
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)</span>
-                            <InputWithPlaceholder type={'number'} placeholder={'°C'} formDataValue1={'temp_in_heat_rooms'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'temp_in_heat_rooms'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Rodzaj wentylacji</span>
-                            <CustomDropdownSelect formDataValue={'vent_type'} options={vent_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'vent_type'} options={vent_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         {/* <div className='flex mt-5 w-full flex-col gap-2'>
                             <span>Materiał</span>
@@ -86,37 +86,37 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się powyżej mieszkania?</span>
-                            <CustomDropdownSelect formDataValue={'whats_over'} options={whats_over} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_over'} options={whats_over} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się poniżej mieszkania?</span>
-                            <CustomDropdownSelect formDataValue={'whats_under'} options={whats_under} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_under'} options={whats_under} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się w sąsiedztwie mieszkania? (północ)</span>
-                            <CustomDropdownSelect formDataValue={'whats_north'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_north'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się w sąsiedztwie mieszkania? (wschód)</span>
-                            <CustomDropdownSelect formDataValue={'whats_east'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors}formDataValue={'whats_east'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się w sąsiedztwie mieszkania? (południe)</span>
-                            <CustomDropdownSelect formDataValue={'whats_south'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_south'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się w sąsiedztwie mieszkania? (zachód)</span>
-                            <CustomDropdownSelect formDataValue={'whats_west'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_west'} options={whats_near} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>
                 </div>
@@ -128,13 +128,13 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                             <CustomLabel label='Instalacja grzewcza' />
                             <div className='flex w-full flex-col mt-5 mb-7 gap-2'>
                                 <span>Rodzaj instalacji centralnego ogrzewania</span>
-                                <CustomDropdownSelect formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>
                             {
                                 (formData.type_of_heating_instalation == '100% grzejniki' || formData.type_of_heating_instalation == 'Przewaga grzejników + nieco podłogowego/ściennego' || formData.type_of_heating_instalation == 'Mniej więcej po równo grzejników i podłogowego/ściennego') && <>
                                 <div className='flex w-full flex-col mb-5 gap-2'>
                                     <span>Maksymalna temperatura zasilania instalacji</span>
-                                    <CustomDropdownSelect formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                                 </div>
                                 <div className='flex flex-row gap-5 w-full mb-10 px-2.5 items-start mt-0'>
                                     <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
@@ -158,16 +158,16 @@ function SecondStepView4({formData, setFormData}: {formData: any, setFormData: a
                             <div className='flex flex-col w-full'>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Ile osób używa ciepłej wody?</span>
-                                    <InputWithPlaceholder type={'number'} placeholder={''} formDataValue1={'hot_water_person_using'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={''} formDataValue1={'hot_water_person_using'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                                 </div>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Jak intensywnie używana jest ciepła woda?</span>
-                                    <CustomDropdownSelect formDataValue={'hot_water_using_style'} options={hot_water_using_style} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'hot_water_using_style'} options={hot_water_using_style} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                                 </div>
                             </div>
                         }
                         <div className='mt-8'>
-                            <CustomLabel label='Instalacja grzewcza' />
+                            <CustomLabel label='Dodatkowa instalacja grzewcza' />
                             <div className='flex w-full flex-col mt-5 gap-2'>
                                 <span>Czy budynek posiada któreś z tych urządzeń służące do wspomagania ogrzewania / przygotowania ciepłej wody?</span>
                                 <div onClick={() => setFormData({...formData, hot_water_steroid_foto: !formData.hot_water_steroid_foto})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>

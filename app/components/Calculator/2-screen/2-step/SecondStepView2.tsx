@@ -15,7 +15,7 @@ import { outside_insulation } from '@/app/consts/outside_insulation'
 import { windows_type } from '@/app/consts/windows_type'
 import { wall_insulation } from '@/app/consts/wall_insulation'
 
-function SecondStepView2({formData, setFormData}: {formData: any, setFormData: any}) {
+function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
     useEffect(() => {
         if(formData.building_construction_type.indexOf('Tradycyjna') == -1) setFormData({...formData, basic_construction_material: '', additional_construction_material: '', wall_insulation: formData.building_construction_type.indexOf('Szkieletowa') >= 0 ? true : false})
     }, [formData.building_construction_type])
@@ -30,13 +30,13 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                             {
                                 building_construction_type.map((item: any, idx: number) => {
                                     return (
-                                        <CustomRadioInput setFormData={setFormData} formData={formData} item={item} name='building_construction_type' key={idx} />
+                                        <CustomRadioInput errors={errors} setErrors={setErrors} setFormData={setFormData} formData={formData} item={item} name='building_construction_type' key={idx} />
                                     )
                                 })
                             }
                             <div className='mt-2.5 flex flex-col gap-2'>
                                 <label>Całkowita (razem z ew. dociepleniem) grubość ścian zewnętrznych</label>
-                                <InputWithPlaceholder type={'number'} placeholder={'cm'} formDataValue1={'total_wall_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'total_wall_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                             </div>
                         </div>
                     </div>
@@ -44,11 +44,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         <CustomLabel label='Materiały konstrukcyjne' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Podstawowy materiał</span>
-                            <CustomDropdownSelect formDataValue={'basic_construction_material'} options={basic_construction_material} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'basic_construction_material'} options={basic_construction_material} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Dodatkowy materiał</span>
-                            <CustomDropdownSelect formDataValue={'additional_construction_material'} options={additional_construction_material} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'additional_construction_material'} options={additional_construction_material} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         <div className='flex flex-row gap-5 w-full px-2.5 items-start mt-5'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
@@ -68,11 +68,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                             <div className='flex flex-col gap-0'>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Izolacja wewnątrz ściany</span>
-                                    <CustomDropdownSelect formDataValue={'wall_inside_insulation'} options={wall_insulation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'wall_inside_insulation'} options={wall_insulation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                                 </div>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Grubość</span>
-                                    <InputWithPlaceholder type={'number'} placeholder={'cm'} formDataValue1={'wall_insulation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'wall_insulation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                                 </div>
                             </div>
                         }
@@ -90,11 +90,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                             <div className='flex flex-col gap-0'>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Docieplenie od zewnątrz</span>
-                                    <CustomDropdownSelect formDataValue={'outside_insulation'} options={outside_insulation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'outside_insulation'} options={outside_insulation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                                 </div>
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Grubość</span>
-                                    <InputWithPlaceholder type={'number'} placeholder={'cm'} formDataValue1={'insulation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'insulation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                                 </div>
                             </div>
                         }
@@ -103,11 +103,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         <CustomLabel label='Okna' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Rodzaj okien</span>
-                            <CustomDropdownSelect formDataValue={'windows_type'} options={windows_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'windows_type'} options={windows_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
                             <label>Liczba okien</label>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'windows_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'windows_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='flex flex-row gap-4 w-full px-2.5 items-center mt-5'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
@@ -115,11 +115,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
                             <label>Liczba drzwi balkonowych</label>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'taras_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'taras_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
                             <label>Liczba dużych przeszkleń</label>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'large_glazings_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'large_glazings_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                     </div>
                 </div>
@@ -162,7 +162,7 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         <CustomLabel label='Drzwi' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Rodzaj drzwi zewnętrznych</span>
-                            <CustomDropdownSelect formDataValue={'doors_type'} options={doors_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'doors_type'} options={doors_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         <div className='flex flex-row gap-5 w-full px-2.5 items-center mt-4'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
@@ -170,7 +170,7 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
                             <label>Liczba drzwi zewnętrznych</label>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'outside_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'outside_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='flex flex-row gap-5 w-full px-2.5 items-center mt-4'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
@@ -181,11 +181,11 @@ function SecondStepView2({formData, setFormData}: {formData: any, setFormData: a
                         <CustomLabel label='Budynek' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Liczba klatek schodowych w budynku</span>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'number_stairways'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_stairways'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
                             <label>Liczba wind w budynku</label>
-                            <InputWithPlaceholder type={'number'} placeholder={'szt.'} formDataValue1={'number_elevators'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_elevators'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                     </div>}
                 </div>

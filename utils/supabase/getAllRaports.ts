@@ -13,7 +13,7 @@ export const getAllRaports = async () => {
         if(find){
             return {
                 response: true,
-                data: find
+                data: JSON.stringify(find)
             }
         }
         else{

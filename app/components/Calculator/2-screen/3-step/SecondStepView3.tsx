@@ -10,7 +10,7 @@ import { is_roof_isolation } from '@/app/consts/is_roof_isolation'
 import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
 import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'
 
-function SecondStepView3({formData, setFormData}: {formData: any, setFormData: any}) {
+function SecondStepView3({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
   return (
     <div className='flex flex-col gap-14 w-full'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
@@ -22,7 +22,7 @@ function SecondStepView3({formData, setFormData}: {formData: any, setFormData: a
                         {
                             is_roof_isolation.map((item: any, idx: number) => {
                                 return (
-                                    <CustomRadioInput setFormData={setFormData} formData={formData} item={item} name='is_roof_isolation' key={idx} />
+                                    <CustomRadioInput errors={errors} setErrors={setErrors} setFormData={setFormData} formData={formData} item={item} name='is_roof_isolation' key={idx} />
                                 )
                             })
                         }
@@ -32,11 +32,11 @@ function SecondStepView3({formData, setFormData}: {formData: any, setFormData: a
                         <div className='flex flex-col w-full'>
                             <div className='flex w-full flex-col mt-0 gap-2'>
                                 <span>Materiał</span>
-                                <CustomDropdownSelect formDataValue={'isolation_roof_material'} options={isolation_roof_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'isolation_roof_material'} options={isolation_roof_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>
                             <div className='flex w-full flex-col mt-5 gap-2'>
                                 <span>Grubość</span>
-                                <InputWithPlaceholder type={'number'} placeholder={'cm'} formDataValue1={'isolation_roof_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'isolation_roof_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                             </div>
                         </div>
                     }
@@ -48,7 +48,7 @@ function SecondStepView3({formData, setFormData}: {formData: any, setFormData: a
                         {
                             is_roof_isolation.map((item: any, idx: number) => {
                                 return (
-                                    <CustomRadioInput setFormData={setFormData} formData={formData} item={item} name='is_parter_floor_isolation' key={idx} />
+                                    <CustomRadioInput errors={errors} setErrors={setErrors} setFormData={setFormData} formData={formData} item={item} name='is_parter_floor_isolation' key={idx} />
                                 )
                             })
                         }
@@ -58,11 +58,11 @@ function SecondStepView3({formData, setFormData}: {formData: any, setFormData: a
                         <div className='flex flex-col w-full'>
                             <div className='flex w-full flex-col mt-0 gap-2'>
                                 <span>Materiał</span>
-                                <CustomDropdownSelect formDataValue={'isolation_parter_floor_material'} options={isolation_parter_floor_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'isolation_parter_floor_material'} options={isolation_parter_floor_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>  
                             <div className='flex w-full flex-col mt-5 gap-2'>
                                 <span>Grubość</span>
-                                <InputWithPlaceholder type={'number'} placeholder={'cm'} formDataValue1={'isolation_parter_floor_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'isolation_parter_floor_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                             </div>
                         </div>
                     }

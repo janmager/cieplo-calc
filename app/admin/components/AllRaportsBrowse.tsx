@@ -15,9 +15,9 @@ function AllRaportsBrowse() {
 
     const fetchAllRaports = async () => {
         setLoading(true)
-        let raportsResponse = await getAllRaports()
+        let raportsResponse: any = await getAllRaports()
         if(raportsResponse.response){
-            setRaports(raportsResponse.data)
+            setRaports(JSON.parse(raportsResponse.data))
             setLoading(false)
         }
         else{

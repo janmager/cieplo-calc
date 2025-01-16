@@ -85,7 +85,6 @@ model Raport {
   on_corner Boolean?
   number_stairways String?
   number_elevators String?
-
   api_total_area Decimal?
   api_heated_area Decimal?
   api_max_heating_power Decimal?
@@ -110,6 +109,7 @@ model Product {
   name   String
   desc   String?
   params String?
+  product_link String?
   image  String?
 }
 

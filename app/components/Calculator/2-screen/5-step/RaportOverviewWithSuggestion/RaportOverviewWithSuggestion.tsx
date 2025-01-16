@@ -52,7 +52,7 @@ function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, se
                         <span className='font-bold'>{formData.house_location['full_name']}</span>
                     </div>
                 </div>
-                <div className='flex items-center justify-center'>
+                <div className='flex items-center md:mt-0 mt-10 justify-center'>
                     <div onClick={() => loading || loadingUpper ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] w-[160px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loading || loadingUpper ? 'opacity-50 grayscale' : ''}`}>
                         <span>{loading ? 'Ładowanie...' : 'Dalej'}</span>
                     </div>
@@ -60,7 +60,7 @@ function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, se
             </div>
 
             <div>
-                <span className='text-[30px] font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
+                <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
                 <div className='mt-5 grid grid-cols-1 md:grid-cols-3 gap-10'>
                     {loading ? 
                     <div className='flex items-center w-full md:col-span-3 justify-center py-20'>

@@ -5,20 +5,23 @@ import info from '@/assets/svg/info-icon.svg'
 import Image from 'next/image'
 import CustomRadioInput from '@/app/components/Customs/CustomRadioInput'
 
-function SecondStepView0({formData, setFormData}: {formData: any, setFormData: any}) {
+function SecondStepView0({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
         <div>
             <CustomLabel label='Wybierz lokalizację budynku:' />
-            <div className='flex flex-col gap-[14px] mt-[22px]'>
+            <div className={`flex flex-col gap-[14px] mt-[22px]`}>
                 {
                     building_types.map((item: any, idx: number) => {
                         return (
-                            <CustomRadioInput setFormData={setFormData} formData={formData} item={item} name='building_type' key={idx} />
+                            <CustomRadioInput hideErrorInfo={true} errors={errors} setErrors={setErrors} setFormData={setFormData} formData={formData} item={item} name='building_type' key={idx} />
                         )
                     })
                 }
             </div>
+            {
+                errors['building_type'] ? <p className='text-red-600 mt-3 font-semibold'>wybierz jedną z opcji</p> : null
+            }
         </div>
         <div className='h-full flex flex-col gap-5 lg:flex-row items-start p-[23px] w-full bg-[#F8F8F8]'>
             <div>
