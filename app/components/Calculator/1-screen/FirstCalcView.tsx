@@ -70,6 +70,10 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
             map.removeLayer(vectorLayer);
             if(pinInfo){
                 let data = await pinInfo.json();
+
+                // get climate zone
+                console.log('get climate zone.')
+
                 setClickedMap({
                     lat: x[1],
                     lng: x[0],
