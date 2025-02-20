@@ -40,6 +40,8 @@ export const findBestFitProduct = ({
                 pompArray.push({x: number, y: getPompaData({pompa: singleProduct, max_power: max_install_temp, outside_temp: number.toString()})})
             })
 
+            console.log(pompArray)
+
             const punktBiwa: any = getPunktBiwalentny(tempArray, pompArray);
             const perfectBiwaPoint = proj_temp_outside/2;
             const isGood = Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x)) > 2 ? false : true;
