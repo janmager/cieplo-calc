@@ -7,6 +7,7 @@ import CustomLabel from '../../Customs/CustomLabel'
 import NextButton from '../../Customs/NextButton'
 import Image from 'next/image'
 import infoIcon from '@/assets/svg/red-info-icon.svg'
+import info from '@/assets/svg/info-icon.svg'
 // @ts-ignore
 import proj4 from 'proj4'
 import "ol/ol.css";
@@ -24,6 +25,9 @@ import mapPin from '@/assets/svg/map-pin.svg'
 import checkSelectBorder from '@/assets/svg/select-border.svg'
 import checkSelectDot from '@/assets/svg/select-dot.svg'
 import InputWithPlaceholder from '../../Customs/InputWithPlaceholder'
+import { getClimateZone } from '@/utils/api/getClimateZone'
+import { getProjectOutsideTemp } from '@/utils/api/getProjectOutsideTemp'
+import { max_temp_of_power_instalation } from '@/app/consts/max_temp_of_power_instalation'
 
 function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {formData: any, setFormData: any, setViewId: any, errors: any, setErrors: any}) {  
     const [ clickedMap, setClickedMap ] = useState<any>({})  
@@ -72,9 +76,12 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                 let data = await pinInfo.json();
 
                 // get climate zone
-                console.log('get climate zone.')
+                const climateZone = getClimateZone(x[1], x[0]);
+                const outsideProjectTemp = getProjectOutsideTemp(climateZone);
 
                 setClickedMap({
+                    climateZone: climateZone,
+                    outsideProjectTemp: outsideProjectTemp,
                     lat: x[1],
                     lng: x[0],
                     full_name: `${data.address.road ? `${data.address.road}, ` : ''}${data.address.postcode ? `${data.address.postcode}, ` : ''}${data.address.city ? `${data.address.city}, ` : ''}${data.address.state ? `${data.address.state}, ` : ''}${data.address.country ? `${data.address.country}` : ''}`,
@@ -107,11 +114,16 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
     }, []);
 
     useEffect(() => {
-        clickedMap.lat && clickedMap.lng && setFormData({...formData, house_location: {
-            lat: clickedMap.lat,
-            lng: clickedMap.lng,
-            full_name: clickedMap.full_name
-        }})
+        clickedMap.lat && clickedMap.lng && setFormData({
+            ...formData, 
+            house_location: {
+                lat: clickedMap.lat,
+                lng: clickedMap.lng,
+                full_name: clickedMap.full_name
+            },
+            climate_zone: (clickedMap.climateZone).toString(),
+            project_outside_temp: (clickedMap.outsideProjectTemp).toString()
+        })
     }, [clickedMap])
 
     const validation = () => {
@@ -141,6 +153,16 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
         if(formData.heat_demand.know){
             if(!formData.heat_demand.kW || formData.heat_demand.kW  < 0){
                 setErrors({...errors, 'heat_demand.kW': true})
+                valid = false;
+                return false;
+            }
+            if(!formData.max_temp_of_power_instalation){
+                setErrors({...errors, 'max_temp_of_power_instalation': true})
+                valid = false;
+                return false;
+            }
+            if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
+                setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
                 valid = false;
                 return false;
             }
@@ -213,13 +235,22 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                         {
                             formData.heat_demand && formData.heat_demand.know &&
                             <div>
-                                <div className='flex flex-row gap-4 items-start mt-5 md:mt-10'>
+                                {/* <div className='flex flex-row gap-4 items-start mt-5 md:mt-10'>
                                     <Image src={infoIcon.src} height={24} width={24} alt="info icon" />
-                                    <span className='mt-[-4px]'>W przypadku nowszych budynków taką informację znajdziesz w projekcie budowlanym. Wcześniej zweryfikuj czy budynek zostałwykonany zgodnie z projektem.</span>
-                                </div>
+                                    <span className='mt-[-4px]'>W przypadku nowszych budynków taką informację znajdziesz w projekcie budowlanym. Wcześniej zweryfikuj czy budynek został wykonany zgodnie z projektem.</span>
+                                </div> */}
                                 <div className='mt-5 flex flex-col gap-2'>
                                     <label>Zapotrzebowanie cieplne</label>
                                     <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'kW'} formDataValue1={'heat_demand'} formDataValue2={'kW'} setFormData={setFormData} formData={formData} />
+                                </div>
+                                <div className='flex w-full flex-col mb-5 mt-5 gap-2'>
+                                    <span>Maksymalna temperatura zasilania instalacji</span>
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                </div>
+                                <div className='mt-5 flex flex-col gap-2'>
+                                    <label>Projektowa temperatura pomieszczenia</label>
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
+                                    <span className='mt-1 text-[14px] font-light opacity-50'>Informację odczytaj z projektu budowlanego lub audytu energetycznego</span>
                                 </div>
                             </div>
                         }

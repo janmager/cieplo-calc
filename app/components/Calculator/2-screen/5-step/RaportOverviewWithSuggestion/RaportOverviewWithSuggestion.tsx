@@ -7,41 +7,19 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
 
-function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, setFormData}: {formData: any, loadingUpper: boolean, step: any, setStep: any, setFormData: any}) {
+function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, setFormData, handleCountCieploAPI, suggestedProducts}: {formData: any, loadingUpper: boolean, step: any, setStep: any, setFormData: any, handleCountCieploAPI: any, suggestedProducts: any}) {
     const [ suggestedProduct, setSuggestedProduct ] = useState<any>(null)
-    const [ loading, setLoading ] = useState(true)
-
-    const fetchAllProducts = async () => {
-        setLoading(true)
-        const returnData: any = await getAllProducts()
-        if(returnData.data){
-            setSuggestedProduct(returnData.data)
-            setFormData({...formData, recommendedProducts: JSON.stringify(returnData.data)})
-            setLoading(false)
-        }
-        else{
-            setLoading(false)
-            setSuggestedProduct([])
-        }
-    }
-
-    useEffect(() => {
-        if(suggestedProduct == null){
-            setLoading(true)
-            fetchAllProducts()
-        }
-    }, [step])
   
     return (
-        <div className='flex flex-col gap-20 pb-10'>
+        <div className='flex flex-col gap-10 pb-10'>
             <div className="max-w-[1172px] w-full mx-auto mb-3">
                 <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Podsumowanie</div>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2'>
+            <div className='grid grid-cols-1'>
                 <div className='flex flex-col gap-2.5'>
                     {formData.heat_demand.kW && <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Zapotrzebowanie cieplne budynku</p>
-                        <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : 'nie znam'}</span>
+                        <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : `${Number(formData.api_max_heating_power).toFixed(2)} kW`}</span>
                     </div>}
                     {formData.heat_demand.temp && <div className='fflex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Projektowa temperatura pomieszczenia</p>
@@ -52,24 +30,48 @@ function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, se
                         <span className='font-bold'>{formData.house_location['full_name']}</span>
                     </div>
                 </div>
-                <div className='flex items-center md:mt-0 mt-10 justify-center'>
-                    <div onClick={() => loading || loadingUpper ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] w-[160px] h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loading || loadingUpper ? 'opacity-50 grayscale' : ''}`}>
-                        <span>{loading ? 'Ładowanie...' : 'Dalej'}</span>
+                {
+                    suggestedProducts == null && 
+                    <div className='flex items-center mt-10 justify-start'>
+                        <div>
+
+                            <div onClick={() => loadingUpper ? null : handleCountCieploAPI()} className={`border font-bold text-[14px] md:text-[16px] border-[#FF4510] px-5 h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loadingUpper ? 'opacity-50 grayscale' : ''}`}>
+                                <span>{loadingUpper ? 'Ładowanie...' : 'Sprawdź proponowane produkty'}</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                }
             </div>
 
+            {suggestedProducts != null &&
             <div>
                 <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
                 <div className='mt-5 grid grid-cols-1 md:grid-cols-3 gap-10'>
-                    {loading ? 
-                    <div className='flex items-center w-full md:col-span-3 justify-center py-20'>
-                        <Image src={loadingIco.src} height="24" width="24" alt="Loading..." className="animate-spin opacity-30" />
-                    </div> : suggestedProduct && suggestedProduct.map((s: any) => {
-                        return <SuggestedProductThumbnail suggestedProduct={s} />
-                    })}
+                    {
+                        suggestedProducts.map((product: any) => {
+                            let productObj = product.product;
+
+                            return (
+                                <div key={productObj.id} className="border px-5 pt-0 pb-10 flex flex-col gap-0 items-center justify-center">
+                                    <img src={`${productObj.image}`} alt={productObj.desc} className='w-full' />
+                                    <div className='flex flex-col gap-1 items-center justify-center text-center'>
+                                        <span className="uppercase text-[#FF4510] font-[600] text-xs">{productObj.type}</span>
+                                        <span className="text-2xl tracking-tight font-[700]">{productObj.name}</span>
+                                        <span className='text-sm font-[400] text-gray-500'>{productObj.desc}</span>
+                                    </div>
+                                </div>
+                            )
+                        })
+                    }
                 </div>
-            </div>
+            </div>}
+
+            {suggestedProducts != null && 
+            <div className="w-full">
+                <div onClick={() => loadingUpper ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] h-[70px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loadingUpper ? 'opacity-50 grayscale' : ''}`}>
+                    <span>{loadingUpper ? 'Ładowanie...' : 'Zapisz raport'}</span>
+                </div>
+            </div>}
         </div>
     )
 }

@@ -1,20 +1,20 @@
 'use server'
 
 import prisma from '@/app/libs/db';
+import { Product } from '@prisma/client';
 
-export const getAllProducts = async () => {
+
+export const saveProduct = async (product: Product) => {
     try{
-        const find: any = await prisma.product.findMany()
-        if(find){
-            return {
-                response: true,
-                data: JSON.parse(JSON.stringify(find))
-            }
-        }
-        else{
-            return {
-                response: false
-            }
+        const add = await prisma.product.update({
+            where: {
+                id: product.id
+            },
+            data: product
+        })
+    
+        return {
+            response: true
         }
     }
     catch(error) {

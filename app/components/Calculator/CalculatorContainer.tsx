@@ -20,8 +20,8 @@ function CalculatorContainer() {
             lng: '',
             full_name: ''
         },
-
-        // 
+        climate_zone: '',
+        project_outside_temp: '',
 
         // second step
         building_type: '',

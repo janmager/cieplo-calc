@@ -6,6 +6,7 @@ import SecondStepView2 from './2-step/SecondStepView2'
 import SecondStepView3 from './3-step/SecondStepView3'
 import SecondStepView4 from './4-step/SecondStepView4'
 import SecondStepView5 from './5-step/SecondStepView5'
+import { getAllProducts } from '@/utils/supabase/getAllProducts'
 
 const steps: any = {
   0: {
@@ -64,7 +65,18 @@ const needMaxTempFromInstalation = [
 ]
 
 function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
-  const [ step, setStep ] = useState(0)
+  const [ step, setStep ] = useState(formData.heat_demand.know ? 5 : 0)
+  const [ products, setProducts ] = useState([]);
+
+  const getProducts = async () => {
+    const p: any = await getAllProducts();
+    if(p.response) setProducts(p.data)
+    else setProducts([])
+  }
+
+  useEffect(() => {
+    if(products.length == 0) getProducts()
+  }, [])
 
   const validation = () => {
     let valid = true;
@@ -256,14 +268,14 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setErrors({...errors, 'vent_type' : true});
         return false;
       }
+      if(!formData.max_temp_of_power_instalation){
+        valid = false;
+        setErrors({...errors, 'max_temp_of_power_instalation' : true});
+        return false;
+      }
       if(needInstalacjaGrzewcza.indexOf(formData.main_heat_sources) >= 0 && !formData.type_of_heating_instalation){
         valid = false;
         setErrors({...errors, 'type_of_heating_instalation' : true});
-        return false;
-      }
-      if(needInstalacjaGrzewcza.indexOf(formData.main_heat_sources) >= 0 && needMaxTempFromInstalation.indexOf(formData.type_of_heating_instalation) >= 0 && !formData.max_temp_of_power_instalation){
-        valid = false;
-        setErrors({...errors, 'max_temp_of_power_instalation' : true});
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_over){
@@ -350,7 +362,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         {/* step 4 */}
         {step == 4 && <SecondStepView4 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
         {/* step 5 */}
-        {step == 5 && <SecondStepView5 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
+        {step == 5 && <SecondStepView5 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} products={products} />}
       </div>
       {step < 5 && <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
         <NextButton onClick={validation} />

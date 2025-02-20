@@ -1,140 +1,182 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+     :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    margin: 0; 
+    margin: 0;
 }
+
 
 /* width */
+
 ::-webkit-scrollbar {
-  width: 5px;
+    width: 5px;
 }
+
 
 /* Track */
+
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
+
 
 /* Handle */
+
 ::-webkit-scrollbar-thumb {
-  background: #FF4510;
+    background: #FF4510;
 }
+
 
 /* Handle on hover */
+
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
 }
 
-.triangle-poddasze{
-  width: 0; 
-  height: 0; 
-  border-left: 110px solid transparent;
-  border-right: 110px solid transparent;
-  
-  border-bottom: 80px solid rgb(200,245,255);
+.triangle-poddasze {
+    width: 0;
+    height: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-bottom: 80px solid rgb(200, 245, 255);
 }
 
-.file-product-uploader{
-  width: 100%;
-  color: #FF4510 !important;
-  margin-top: 5px !important;
-  padding-top: 50px !important;
-  padding-left: 25px !important;
-  padding-right: 25px !important;
-  border-width: 2px !important;
-  border-color: #FF4510 !important;
-  padding-bottom: 50px !important;
-  max-width: 100% !important;
+.file-product-uploader {
+    width: 100%;
+    color: #FF4510 !important;
+    margin-top: 5px !important;
+    padding-top: 50px !important;
+    padding-left: 25px !important;
+    padding-right: 25px !important;
+    border-width: 2px !important;
+    border-color: #FF4510 !important;
+    padding-bottom: 50px !important;
+    max-width: 100% !important;
 }
 
-.file-product-uploader svg{
-  display: none !important;
-}
-.extraMinusMtOnPrint{
-  margin-top: 10px !important;
+.admin-edit-table {
+    border: 1px solid rgb(155, 155, 155);
 }
 
-@page { size: A5;  margin: 40mm; }
+.admin-edit-table tr,
+.admin-edit-table td {
+    border: 1px solid rgb(155, 155, 155);
+    text-align: center;
+}
+
+.nr {
+    width: 60px;
+    font-size: 12px;
+    font-weight: 600;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.admin-edit-table input {
+    text-align: center;
+    padding: 5px;
+    width: 60px;
+    outline: none;
+}
+
+.answ {}
+
+.file-product-uploader svg {
+    display: none !important;
+}
+
+.extraMinusMtOnPrint {
+    margin-top: 10px !important;
+}
+
+@page {
+    size: A5;
+    margin: 40mm;
+}
+
 @media print {
-  html, body {
-    width: 210mm;
-    height: 297mm;
-  }
-  p{
-    font-size: 24px !important;
-  }
-  .differentOnPrint{
-    border: 0px;
-    background: transparent;
-    box-shadow: none;
-  }
-  .extraMinusMtOnPrint{
-    margin-top: -20px !important;
-  }
-  .onPrintMargin{
-    margin-top: 5px;
-  }
-  .onPrintLabel{
-    font-size: 14px !important;
-  }
-  .mt-20{
-    margin-top: 0px;
-  }
-  .noTopMargin{
-    margin-top: 0px !important;
-  }
-  .mt-10{
-    margin-top: 15px;
-  }
-  .hideOnPrint{
-    display: none;
-  }
-  .showOnPrint{
-    display: flex !important;
-  }
-  .onPrintTopMargin{
-    margin-top: 5px;
-  }
-  .onPrintTopMarginExtra{
-    margin-top: 40px;
-  }
-  .onPrintMarginBottom{
-    margin-bottom: 20px;
-  }
-  .onPrintHardGrid3{
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .onPrintText20{
-    font-size: 20px;
-  }
-  .onPrintText14{
-    font-size: 14px !important
-  }
-  .grid-cols-1{
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .onPrintDontCol{
-    flex-direction: row;
-  }
-  @page {
-    margin: 30px 15px;
-  }
-  .pagebreak { page-break-before: always; } /* page-break-after works, as well */
+    html,
+    body {
+        width: 210mm;
+        height: 297mm;
+    }
+    p {
+        font-size: 24px !important;
+    }
+    .differentOnPrint {
+        border: 0px;
+        background: transparent;
+        box-shadow: none;
+    }
+    .extraMinusMtOnPrint {
+        margin-top: -20px !important;
+    }
+    .onPrintMargin {
+        margin-top: 5px;
+    }
+    .onPrintLabel {
+        font-size: 14px !important;
+    }
+    .mt-20 {
+        margin-top: 0px;
+    }
+    .noTopMargin {
+        margin-top: 0px !important;
+    }
+    .mt-10 {
+        margin-top: 15px;
+    }
+    .hideOnPrint {
+        display: none;
+    }
+    .showOnPrint {
+        display: flex !important;
+    }
+    .onPrintTopMargin {
+        margin-top: 5px;
+    }
+    .onPrintTopMarginExtra {
+        margin-top: 40px;
+    }
+    .onPrintMarginBottom {
+        margin-bottom: 20px;
+    }
+    .onPrintHardGrid3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .onPrintText20 {
+        font-size: 20px;
+    }
+    .onPrintText14 {
+        font-size: 14px !important
+    }
+    .grid-cols-1 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .onPrintDontCol {
+        flex-direction: row;
+    }
+    @page {
+        margin: 30px 15px;
+    }
+    .pagebreak {
+        page-break-before: always;
+    }
+    /* page-break-after works, as well */
 }

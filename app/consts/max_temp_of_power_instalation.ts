@@ -1,22 +1,30 @@
 export const max_temp_of_power_instalation: any = [
+    // {
+    //     name: 'Nie wiem',
+    //     value: 'Nie wiem'
+    // },
     {
-        name: 'Nie wiem',
-        value: 'Nie wiem'
+        name: '25 °C',
+        value: '25 °C',
     },
     {
-        name: 'Do 35 °C',
-        value: 'Do 35 °C',
+        name: '30 °C',
+        value: '30 °C',
     },
     {
-        name: 'Do 45 °C',
-        value: 'Do 45 °C',
+        name: '35 °C',
+        value: '35 °C',
     },
     {
-        name: 'Do 55 °C',
-        value: 'Do 55 °C',
+        name: '40 °C',
+        value: '40 °C',
     },
     {
-        name: 'Ponad 60 °C',
-        value: 'Ponad 60 °C',
+        name: '45 °C',
+        value: '45 °C',
+    },
+    {
+        name: '50 °C',
+        value: '50 °C',
     },
 ]

@@ -59,7 +59,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
     const fetchAllInstalators = async () => {
         const ins = await getAllInstalators();
         // const suggested = await getAllProducts();
-        let suggested: any = formData.recommendedProducts ? JSON.parse(formData.recommendedProducts) : await getAllProducts();
+        let suggested: any = JSON.parse(formData.recommendedProducts);
         autoDownload && handleOpenModalRaport(true);
 
         if(ins.response && (suggested.length || suggested.response)){
@@ -207,12 +207,12 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='pt-2' />
                 <InfoBox title='Rok budowy' value={formData.house_building_years ? formData.house_building_years : ''} />
                 <InfoBox title='Lokalizacja' value={formData['house_location'] && formData['house_location']['full_name']} />
-                <InfoBox title='Zapotrzebowanie cieplne' value={formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : 'Nie znam'} />
-                <InfoBox title='Projektowa temperatura zewnętrzna' value={formData.heat_demand && formData.heat_demand.temp ? `${formData.heat_demand.temp}°C` : ''} />
-                <InfoBox title='Zakładana temperatura w pomieszczeniu' value={formData.heat_assumed_temp ? formData.heat_assumed_temp : ''} />
+                <InfoBox title='Zapotrzebowanie cieplne' value={formData.heat_demand && formData.heat_demand.know && formData.heat_demand.kW ? `${formData.heat_demand.kW} kW` : `${formData.api_max_heating_power} kW`} />
+                <InfoBox title='Projektowa temperatura zewnętrzna' value={formData.project_outside_temp ? `${formData.project_outside_temp} °C` : '? °C'} />
+                <InfoBox title='Zakładana temperatura w pomieszczeniu' value={formData.heat_demand.temp ? `${formData.heat_demand.temp} °C` : '? °C'} />
             </div>
 
-            <div className='mt-20'>
+            {formData.api_bivalent_point_heating_power && <div className='mt-20'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] onPrintTopMarginExtra leading-[110%]'>Szacunkowe zapotrzebowanie na moc i energię cieplną</p>
                 <div className='flex flex-col lg:flex-row mt-10 gap-5 lg:gap-16 items-start justify-start'>
                     <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
@@ -230,7 +230,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
 
             <div className='mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Wymiary</p>
@@ -238,7 +238,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     <div className='flex flex-col md:col-span-4'>
                         <CustomLabel label='Obrys budynku' />
                         <div className='pt-2' />
-                        <InfoBox title='Powierzchnia zabudowy' value={formData.building_area ? `${formData.building_area} mkw.` : ''} />
+                        <InfoBox title='Powierzchnia zabudowy' value={formData.building_area ? `${formData.building_area} mkw.` : formData.building_outline_width_m ? `${formData.building_outline_width_m}m x ${formData.building_outline_length_m}m` : ''} />
                         <div className='w-[100px] h-[1px] mt-7 mb-7 bg-[#FF1F1F]' />
                         <CustomLabel label='Układ pięter' />
                         <div className='pt-2' />
@@ -331,8 +331,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         <InfoBox title='Główne źródło ciepła' value={formData.main_heat_sources ? formData.main_heat_sources : ''} />
                         <InfoBox title='Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms}°C` : ''} />
                         <InfoBox title='Rodzaj wentylacji' value={formData.vent_type ? formData.vent_type : ''} />
-                        <InfoBox title='Materiał' value={formData.heating_isolation_material ? formData.heating_isolation_material : ''} />
-                        <InfoBox title='Grubość' value={formData.heating_isolation_material_thickness ? `${formData.heating_isolation_material_thickness}cm` : ''} />
+                        {formData.heating_isolation_material && <InfoBox title='Materiał' value={formData.heating_isolation_material ? formData.heating_isolation_material : ''} />}
+                        {formData.heating_isolation_material_thickness && <InfoBox title='Grubość' value={formData.heating_isolation_material_thickness ? `${formData.heating_isolation_material_thickness}cm` : ''} />}
                     </div>
                     <div>
                         <CustomLabel label='Instalacja grzewcza' />
@@ -354,11 +354,12 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
 
             <div className='mt-20 pagebreak'>
                 <p className='text-[30px] text-[#FF4510] font-[700]'>Sugerowane urządzenia do Twojego budynku</p>
-                <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-10'>
-                {suggestedProducts && suggestedProducts.map((p: any) => {
+                <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-5'>
+                {suggestedProducts && suggestedProducts.length ? suggestedProducts.map((p: any) => {
                     return (
-                        <SuggestedProductThumbnail suggestedProduct={p} />
-                    )})
+                        <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
+                    )}) : 
+                    <div className='opacity-50 pt-5 pb-0'>brak poleceń</div>
                 }
                 </div>
             </div>

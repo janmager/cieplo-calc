@@ -130,20 +130,15 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                                 <span>Rodzaj instalacji centralnego ogrzewania</span>
                                 <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>
-                            {
-                                (formData.type_of_heating_instalation == '100% grzejniki' || formData.type_of_heating_instalation == 'Przewaga grzejników + nieco podłogowego/ściennego' || formData.type_of_heating_instalation == 'Mniej więcej po równo grzejników i podłogowego/ściennego') && <>
-                                <div className='flex w-full flex-col mb-5 gap-2'>
-                                    <span>Maksymalna temperatura zasilania instalacji</span>
-                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
-                                </div>
-                                <div className='flex flex-row gap-5 w-full mb-10 px-2.5 items-start mt-0'>
-                                    <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                                    <p className='w-full flex-1 mt-[-5px]'>Jaką max. temperaturą zasilane są grzejniki w największe mrozy? To przydatna informacja przy doborze niektórych źródeł ciepła.</p>
-                                </div>
-                                </>
-
-                            }
                         </>}
+                        <div className='flex w-full flex-col mb-5 gap-2'>
+                            <span>Maksymalna temperatura zasilania instalacji</span>
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        </div>
+                        <div className='flex flex-row gap-5 w-full mb-10 px-2.5 items-start mt-0'>
+                            <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
+                            <p className='w-full flex-1 mt-[-5px]'>Jaką max. temperaturą zasilane są grzejniki w największe mrozy? To przydatna informacja przy doborze niektórych źródeł ciepła.</p>
+                        </div>
                         <CustomLabel label='Ciepła woda kranowa' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Przez inżynierów zwana Ciepłą Wodą Użytkową (CWU).</span>

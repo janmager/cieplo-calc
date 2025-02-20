@@ -18,7 +18,8 @@ function EditProductsView() {
         setLoading(true)
         let productsResponse = await getAllProducts()
         if(productsResponse.response){
-            setProducts(productsResponse.data)
+            let sorted = productsResponse.data.sort((a: any,b: any) => a.type > b.type ? 1 : -1)
+            setProducts(sorted)
             setLoading(false)
         }
         else{

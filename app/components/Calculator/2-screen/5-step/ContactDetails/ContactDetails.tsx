@@ -9,7 +9,7 @@ import { send_raport_to_near_companies } from '@/app/consts/send_raport_to_near_
 import check from '@/assets/svg/check-orange.svg'
 import NextButton from '@/app/components/Customs/NextButton'
 
-function ContactDetails({formData, setFormData, step, setStep, errors, setErrors}: {formData: any, setFormData: any, step: any, setStep: any, errors: any, setErrors: any}) {
+function ContactDetails({formData, setFormData, step, setStep, errors, setErrors, loadingUpper}: {formData: any, setFormData: any, step: any, setStep: any, errors: any, setErrors: any, loadingUpper: boolean}) {
 
     const validateContact = () => {
         let valid = true;

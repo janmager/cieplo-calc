@@ -10,10 +10,13 @@ import AddNewInstalatorModal from './AddNewInstalatorModal'
 import editIco from '@/assets/svg/pencil.svg'
 import { deleteProductFromDb } from '@/utils/supabase/deleteProductFromDb copy'
 import ShowRaportDetailsAdminModal from './ShowRaportDetailsAdminModal'
+import DetailsProductModal from '@/app/components/Customs/DetailsProductModal'
 
 function ProductsTable({products, fetchAllProducts}: {products: Product[], fetchAllProducts: any}) {
     const [ showConfirm, setShowConfirm ] = useState<any>(false)
     const [ loading, setLoading ] = useState(false)
+    const [ currentDetails, setCurrentDetails ] = useState<Product | null>(null)
+    const [ showDetails, setShowDetails ] = useState(false)
 
     const confirmDelete = (raport: any) => {
         setShowConfirm(raport)
@@ -45,15 +48,26 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
         )
     }
 
+    const handleProductInfoModal = (product: any) => {
+        setShowDetails(true);
+        setCurrentDetails(product)
+    }
+
     return (
         <div className='text-[14px]'>
             {/* header */}
             <div className='hidden md:flex flex-row flex-nowrap border py-2 font-bold'>
-                <div className='w-full min-w-[260px] max-w-[260px] border-r px-4'>
+                <div className='w-full border-r px-4 min-w-[300px] max-w-[300px]'>
                     Nazwa
                 </div>
-                <div className="w-full min-w-[200px] max-w-[200px] border-r px-4">
+                <div className="w-full min-w-[150px] max-w-[150px] border-r px-4">
+                    Typ
+                </div>
+                <div className="w-full min-w-[100px] max-w-[100px] border-r px-4">
                     Model
+                </div>
+                <div className="w-full min-w-[200px] max-w-[200px] border-r-0 px-4">
+                    Parametry
                 </div>
                 <div className="w-full px-4 min-w-[100px] max-w-[100px]">
                     
@@ -66,13 +80,20 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
                 products.map((product) => {
                     return (
                         <div key={product.id} className='flex border-t md:border-t-0 w-full text-xs flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
-                            <div className='md:col-span-3 px-4 md:border-r flex w-full min-w-[260px] max-w-[260px] items-center'>
-                                {product.name}
+                            <div className='md:col-span-3 px-4  md:border-r flex w-full min-w-[300px] max-w-[300px] items-center'>
+                                <span className="max-w-[290px] truncate line-clamp-1">{product.name}</span>
                             </div>
-                            <div className='w-full min-w-[200px] max-w-[200px] px-4 md:border-r flex truncate items-center overflow-auto'>
+                            <div className='w-full min-w-[150px] max-w-[150px] px-4 md:border-r flex truncate items-center overflow-auto'>
+                                {product.type}
+                            </div>
+                            <div className='w-full min-w-[100px] max-w-[100px] px-4 md:border-r flex truncate items-center overflow-auto'>
                                 {product.desc}
                             </div>
+                            <div className='w-full min-w-[200px] max-w-[200px] px-4 md:border-r-0 flex truncate items-center overflow-auto'>
+                                <span className="text-[11px] underline cursor-pointer" onClick={() => handleProductInfoModal(product)}>zobacz szczegóły</span>
+                            </div>
                             <div className='w-full col-span-2 md:col-span-1 flex justify-center flex-row gap-4 mt-2 md:mt-0 lg:justify-end pl-5 pr-3 lg:items-center'>
+                                {product.p50_plus15 ? '✅' : '❌'}
                                 <Image onClick={() => confirmDelete(product)} src={trashIcon.src} height={19} width={19} alt="Trash icon" className='opacity-30 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
                             </div>
                         </div>
@@ -81,6 +102,7 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
             }
             </div>
             {showConfirm && <ConfirmModal title='Czy na pewno chcesz usunąć produkt?' desc='Produkt zostanie trwale usunięty.' yesButtonText='Tak' noButtonText='Nie' onClose={() => setShowConfirm(false)} onConfirm={() => deleteProduct()} />}
+            {showDetails && <DetailsProductModal product={currentDetails} show={showDetails} setShow={setShowDetails} />}
         </div>
     )
 }

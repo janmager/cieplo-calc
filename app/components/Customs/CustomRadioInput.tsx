@@ -14,7 +14,6 @@ function CustomRadioInput({setFormData, formData, item, name, errors, setErrors,
                 behavior: 'smooth',
               });
         }
-        console.log(errors)
     }, [errors])
     
     return (

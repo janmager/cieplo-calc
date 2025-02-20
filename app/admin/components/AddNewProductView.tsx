@@ -19,7 +19,6 @@ function AddNewProductView() {
         id: crypto.randomUUID(),
         name: '',
         desc: '',
-        params: '',
         product_link: '',
         image: '',
     })
@@ -34,7 +33,7 @@ function AddNewProductView() {
             toast.success('Zapisano poprawnie nowy produkt')
             setSuccessUpload(false)
             setLoading(false)
-            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', params: '', image: '', product_link: ''})
+            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', image: '', product_link: ''})
             setValid(false)
         }
         else {

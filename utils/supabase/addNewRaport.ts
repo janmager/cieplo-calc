@@ -18,6 +18,8 @@ export const addNewRaport = async (raport: any) => {
                 building_type: raport.building_type,
                 building_outline: raport.building_outline,
                 building_area: raport.building_area,
+                climate_zone: raport.climate_zone, 
+                project_outside_temp: raport.project_outside_temp,
                 building_outline_m: raport.building_outline_m,
                 building_outline_sizes: raport.building_outline_sizes,
                 building_outline_length_m: raport.building_outline_length_m,
@@ -102,6 +104,7 @@ export const addNewRaport = async (raport: any) => {
         }
     }
     catch(error) {
+        console.log(error)
         if (error instanceof Error){
             console.log("Error: ", error.stack)
             return {

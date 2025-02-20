@@ -33,11 +33,11 @@ const ADMIN_LINKS: any = {
         viewId: 3,
         icon: editImg
     },
-    4: {
-        name: 'Dodaj nowy produkt',
-        viewId: 4,
-        icon: plusImg
-    },
+    // 4: {
+    //     name: 'Dodaj nowy produkt',
+    //     viewId: 4,
+    //     icon: plusImg
+    // },
     5: {
         name: 'Polecani instalatorzy',
         viewId: 5,

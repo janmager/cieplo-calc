@@ -7,16 +7,23 @@ import loaderImg from '@/assets/svg/loader.svg'
 import Image from 'next/image'
 import toast, { Toaster } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { countKwForSpecificTemp } from '@/utils/api/countKwForSpecificTemp'
+import { getPompaData } from '@/utils/api/getPompaData'
+import { getPunktBiwalentny } from '@/utils/api/getPunktBiwalentny'
+import { Product } from '@prisma/client'
+import { findBestFitProduct } from '@/utils/api/findBestFitProduct'
 
-function SecondStepView5({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
+function SecondStepView5({formData, setFormData, errors, setErrors, products}: {formData: any, setFormData: any, errors: any, setErrors: any, products: any}) {
     const [ currentStep, setCurrentStep ] = useState(1)
     const [ loading, setLoading ] = useState(false)
+    const [ suggestedProducts, setSuggestedProducts ] = useState(null)
 
     const router = useRouter();
 
     const handleAddNewRaport = async () => {
         setLoading(true)
-    try{
+        
+        try{
             let data = formData;
             data.id = crypto.randomUUID();
             data.created_at =  new Date(),
@@ -61,44 +68,68 @@ function SecondStepView5({formData, setFormData, errors, setErrors}: {formData: 
     const handleCountCieploAPI = async () => {
         setLoading(true)
 
-        const result = await fetch(`/api/cieplo`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
+        let kw_need = formData.heat_demand.kW;
+        let fromApi: any = false;
 
-        let res = await result.json();
-        if(res.response){
-            // toast.success('Pobrawanie obliczono z API');
-            setFormData({...formData, 
-                api_total_area: res.data.total_area,
-                api_heated_area: res.data.heated_area,
-                api_max_heating_power: res.data.max_heating_power,
-                api_avg_heating_power: res.data.avg_heating_power,
-                api_bivalent_point_heating_power: res.data.bivalent_point_heating_power,
-                api_hot_water_power: res.data.hot_water_power,
-                api_annual_energy_consumption: res.data.annual_energy_consumption,
-                api_annual_energy_consumption_factor: res.data.annual_energy_consumption_factor,
-                api_heating_power_factor: res.data.heating_power_factor,
-                api_design_outdoor_temperature: res.data.design_outdoor_temperature,
-                api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
-            })
-            setLoading(false)
+        if(!formData.heat_demand.know){
+            const result = await fetch(`/api/cieplo`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+            },
+                body: JSON.stringify(formData),
+            });
+
+            let res = await result.json();
+            if(res.response){
+                fromApi = {
+                    api_total_area: res.data.total_area,
+                    api_heated_area: res.data.heated_area,
+                    api_max_heating_power: res.data.max_heating_power,
+                    api_avg_heating_power: res.data.avg_heating_power,
+                    api_bivalent_point_heating_power: res.data.bivalent_point_heating_power,
+                    api_hot_water_power: res.data.hot_water_power,
+                    api_annual_energy_consumption: res.data.annual_energy_consumption,
+                    api_annual_energy_consumption_factor: res.data.annual_energy_consumption_factor,
+                    api_heating_power_factor: res.data.heating_power_factor,
+                    api_design_outdoor_temperature: res.data.design_outdoor_temperature,
+                    api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
+                }
+                kw_need = res.data.max_heating_power
+            }
+            else{
+                toast.error('Błąd pobierania danych z API')
+                router.push('/error')
+            }
         }
-        else{
-            toast.error('Błąd pobierania danych z API')
-            router.push('/error')
-        }
+
+        const checkedProducts: any = findBestFitProduct({
+            products: products, 
+            proj_temp_outside: formData.project_outside_temp, 
+            needed_kw: kw_need,
+            temp_inside: formData.heat_demand.temp,
+            max_install_temp: formData.max_temp_of_power_instalation.split(' ')[0]
+        })
+
+        console.log(checkedProducts);
+
+        setFormData({
+            ...formData, 
+            ...fromApi && fromApi,
+            recommendedProducts: JSON.stringify(checkedProducts),
+        })
+
+        setSuggestedProducts(checkedProducts);
+        setLoading(false);
     }
 
     useEffect(() => {
-        if(currentStep == 3){
-            handleAddNewRaport()
+        if(currentStep == 1){
         }
         if(currentStep == 2){
-            handleCountCieploAPI()
+        }
+        if(currentStep == 3){
+            handleAddNewRaport()
         }
     }, [currentStep])
   
@@ -114,8 +145,8 @@ function SecondStepView5({formData, setFormData, errors, setErrors}: {formData: 
     return (
         <div className='flex flex-col gap-14 w-full'>           
             <Toaster position="top-center" />
-            {currentStep == 1 && <RaportOverviewWithSuggestion loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
-            {currentStep == 2 && <ContactDetails errors={errors} setErrors={setErrors} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
+            {currentStep == 1 && <RaportOverviewWithSuggestion suggestedProducts={suggestedProducts} handleCountCieploAPI={handleCountCieploAPI} loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
+            {currentStep == 2 && <ContactDetails loadingUpper={loading} errors={errors} setErrors={setErrors} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 3 && <FullRaportPreview formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
         </div>
     )

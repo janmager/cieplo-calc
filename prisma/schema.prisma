@@ -19,6 +19,8 @@ model Raport {
   heat_demand_know                     Boolean?
   heat_demand_temp                     String?
   heat_demand_kW                       String?
+  project_outside_temp                 String?
+  climate_zone                         String?
   building_type                        String?
   building_outline                     String?
   building_area                        String?
@@ -38,8 +40,8 @@ model Raport {
   basic_construction_material          String?
   additional_construction_material     String?
   wall_insulation                      Boolean?
-  wall_inside_insulation String?
-  wall_insulation_thickness String?
+  wall_inside_insulation               String?
+  wall_insulation_thickness            String?
   house_insulation                     Boolean?
   outside_insulation                   String?
   insulation_thickness                 String?
@@ -48,7 +50,7 @@ model Raport {
   taras_doors_number                   String?
   large_glazings_number                String?
   doors_type                           String?
-  outside_doors_number String?
+  outside_doors_number                 String?
   is_roof_isolation                    String?
   isolation_roof_material              String?
   isolation_roof_thickness             String?
@@ -61,7 +63,7 @@ model Raport {
   heating_isolation_material           String?
   heating_isolation_material_thickness String?
   type_of_heating_instalation          String?
-  max_temp_of_power_instalation String?
+  max_temp_of_power_instalation        String?
   count_need_energy_cwu                Boolean?
   hot_water_person_using               String?
   hot_water_using_style                String?
@@ -74,28 +76,28 @@ model Raport {
   send_raport_email                    String?
   contact_phone_number                 String?
   contact_email_address                String?
-  raport_url String?
-  recommendedProducts String?
-  whats_over String?
-  whats_under String?
-  whats_north String?
-  whats_south String?
-  whats_east String?
-  whats_west String?
-  on_corner Boolean?
-  number_stairways String?
-  number_elevators String?
-  api_total_area Decimal?
-  api_heated_area Decimal?
-  api_max_heating_power Decimal?
-  api_avg_heating_power Decimal?
-  api_bivalent_point_heating_power Decimal?
-  api_hot_water_power Decimal?
-  api_annual_energy_consumption Int?
+  raport_url                           String?
+  recommendedProducts                  String?
+  whats_over                           String?
+  whats_under                          String?
+  whats_north                          String?
+  whats_south                          String?
+  whats_east                           String?
+  whats_west                           String?
+  on_corner                            Boolean?
+  number_stairways                     String?
+  number_elevators                     String?
+  api_total_area                       Decimal?
+  api_heated_area                      Decimal?
+  api_max_heating_power                Decimal?
+  api_avg_heating_power                Decimal?
+  api_bivalent_point_heating_power     Decimal?
+  api_hot_water_power                  Decimal?
+  api_annual_energy_consumption        Int?
   api_annual_energy_consumption_factor Decimal?
-  api_heating_power_factor Decimal?
-  api_design_outdoor_temperature Int?
-  api_avg_outdoor_temperature Decimal?
+  api_heating_power_factor             Decimal?
+  api_design_outdoor_temperature       Int?
+  api_avg_outdoor_temperature          Decimal?
 }
 
 model Admin {
@@ -105,17 +107,83 @@ model Admin {
 }
 
 model Product {
-  id     String  @id @unique
-  name   String
-  desc   String?
-  params String?
+  id           String  @id @unique
+  name         String
+  desc         String?
+  type         String?
   product_link String?
-  image  String?
+  image        String?
+
+  p25_minus25 Decimal?
+  p25_minus20 Decimal?
+  p25_minus15 Decimal?
+  p25_minus10 Decimal?
+  p25_minus7  Decimal?
+  p25_minus2  Decimal?
+  p25_plus2   Decimal?
+  p25_plus7   Decimal?
+  p25_plus10  Decimal?
+  p25_plus15  Decimal?
+
+  p30_minus25 Decimal?
+  p30_minus20 Decimal?
+  p30_minus15 Decimal?
+  p30_minus10 Decimal?
+  p30_minus7  Decimal?
+  p30_minus2  Decimal?
+  p30_plus2   Decimal?
+  p30_plus7   Decimal?
+  p30_plus10  Decimal?
+  p30_plus15  Decimal?
+
+  p35_minus25 Decimal?
+  p35_minus20 Decimal?
+  p35_minus15 Decimal?
+  p35_minus10 Decimal?
+  p35_minus7  Decimal?
+  p35_minus2  Decimal?
+  p35_plus2   Decimal?
+  p35_plus7   Decimal?
+  p35_plus10  Decimal?
+  p35_plus15  Decimal?
+
+  p40_minus25 Decimal?
+  p40_minus20 Decimal?
+  p40_minus15 Decimal?
+  p40_minus10 Decimal?
+  p40_minus7  Decimal?
+  p40_minus2  Decimal?
+  p40_plus2   Decimal?
+  p40_plus7   Decimal?
+  p40_plus10  Decimal?
+  p40_plus15  Decimal?
+
+  p45_minus25 Decimal?
+  p45_minus20 Decimal?
+  p45_minus15 Decimal?
+  p45_minus10 Decimal?
+  p45_minus7  Decimal?
+  p45_minus2  Decimal?
+  p45_plus2   Decimal?
+  p45_plus7   Decimal?
+  p45_plus10  Decimal?
+  p45_plus15  Decimal?
+
+  p50_minus25 Decimal?
+  p50_minus20 Decimal?
+  p50_minus15 Decimal?
+  p50_minus10 Decimal?
+  p50_minus7  Decimal?
+  p50_minus2  Decimal?
+  p50_plus2   Decimal?
+  p50_plus7   Decimal?
+  p50_plus10  Decimal?
+  p50_plus15  Decimal?
 }
 
 model Instalators {
-  id String @id @unique
-  name String
-  phone String?
+  id            String  @id @unique
+  name          String
+  phone         String?
   postalAndCity String?
 }
