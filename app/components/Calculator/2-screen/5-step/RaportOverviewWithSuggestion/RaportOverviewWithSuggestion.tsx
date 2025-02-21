@@ -46,7 +46,7 @@ function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, se
             {suggestedProducts != null &&
             <div>
                 <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
-                <div className='mt-5 grid grid-cols-1 md:grid-cols-3 gap-10'>
+                <div className={`mt-5 grid grid-cols-1 ${suggestedProducts.length == 3 ? 'md:grid-cols-3' : suggestedProducts.length == 2 ? 'md:grid-cols-2' : ''} gap-10`}>
                     {
                         suggestedProducts.map((product: any) => {
                             let productObj = product.product;

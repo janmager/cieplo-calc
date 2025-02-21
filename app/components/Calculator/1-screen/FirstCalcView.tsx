@@ -228,7 +228,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                         <div className='md:max-w-[275px] flex flex-row items-start gap-3 cursor-pointer opacity-90 hover:opacity-100 duration-200 transition-all' onClick={() => setFormData({...formData, heat_demand: {...formData.heat_demand, know: true, kW: '', temp: ''}})}>
                             <div className='relative min-h-[19px] min-w-[19px] max-h-[19px] max-w-[19px]'>
                                 <Image src={checkSelectBorder.src} className={formData.heat_demand && formData.heat_demand.know ? '' : 'opacity-50'} height={17} width={17} alt={'border'} />
-                                {formData.heat_demand && formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[3.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
+                                {formData.heat_demand && formData.heat_demand.know && <Image className='absolute left-[2.5px] top-[3.7px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
                             </div>
                             <span className='mt-[-4px]'><b>Znam</b> zapotrzebowanie cieplne swojego budynku </span>
                         </div>
@@ -259,7 +259,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                         <div className='md:max-w-[320px] flex flex-row items-start gap-3 cursor-pointer opacity-90 hover:opacity-100 duration-200 transition-all' onClick={() => setFormData({...formData, heat_demand: {...formData.heat_demand, know: false, kW: '', temp: ''}})}>
                             <div className='relative min-h-[19px] min-w-[19px] max-h-[19px] max-w-[19px]'>
                                 <Image src={checkSelectBorder.src} className={formData.heat_demand && !formData.heat_demand.know ? '' : 'opacity-50'} height={17} width={17} alt={'border'} />
-                                {formData.heat_demand && !formData.heat_demand.know && <Image className='absolute left-[3.5px] top-[3.5px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
+                                {formData.heat_demand && !formData.heat_demand.know && <Image className='absolute left-[3px] top-[3.7px]' src={checkSelectDot.src} height={10} width={10} alt={'dot'} />}
                             </div>
                             <span className='mt-[-4px]'><b>Nie znam</b> zapotrzebowania cieplnego mojego budynku i chcę go policzyć</span>
                         </div>
