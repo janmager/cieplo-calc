@@ -44,7 +44,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                         }
                         const responseData = await response.json();
 
-                        setLoading(false);
                     }
                     catch(e){
                         console.log(e);
@@ -66,8 +65,8 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
     }
 
     const handleCountCieploAPI = async () => {
-        setLoading(true)
-
+        if(loading) return false;
+        setLoading(true);
         let kw_need = formData.heat_demand.kW;
         let fromApi: any = false;
 
@@ -95,7 +94,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                     api_design_outdoor_temperature: res.data.design_outdoor_temperature,
                     api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
                 }
-                kw_need = res.data.max_heating_power + res.data.hot_water_power
+                kw_need = res.data.max_heating_power + (res.data.hot_water_power ? res.data.hot_water_power : 0)
             }
             else{
                 toast.error('Błąd pobierania danych z API')
@@ -120,7 +119,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
         })
 
         setSuggestedProducts(checkedProducts);
-        setLoading(false);
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -143,10 +142,10 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
         )
     }
 
-    return (
+    if(products && !loading) return (
         <div className='flex flex-col gap-14 w-full'>           
             <Toaster position="top-center" />
-            {currentStep == 1 && <RaportOverviewWithSuggestion suggestedProducts={suggestedProducts} handleCountCieploAPI={handleCountCieploAPI} loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
+            {currentStep == 1 && <RaportOverviewWithSuggestion products={products} suggestedProducts={suggestedProducts} handleCountCieploAPI={handleCountCieploAPI} loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 2 && <ContactDetails loadingUpper={loading} errors={errors} setErrors={setErrors} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 3 && <FullRaportPreview formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
         </div>

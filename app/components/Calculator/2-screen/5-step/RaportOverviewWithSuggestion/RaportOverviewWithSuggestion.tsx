@@ -7,8 +7,14 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
 
-function RaportOverviewWithSuggestion({formData, step, loadingUpper, setStep, setFormData, handleCountCieploAPI, suggestedProducts}: {formData: any, loadingUpper: boolean, step: any, setStep: any, setFormData: any, handleCountCieploAPI: any, suggestedProducts: any}) {
-    const [ suggestedProduct, setSuggestedProduct ] = useState<any>(null)
+function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, setStep, setFormData, handleCountCieploAPI, suggestedProducts}: {formData: any, loadingUpper: boolean, step: any, products: any, setStep: any, setFormData: any, handleCountCieploAPI: any, suggestedProducts: any}) {
+
+    useEffect(() => {
+        if(!loadingUpper && products.length > 0 && suggestedProducts == null){
+            console.log('go on from raport view')
+            handleCountCieploAPI()
+        } 
+    }, [products])
   
     return (
         <div className='flex flex-col gap-10 pb-10'>
