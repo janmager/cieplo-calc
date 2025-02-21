@@ -207,7 +207,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='pt-2' />
                 <InfoBox title='Rok budowy' value={formData.house_building_years ? formData.house_building_years : ''} />
                 <InfoBox title='Lokalizacja' value={formData['house_location'] && formData['house_location']['full_name']} />
-                <InfoBox title='Zapotrzebowanie cieplne' value={formData.heat_demand && formData.heat_demand.know && formData.heat_demand.kW ? `${formData.heat_demand.kW} kW` : `${formData.api_max_heating_power} kW`} />
+                <InfoBox title='Zapotrzebowanie cieplne' value={formData.heat_demand && formData.heat_demand.know && formData.heat_demand.kW ? `${formData.heat_demand.kW} kW` : `${(Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power)).toFixed(2)} kW`} />
                 <InfoBox title='Projektowa temperatura zewnętrzna' value={formData.project_outside_temp ? `${formData.project_outside_temp} °C` : '? °C'} />
                 <InfoBox title='Zakładana temperatura w pomieszczeniu' value={formData.heat_demand.temp ? `${formData.heat_demand.temp} °C` : '? °C'} />
             </div>
@@ -218,7 +218,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Moc grzewcza</span>
                         <div className='flex flex-row items-center gap-2.5'>
-                            <span className='text-[30px] onPrintText20 font-[700]'>{formData.api_bivalent_point_heating_power ? formData.api_bivalent_point_heating_power : '?'}kW</span>
+                            <span className='text-[30px] onPrintText20 font-[700]'>{formData.api_max_heating_power ? (Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power)).toFixed(2) : '?'}kW</span>
                             <span className='font-[400] onPrintText20 text-[20px]'>(C.O. + CWU)</span>
                         </div>
                     </div>

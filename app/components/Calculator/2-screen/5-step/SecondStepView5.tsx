@@ -95,7 +95,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                     api_design_outdoor_temperature: res.data.design_outdoor_temperature,
                     api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
                 }
-                kw_need = res.data.max_heating_power
+                kw_need = res.data.max_heating_power + res.data.hot_water_power
             }
             else{
                 toast.error('Błąd pobierania danych z API')
@@ -127,6 +127,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
         if(currentStep == 1){
         }
         if(currentStep == 2){
+            console.log(formData);
         }
         if(currentStep == 3){
             handleAddNewRaport()

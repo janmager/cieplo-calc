@@ -25,37 +25,39 @@ export const findBestFitProduct = ({
         let raport: any = []
 
         toTempArray.forEach(number => {
-            tempArray.push({x: number, y: countKwForSpecificTemp({
+            tempArray.push({x: number, y: Number(countKwForSpecificTemp({
                 temp_outside: number,
                 temp_inside_project: temp_inside,
                 temp_outside_climate: proj_temp_outside,
                 power_kW: needed_kw
-            })})
+            }))})
         })
 
         products.map((singleProduct: Product) =>  {
             let pompArray: Point[] = [];
 
             toPompArray.forEach((number: any) => {
-                pompArray.push({x: number, y: getPompaData({pompa: singleProduct, max_power: max_install_temp, outside_temp: number.toString()})})
+                getPompaData({pompa: singleProduct, max_power: max_install_temp, outside_temp: number.toString()}) && pompArray.push({x: Number(number), y: Number(getPompaData({pompa: singleProduct, max_power: max_install_temp, outside_temp: number.toString()}))})
             })
-
-            console.log(pompArray)
 
             const punktBiwa: any = getPunktBiwalentny(tempArray, pompArray);
-            const perfectBiwaPoint = proj_temp_outside/2;
-            const isGood = Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x)) > 2 ? false : true;
-    
-            raport.push({
-                product: singleProduct,
-                productName: singleProduct.desc,
-                isGood: isGood,
-                type: singleProduct.type,
-                range: Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x))
-            })
+            if(punktBiwa){
+                const perfectBiwaPoint = proj_temp_outside/2;
+                const isGood = Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x)) > 2 ? false : true;
+        
+                raport.push({
+                    product: singleProduct,
+                    productName: singleProduct.desc,
+                    isGood: isGood,
+                    type: singleProduct.type,
+                    range: Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x))
+                })
+            }
         })
 
         let fitting_products: any = []
+
+        console.log(raport);
 
         raport = raport.filter((r: any) => r.isGood && r)
         let monobloks = raport.filter((r: any) => r.type == 'Monoblok')
