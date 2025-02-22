@@ -71,12 +71,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .admin-edit-table {
-    border: 1px solid rgb(155, 155, 155);
+    border: 1px solid rgb(201, 201, 201);
 }
 
 .admin-edit-table tr,
 .admin-edit-table td {
-    border: 1px solid rgb(155, 155, 155);
+    border: 1px solid rgb(201, 201, 201);
     text-align: center;
 }
 

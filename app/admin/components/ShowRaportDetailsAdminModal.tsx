@@ -44,7 +44,7 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
                     <DetailedRaportAdmin data={data} />
                 </div>
                 <div className='flex flex-col gap-2.5 mt-2 md:mt-5'>
-                    <div onClick={() => loading ? null : reactToPrintFn()} className='bg-[#FF4510] text-lg text-white py-5 px-10 rounded flex items-center justify-center text-center cursor-pointer font-semibold'>Wydrukuj raport</div>
+                    <div onClick={() => loading ? null : reactToPrintFn()} className='bg-[#FF4510] text-lg text-white py-5 px-10 rounded flex items-center justify-center text-center cursor-pointer font-semibold'>Wydrukuj / Zapisz .PDF</div>
                     <div onClick={() => setVisible(false)} className='bg-transparent text-lg text-gray-500 py-2.5 px-10 hover:text-gray-600 rounded flex border border-gray-300 hover:bg-gray-100 transition-all duration-300 items-center justify-center text-center cursor-pointer font-medium'>Zamknij</div>
                 </div>
                 <Image src={xIcon.src} alt="close icon" height={20} width={20} className='absolute top-[20px] opacity-50 hover:opacity-100 transition-all duration-300 right-[20px] cursor-pointer' onClick={() => setVisible(false)} />

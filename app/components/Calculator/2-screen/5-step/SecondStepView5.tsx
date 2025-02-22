@@ -110,8 +110,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             max_install_temp: formData.max_temp_of_power_instalation.split(' ')[0]
         })
 
-        console.log(checkedProducts);
-
         setFormData({
             ...formData, 
             ...fromApi && fromApi,
@@ -126,7 +124,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
         if(currentStep == 1){
         }
         if(currentStep == 2){
-            console.log(formData);
         }
         if(currentStep == 3){
             handleAddNewRaport()

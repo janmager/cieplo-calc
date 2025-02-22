@@ -1,6 +1,6 @@
 import { Instalators, Product } from '@prisma/client'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import trashIcon from '@/assets/svg/trash-icon.svg'
 import ConfirmModal from '@/app/components/Customs/ConfirmModal'
 import toast from 'react-hot-toast'
@@ -93,7 +93,6 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
                                 <span className="text-[11px] underline cursor-pointer" onClick={() => handleProductInfoModal(product)}>zobacz szczegóły</span>
                             </div>
                             <div className='w-full col-span-2 md:col-span-1 flex justify-center flex-row gap-4 mt-2 md:mt-0 lg:justify-end pl-5 pr-3 lg:items-center'>
-                                {product.p50_plus15 ? '✅' : '❌'}
                                 <Image onClick={() => confirmDelete(product)} src={trashIcon.src} height={19} width={19} alt="Trash icon" className='opacity-30 hover:opacity-80 transition-all duration-300 hover:cursor-pointer grayscale hover:grayscale-0' />
                             </div>
                         </div>
@@ -102,7 +101,7 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
             }
             </div>
             {showConfirm && <ConfirmModal title='Czy na pewno chcesz usunąć produkt?' desc='Produkt zostanie trwale usunięty.' yesButtonText='Tak' noButtonText='Nie' onClose={() => setShowConfirm(false)} onConfirm={() => deleteProduct()} />}
-            {showDetails && <DetailsProductModal product={currentDetails} show={showDetails} setShow={setShowDetails} />}
+            {showDetails && <DetailsProductModal fetchAllProducts={fetchAllProducts} product={currentDetails} show={showDetails} setShow={setShowDetails} />}
         </div>
     )
 }

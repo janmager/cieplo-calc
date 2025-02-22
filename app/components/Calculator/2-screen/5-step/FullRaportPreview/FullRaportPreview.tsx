@@ -232,7 +232,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 </div>
             </div>}
 
-            <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Wymiary</p>
                 <div className='grid grid-cols-1 md:grid-cols-10 gap-10 mt-10'>
                     <div className='flex flex-col md:col-span-4'>
@@ -255,9 +255,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         <DynamicHouseSketch paddingLeft={false} setFormData={setFormData} formData={formData} />
                     </div>
                 </div>
-            </div>
+            </div>}
 
-            <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Ściany</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
@@ -294,9 +294,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         <InfoBox title='Rodzaj drzwi zewnętrznych' value={formData.doors_type ? formData.doors_type : ''} />
                     </div>
                 </div>
-            </div>
+            </div>}
 
-            <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Poddasze i parter</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
@@ -322,9 +322,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         }
                     </div>
                 </div>
-            </div>
+            </div>}
 
-            <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Ogrzewanie budynku</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
@@ -350,7 +350,38 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         <p className='font-[700] mt-2.5 onPrintText14'>{!formData.hot_water_steroid_foto && !formData.how_water_steroid_kolektor ? 'brak' : `${formData.hot_water_steroid_foto ? 'Instalacja fotowoltaiczna' : ''}${formData.how_water_steroid_kolektor && formData.hot_water_steroid_foto ? ', Kolektory słoneczne' : formData.how_water_steroid_kolektor ? 'Kolektory słoneczne' : ''}`}</p>
                     </div>
                 </div>
-            </div>
+            </div>}
+
+            {formData.api_max_heating_power && <div className='mt-20 pagebreak'>
+                <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Obliczone zapotrzebowanie</p>
+                <div className='grid grid-cols-1 gap-10 mt-10'>
+                    <div>             
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>        
+                            <InfoBox title='Całkowita powierzchnia budynku' value={formData.api_total_area ? `${formData.api_total_area} m²` : '-'} />
+                            <InfoBox title='Ogrzewana powierzchnia budynku' value={formData.api_heated_area ? `${formData.api_heated_area} m²` : '-'} />
+                        </div> 
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>   
+                            <InfoBox title='Maksymalna moc grzewcza na potrzeby wyłącznie ogrzewania budynku w najzimniejszym dniu zimy (dla projektowej temperatury zewnętrznej)' value={formData.api_max_heating_power ? `${formData.api_max_heating_power} kW` : '-'} />
+                            <InfoBox title='Przeciętna moc grzewcza na potrzeby wyłącznie ogrzewania budynku przy średniej zimowej temperaturze zewnętrznej' value={formData.api_avg_heating_power ? `${Number(formData.api_avg_heating_power).toFixed(2)} kW` : '-'} />      
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>  
+                            <InfoBox title='Moc grzewcza w punkcie biwalentnym, tj. przy temperaturze zewnętrznej wyliczonej odpowiednio dla strefy klimatycznej, w której znajduje się budynek' value={formData.api_bivalent_point_heating_power ? `${formData.api_bivalent_point_heating_power} kW` : '-'} />
+                            <InfoBox title='Średnia temperatura zewnętrzna w ciągu sezonu grzewczego na podstawie danych klimatycznych' value={formData.api_avg_outdoor_temperature ? `${formData.api_avg_outdoor_temperature} °C` : '-'} />    
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>   
+                            <InfoBox title='Całkowite roczne zużycie energii na potrzeby wyłącznie ogrzewania budynku (nie jest w to wliczone przygotowanie CWU)' value={formData.api_annual_energy_consumption ? `${formData.api_annual_energy_consumption} kWh` : '-'} />
+                            <InfoBox title='Współczynnik zapotrzebowania na ciepło.' value={formData.api_annual_energy_consumption_factor ? `${formData.api_annual_energy_consumption_factor} kWh/m²` : '-'} />      
+                        </div>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'> 
+                            <InfoBox title='Współczynnik zapotrzebowania na moc grzewczą' value={formData.api_heating_power_factor ? `${formData.api_heating_power_factor} W/m²` : '-'} />
+                            <InfoBox title='Projektowa temperatura zewnętrzna w danej lokalizacji, dla której liczona jest maksymalna wymagana moc grzewcza na potrzeby wyłącznie ogrzewania budynku' value={formData.api_design_outdoor_temperature ? `${formData.api_design_outdoor_temperature} °C` : '-'} />      
+                        </div>
+                        {formData.api_hot_water_power && <div className='grid grid-cols-1 gap-10'>  
+                            {formData.api_hot_water_power && <InfoBox title='Dodatkowa moc grzewcza na potrzeby przygotowania CWU' value={formData.api_hot_water_power ? `${formData.api_hot_water_power} kW` : '-'} />}         
+                        </div>}
+                    </div>
+                </div>
+            </div>}
 
             <div className='mt-20 pagebreak'>
                 <p className='text-[30px] text-[#FF4510] font-[700]'>Sugerowane urządzenia do Twojego budynku</p>
@@ -373,11 +404,11 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div> */}
-                <div onClick={() => savetoPDF({first: false})} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
-                    <span>{loading ? 'trwa pobieranie...' : 'zapisz stronę'}</span>
+                <div onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                    <span>kopiuj link do raportu</span>
                 </div>
                 <div onClick={() => handleOpenModalRaport()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
-                    <span>{loading ? 'trwa pobieranie...' : 'pobierz raport'}</span>
+                    <span>{loading ? 'trwa pobieranie...' : 'pobierz raport pdf'}</span>
                 </div>
             </div>
 

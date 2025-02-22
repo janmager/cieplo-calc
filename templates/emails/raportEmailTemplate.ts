@@ -95,7 +95,7 @@ export const raportEmailTemplate = ({email, raport_url, raportId}: {email: strin
                 <tr>
                     <td>&nbsp;</td>
                     <td style="text-align: center;">
-                        <img src="https://i.ibb.co/924Yvxw/logo-black-small.png" alt="logo" height="32" width="164" />
+                        <img src="https://i.ibb.co/924Yvxw/logo-black-small.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -107,9 +107,9 @@ export const raportEmailTemplate = ({email, raport_url, raportId}: {email: strin
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%;" width="100%">
                                 <tr>
                                     <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px 24px 38px 24px;" valign="top">
-                                    <p style="color: black; font-family: Helvetica, sans-serif; font-size: 17px; font-weight: bold; margin: 0; margin-bottom: 16px;">Nowy raport</p>
-                                    <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px;">Twój raport wyceny został wygenerowany</p><br/>
-                                    <a style="background: #FF4510; text-decoration: none; color: white; padding: 10px 30px; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
+                                    <p style="color: black; font-family: Helvetica, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 16px; margin-top: 10px; margin-left: 5px;">Nowy raport</p>
+                                    <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px; margin-left: 5px;">Twój raport wyceny został wygenerowany</p><br/>
+                                    <a style="background: #FF4510; margin-bottom: 20px; width: 100%; text-decoration: none; font-size: 17px; color: white; padding: 15px 30px; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
                                     </td>
                                 </tr>
                             </table>

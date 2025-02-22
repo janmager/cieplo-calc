@@ -11,7 +11,6 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
 
     useEffect(() => {
         if(!loadingUpper && products.length > 0 && suggestedProducts == null){
-            console.log('go on from raport view')
             handleCountCieploAPI()
         } 
     }, [products])
@@ -36,17 +35,6 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                         <span className='font-bold'>{formData.house_location['full_name']}</span>
                     </div>
                 </div>
-                {
-                    suggestedProducts == null && 
-                    <div className='flex items-center mt-10 justify-start'>
-                        <div>
-
-                            <div onClick={() => loadingUpper ? null : handleCountCieploAPI()} className={`border font-bold text-[14px] md:text-[16px] border-[#FF4510] px-5 h-[50px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loadingUpper ? 'opacity-50 grayscale' : ''}`}>
-                                <span>{loadingUpper ? 'Ładowanie...' : 'Sprawdź proponowane produkty'}</span>
-                            </div>
-                        </div>
-                    </div>
-                }
             </div>
 
             {suggestedProducts != null &&
@@ -62,9 +50,12 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                     <img src={`${productObj.image}`} alt={productObj.desc} className='w-full' />
                                     <div className='flex flex-col gap-1 items-center justify-center text-center'>
                                         <span className="uppercase text-[#FF4510] font-[600] text-xs">{productObj.type}</span>
-                                        <span className="text-2xl tracking-tight font-[700]">{productObj.name}</span>
+                                        <span className="text-2xl tracking-tight font-[700] line-clamp-2">{productObj.name}</span>
                                         <span className='text-sm font-[400] text-gray-500'>{productObj.desc}</span>
                                     </div>
+                                    {productObj.product_link && <a target='_blank' href={productObj.product_link} className='bg-[#FF4510] product-link hideOnPrint mt-7 flex items-center justify-center h-[54px] w-full uppercase text-white font-[700]'>
+                                        <span>ZOBACZ KARTĘ PRODUKTU</span>
+                                    </a>}
                                 </div>
                             )
                         })

@@ -69,7 +69,6 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   const [ products, setProducts ] = useState([]);
 
   const getProducts = async () => {
-    console.log('gettings')
     const p: any = await getAllProducts();
     if(p.response) setProducts(p.data)
     else setProducts([])

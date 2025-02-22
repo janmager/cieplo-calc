@@ -4,7 +4,7 @@ import { saveProduct } from '@/utils/supabase/saveProduct';
 import { Prisma, Product } from '@prisma/client'
 import React, { useState } from 'react'
 
-function DetailsProductModal({product, show, setShow}: {product: Product | null, show: boolean, setShow: any}) {
+function DetailsProductModal({product, show, setShow, fetchAllProducts}: {product: Product | null, show: boolean, setShow: any, fetchAllProducts: any}) {
     const [ tempProduct, setTempProduct ] = useState<Product | null>(product || null)
     const [ loading, setLoading ] = useState(false);
     const [ error, setError ] = useState('')
@@ -18,6 +18,7 @@ function DetailsProductModal({product, show, setShow}: {product: Product | null,
             const edit = await saveProduct(tempProduct as Product)
             if(edit.response){
                 setShow(false)
+                fetchAllProducts();
             }
             else return false;
         }
@@ -32,9 +33,22 @@ function DetailsProductModal({product, show, setShow}: {product: Product | null,
     if(show && tempProduct != null) return (
         <div className='fixed top-0 left-0 z-50 w-dvw h-dvh flex items-center justify-center'>
             <div className='z-40 bg-white p-10 flex items-center flex-col rounded-lg text-gray-800'>
-                <span className="text-sm text-gray-400 font-[400]">{tempProduct.type}</span>
-                <span className="text-xl font-[600]">{tempProduct.name}</span>
-                <span className="font-[400] text-gray-500">{tempProduct.desc}</span>
+                <div className="flex flex-col w-full">
+                    <label>Typ</label>
+                    <input type="text" value={tempProduct.type ? tempProduct.type : ''} onChange={(e) => setTempProduct({...tempProduct, type: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                </div>
+                <div className="flex mt-2.5 flex-col w-full">
+                    <label>Nazwa</label>
+                    <input type="text" value={tempProduct.name ? tempProduct.name : ''} onChange={(e) => setTempProduct({...tempProduct, name: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                </div>
+                <div className="flex mt-2.5 flex-col w-full">
+                    <label>Model</label>
+                    <input type="text" value={tempProduct.desc ? tempProduct.desc : ''} onChange={(e) => setTempProduct({...tempProduct, desc: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                </div>
+                <div className="flex mt-2.5 flex-col w-full">
+                    <label>Link do karty produktu</label>
+                    <input type="text" value={tempProduct.product_link ? tempProduct.product_link : ''} onChange={(e) => setTempProduct({...tempProduct, product_link: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                </div>
 
                 <table className="admin-edit-table mt-5 mb-3">
                     <tr>

@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 function CustomAdminDetailsInputData({label, data, checkBox = false, smallValue = false, col = false}: {label: string, data: any, checkBox?: boolean, smallValue?: boolean, col?: boolean}) {
     return (
-        <div className={`${checkBox ? `${col ? 'md:grid-cols-1' : 'md:grid-cols-2'} flex items-start md:items-center md:grid ${(data == 'yes' || data == 'no') ? col ? 'flex-col' : 'flex-row' : 'flex-col'}` : smallValue ? col ? 'md:grid-cols-1 grid' : 'md:grid-cols-6 grid' : `flex ${(data == 'yes' || data == 'no') ? col ? 'flex-col' : 'flex-row' : 'flex-col'} md:grid-cols-4 md:grid`} gap-2 md:gap-5`}>
+        <div className={`${checkBox ? `${col ? 'sm:grid-cols-1' : 'sm:grid-cols-2'} flex items-start sm:items-center sm:grid ${(data == 'yes' || data == 'no') ? col ? 'flex-col' : 'flex-row' : 'flex-col'}` : smallValue ? col ? 'md:grid-cols-1 grid' : 'md:grid-cols-6 grid' : `flex ${(data == 'yes' || data == 'no') ? col ? 'flex-col' : 'flex-row' : 'flex-col'} sm:grid-cols-4 sm:grid`} gap-2 md:gap-5`}>
             <span className={`text-left flex items-center justify-start ${col ? 'md:justify-start md:text-left' : 'md:justify-end md:text-right'} font-[500] ${smallValue ? 'md:col-span-4' : ''}`}>{label}:</span>
             {
                 data == 'yes' ? 
@@ -16,7 +16,7 @@ function CustomAdminDetailsInputData({label, data, checkBox = false, smallValue 
                 // <Image src={declineIcon.src} className={`${checkBox ? 'md:ml-[-20px]' : ''}`} height={26} width={26} alt='no' />
                 : null
             }
-            {data != 'yes' && data != 'no' && <input value={data ? typeof data == 'object' ? data.join(', ') : data : 'nie podano'} readOnly className={`border ${checkBox ? '' : smallValue ? 'md:col-span-2' : 'md:col-span-3'} cursor-default outline-none rounded-lg h-[40px] w-full text-black px-3 flex flex-row border-[#CDCDCD]`} />}
+            {data != 'yes' && data != 'no' && <input value={data ? typeof data == 'object' ? data.join(', ') : data : 'nie podano'} readOnly className={`border ${checkBox ? '' : smallValue ? 'sm:col-span-2' : 'sm:col-span-3'} cursor-default outline-none rounded-lg h-[40px] w-full text-black px-3 flex flex-row border-[#CDCDCD]`} />}
         </div>
     )
 }
