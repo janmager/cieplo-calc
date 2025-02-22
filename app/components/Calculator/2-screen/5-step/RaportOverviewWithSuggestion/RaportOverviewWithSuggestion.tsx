@@ -37,7 +37,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                 </div>
             </div>
 
-            {suggestedProducts != null &&
+            {suggestedProducts != null ?
             <div>
                 <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
                 <div className={`mt-5 grid grid-cols-1 ${suggestedProducts.length == 3 ? 'md:grid-cols-3' : suggestedProducts.length == 2 ? 'md:grid-cols-2' : ''} gap-10`}>
@@ -61,6 +61,9 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                         })
                     }
                 </div>
+            </div> : 
+            <div>
+                // LOADDER    
             </div>}
 
             {suggestedProducts != null && 
