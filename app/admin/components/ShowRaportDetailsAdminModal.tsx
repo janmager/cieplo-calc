@@ -34,7 +34,7 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
                 <Image src={loadingIcon.src} height="24" width="24" alt="Loading..." className="animate-spin opacity-30" />
             </div>
             :
-            <div className='bg-white gap-4 md:gap-8 relative z-[101] h-full xl:h-[90%] w-full max-w-full xl:max-w-[90%] p-5 md:p-10 rounded flex flex-col'>
+            <div className='bg-white gap-4 md:gap-8 relative z-[101] h-full lg:h-[90%] w-full max-w-full lg:max-w-[900px] p-5 md:p-10 rounded flex flex-col'>
                 <div className='flex flex-col gap-1'>
                     <h1 className='text-[24px] font-bold'>Raport wyceny</h1>
                     <span className='font-[500] mt-2'><span className='opacity-75 font-normal'>z dnia</span> {new Date(data.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span>

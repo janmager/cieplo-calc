@@ -104,12 +104,12 @@ export const raportEmailTemplate = ({email, raport_url, raportId}: {email: strin
                     <td class="container" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; padding-top: 24px; width: 600px; margin: 0 auto;" width="600" valign="top">
                         <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
                             <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Wynik raportu</span>
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%;" width="100%">
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%; height: 100%;" width="100%">
                                 <tr>
                                     <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px 24px 68px 24px;" valign="top">
                                     <p style="color: black; font-family: Helvetica, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 16px; margin-top: 10px; margin-left: 5px;">Nowy raport</p>
                                     <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px; margin-left: 5px;">Twój raport wyceny został wygenerowany</p><br/>
-                                    <a style="background: #FF4510; margin-bottom: 20px; width: 100%; text-decoration: none; font-size: 17px; color: white; padding: 15px 30px; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
+                                    <a style="background: #FF4510; margin-bottom: 20px; width: 100%; text-decoration: none; font-size: 17px; color: white; padding: 15px 30px; display: block; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
                                     </td>
                                 </tr>
                             </table>

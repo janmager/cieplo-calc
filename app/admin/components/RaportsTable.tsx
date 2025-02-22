@@ -110,15 +110,15 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                 raports.map((raport) => {
                     return (
                         <div key={raport.id} className='grid grid-cols-2 md:flex border-t md:border-t-0 w-full text-xs flex-row flex-wrap md:flex-nowrap border-b border-l border-r py-2'>
-                            <div className='w-full md:min-w-[120px] md:max-w-[120px] px-4 border-r flex items-center'>
+                            <div className='w-full md:min-w-[120px] md:max-w-[120px] px-4 md:border-r flex items-center'>
                                 {cutStartAndEndString(raport.id, 5)}
                             </div>
-                            <div className='pl-4 pr-0 md:pr-4 md:border-r flex w-full min-w-[170px] max-w-[170px] items-center justify-end md:justify-start'>
+                            <div className='pl-4 pr-2 md:pr-4 md:border-r flex w-full min-w-[170px] max-w-[170px] items-center justify-end md:justify-start'>
                                 {new Date(raport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}
                             </div>
-                            <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-4 border-r flex truncate items-center overflow-auto'>
+                            {(raport.send_raport_email || raport.contact_phone_number) ? <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-4 border-r flex truncate items-center overflow-auto'>
                                 {raport.send_raport_email}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}
-                            </div>
+                            </div> : <div className='col-span-2 w-full'></div>}
                             <div className='w-full md:w-fit col-span-2 min-w-[240px] md:col-span-1 flex justify-center mt-5 md:mt-0 flex-row gap-3 lg:justify-end pl-5 pr-3 lg:items-end'>
                                 <span onClick={() => handleShowDetails(raport.id)} className='text-[11px] border-r pr-5 ml-5 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
                                 <Link target='_blank' href={`/wynik/${raport.id}`} className='text-[11px] opacity-70 hover:opacity-100 border-r pr-5'>Otwórz</Link>

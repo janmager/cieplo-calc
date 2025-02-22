@@ -201,7 +201,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                     {
                         data.recommendedProducts  && JSON.parse(data.recommendedProducts).map((item: any, index: number) => {
                             return (
-                                <div key={index} className={`flex py-4 flex-row itesm-center justify-center gap-4 bg-white px-5 rounded-2xl`}>
+                                <div key={index} className={`flex py-4 flex-col sm:flex-row items-center justify-center gap-4 bg-white px-5 rounded-2xl`}>
                                     <div>
                                         <img width="160" src={item.product.image} alt={item.product.name} />
                                     </div>
@@ -225,10 +225,10 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                     {
                         instalators.map((instalator: Instalators, id: number) => (
                             <div key={id} className={`flex py-4 flex-col itesm-center justify-center bg-white px-5 gap-2 rounded-2xl`}>
-                                <div className="font-[600] text-lg tracking-tighter">
+                                <div className="font-[600] text-sm sm:text-lg tracking-tighter">
                                     {instalator.name}
                                 </div>
-                                <div className="grid grid-cols-2 w-full gap-5`">
+                                <div className="grid sm:grid-cols-2 w-full mt-2 sm:mt-0 gap-2 md:gap-5`">
                                     <div className='flex flex-row gap-3 items-center'>
                                         <Image src={'/phone.svg'} className="pdf-margin-top" height={14} width={13} alt='phone' />
                                         <span className='text-[#FF4510] onPrintText14 text-[14px] font-[400]'>{instalator.phone}</span>
