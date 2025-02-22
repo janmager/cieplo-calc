@@ -11,7 +11,7 @@ import postIcon from '@/assets/svg/post-icon.svg'
 import Image from 'next/image'
 import { getAllInstalators } from '@/utils/supabase/getAllInstalators'
 
-function DetailedRaportAdmin({data}:{data: Raport}) {
+function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Raport, print?: any, printAuto?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null)
 
     if(!data){
@@ -27,7 +27,7 @@ function DetailedRaportAdmin({data}:{data: Raport}) {
             setInstalators(ins.data)
         }
         else {
-            setInstalators(null)
+            setInstalators([])
         }
     }
 
@@ -36,6 +36,12 @@ function DetailedRaportAdmin({data}:{data: Raport}) {
             getAllInstalatorsDb()
         }
     }, [])
+
+    // useEffect(() => {
+    //     if(instalators.length >= 0 && printAuto){
+    //         print();
+    //     }
+    // }, [instalators])
 
     return (
         <div className='flex flex-col gap-5 mt-[-20px]'>
@@ -178,13 +184,13 @@ function DetailedRaportAdmin({data}:{data: Raport}) {
                     <CustomAdminDetailsDivider text='Obliczone zapotrzebowanie' />
                     <CustomAdminDetailsInputData checkBox={true} label='Całkowita powierzchnia budynku' data={data.api_total_area ? `${data.api_total_area} m²` : '-'} />
                     <CustomAdminDetailsInputData checkBox={true} label='Ogrzewana powierzchnia budynku' data={data.api_heated_area ? `${data.api_heated_area} m²` : '-'} />
-                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Maksymalna moc grzewcza na potrzeby wyłącznie ogrzewania budynku w najzimniejszym dniu zimy (dla projektowej temperatury zewnętrznej)' data={data.api_max_heating_power ? `${data.api_max_heating_power} kW` : '-'} />
+                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Maksymalna moc grzewcza na potrzeby wyłącznie ogrzewania budynku w najzimniejszym dniu zimy (dla projektowej temperatury zewnętrznej)' data={data.api_max_heating_power ? `${Number(data.api_max_heating_power).toFixed(2)} kW` : '-'} />
                     <CustomAdminDetailsInputData checkBox={true} col={true} label='Przeciętna moc grzewcza na potrzeby wyłącznie ogrzewania budynku przy średniej zimowej temperaturze zewnętrznej' data={data.api_avg_heating_power ? `${Number(data.api_avg_heating_power).toFixed(2)} kW` : '-'} />
-                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Moc grzewcza w punkcie biwalentnym, tj. przy temperaturze zewnętrznej wyliczonej odpowiednio dla strefy klimatycznej, w której znajduje się budynek' data={data.api_bivalent_point_heating_power ? `${data.api_bivalent_point_heating_power} kW` : '-'} />
-                    {data.api_hot_water_power && <CustomAdminDetailsInputData checkBox={true} col={true} label='Dodatkowa moc grzewcza na potrzeby przygotowania CWU' data={data.api_hot_water_power ? `${data.api_hot_water_power} kW` : '-'} />}
-                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Całkowite roczne zużycie energii na potrzeby wyłącznie ogrzewania budynku (nie jest w to wliczone przygotowanie CWU)' data={data.api_annual_energy_consumption ? `${data.api_annual_energy_consumption} kWh` : '-'} />
-                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Współczynnik zapotrzebowania na ciepło.' data={data.api_annual_energy_consumption_factor ? `${data.api_annual_energy_consumption_factor} kWh/m²` : '-'} />
-                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Współczynnik zapotrzebowania na moc grzewczą' data={data.api_heating_power_factor ? `${data.api_heating_power_factor} W/m²` : '-'} />
+                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Moc grzewcza w punkcie biwalentnym, tj. przy temperaturze zewnętrznej wyliczonej odpowiednio dla strefy klimatycznej, w której znajduje się budynek' data={data.api_bivalent_point_heating_power ? `${Number(data.api_bivalent_point_heating_power).toFixed(2)} kW` : '-'} />
+                    {data.api_hot_water_power && <CustomAdminDetailsInputData checkBox={true} col={true} label='Dodatkowa moc grzewcza na potrzeby przygotowania CWU' data={data.api_hot_water_power ? `${Number(data.api_hot_water_power).toFixed(2)} kW` : '-'} />}
+                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Całkowite roczne zużycie energii na potrzeby wyłącznie ogrzewania budynku (nie jest w to wliczone przygotowanie CWU)' data={data.api_annual_energy_consumption ? `${Number(data.api_annual_energy_consumption).toFixed(2)} kWh` : '-'} />
+                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Współczynnik zapotrzebowania na ciepło.' data={data.api_annual_energy_consumption_factor ? `${Number(data.api_annual_energy_consumption_factor).toFixed(2)} kWh/m²` : '-'} />
+                    <CustomAdminDetailsInputData checkBox={true} col={true} label='Współczynnik zapotrzebowania na moc grzewczą' data={data.api_heating_power_factor ? `${Number(data.api_heating_power_factor).toFixed(2)} W/m²` : '-'} />
                     <CustomAdminDetailsInputData checkBox={true} col={true} label='Projektowa temperatura zewnętrzna w danej lokalizacji, dla której liczona jest maksymalna wymagana moc grzewcza na potrzeby wyłącznie ogrzewania budynku' data={data.api_design_outdoor_temperature ? `${data.api_design_outdoor_temperature} °C` : '-'} />
                     <CustomAdminDetailsInputData checkBox={true} col={true} label='Średnia temperatura zewnętrzna w ciągu sezonu grzewczego na podstawie danych klimatycznych' data={data.api_avg_outdoor_temperature ? `${data.api_avg_outdoor_temperature} °C` : '-'} />
                 </>

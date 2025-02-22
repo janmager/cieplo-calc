@@ -178,7 +178,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
     }
     
     return (
-        <div className='flex flex-col gap-0 pb-10 px-10' ref={contentRef}>
+        <div className='flex flex-col gap-0 pb-10 px-5 md:px-10' ref={contentRef}>
             <Toaster position="top-center" />
             <div className='py-10 w-full hidden mt-[-30px] mb-10 bg-black items-center justify-center px-10 showOnPrint'>
                 <Image src={logo.src} className='mt-[20px]' alt="Logo Gree" width={160} height={40} />
@@ -189,8 +189,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             </div>
 
             {<div className='mt-10 onPrintMarginBottom'>
-                <div className='flex flex-row items-center gap-2.5' ref={raportLinkRef}>
-                    <p className='onPrintText14'>Raport jest dostępny pod adresem: <a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id}</a></p>
+                <div className='flex flex-col md:flex-row items-start md:items-center gap-2.5' ref={raportLinkRef}>
+                    <p className='onPrintText14'>Raport jest dostępny pod adresem: </p><a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id.substring(0,4)}...</a>
                     <Image 
                         onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
                         src={copy.src} 
@@ -361,7 +361,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                             <InfoBox title='Ogrzewana powierzchnia budynku' value={formData.api_heated_area ? `${formData.api_heated_area} m²` : '-'} />
                         </div> 
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>   
-                            <InfoBox title='Maksymalna moc grzewcza na potrzeby wyłącznie ogrzewania budynku w najzimniejszym dniu zimy (dla projektowej temperatury zewnętrznej)' value={formData.api_max_heating_power ? `${formData.api_max_heating_power} kW` : '-'} />
+                            <InfoBox title='Maksymalna moc grzewcza na potrzeby wyłącznie ogrzewania budynku w najzimniejszym dniu zimy (dla projektowej temperatury zewnętrznej)' value={formData.api_max_heating_power ? `${Number(formData.api_max_heating_power).toFixed(2)} kW` : '-'} />
                             <InfoBox title='Przeciętna moc grzewcza na potrzeby wyłącznie ogrzewania budynku przy średniej zimowej temperaturze zewnętrznej' value={formData.api_avg_heating_power ? `${Number(formData.api_avg_heating_power).toFixed(2)} kW` : '-'} />      
                         </div>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>  
@@ -369,11 +369,11 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                             <InfoBox title='Średnia temperatura zewnętrzna w ciągu sezonu grzewczego na podstawie danych klimatycznych' value={formData.api_avg_outdoor_temperature ? `${formData.api_avg_outdoor_temperature} °C` : '-'} />    
                         </div>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>   
-                            <InfoBox title='Całkowite roczne zużycie energii na potrzeby wyłącznie ogrzewania budynku (nie jest w to wliczone przygotowanie CWU)' value={formData.api_annual_energy_consumption ? `${formData.api_annual_energy_consumption} kWh` : '-'} />
-                            <InfoBox title='Współczynnik zapotrzebowania na ciepło.' value={formData.api_annual_energy_consumption_factor ? `${formData.api_annual_energy_consumption_factor} kWh/m²` : '-'} />      
+                            <InfoBox title='Całkowite roczne zużycie energii na potrzeby wyłącznie ogrzewania budynku (nie jest w to wliczone przygotowanie CWU)' value={formData.api_annual_energy_consumption ? `${Number(formData.api_annual_energy_consumption).toFixed(2)} kWh` : '-'} />
+                            <InfoBox title='Współczynnik zapotrzebowania na ciepło.' value={formData.api_annual_energy_consumption_factor ? `${Number(formData.api_annual_energy_consumption_factor).toFixed(2)} kWh/m²` : '-'} />      
                         </div>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-10'> 
-                            <InfoBox title='Współczynnik zapotrzebowania na moc grzewczą' value={formData.api_heating_power_factor ? `${formData.api_heating_power_factor} W/m²` : '-'} />
+                            <InfoBox title='Współczynnik zapotrzebowania na moc grzewczą' value={formData.api_heating_power_factor ? `${Number(formData.api_heating_power_factor).toFixed(2)} W/m²` : '-'} />
                             <InfoBox title='Projektowa temperatura zewnętrzna w danej lokalizacji, dla której liczona jest maksymalna wymagana moc grzewcza na potrzeby wyłącznie ogrzewania budynku' value={formData.api_design_outdoor_temperature ? `${formData.api_design_outdoor_temperature} °C` : '-'} />      
                         </div>
                         {formData.api_hot_water_power && <div className='grid grid-cols-1 gap-10'>  
@@ -400,7 +400,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <RecommendedInstalators instalators={instalators} />
             </div>
 
-            <div className={`flex flex-row gap-7 mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
+            <div className={`flex flex-col sm:flex-row gap-7 mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
                 {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div> */}

@@ -23,7 +23,7 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
             setLoading(false);
         }, 400)
         setTimeout(() => {
-            automaticDownload && reactToPrintFn();
+            // automaticDownload && reactToPrintFn();
         }, 500)
     }, [])
 
@@ -34,14 +34,14 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
                 <Image src={loadingIcon.src} height="24" width="24" alt="Loading..." className="animate-spin opacity-30" />
             </div>
             :
-            <div className='bg-white gap-4 md:gap-8 relative z-[101] h-[90%] w-full max-w-[95%] md:max-w-[1440px] md:w-[80%] p-5 md:p-10 rounded flex flex-col'>
+            <div className='bg-white gap-4 md:gap-8 relative z-[101] h-full xl:h-[90%] w-full max-w-full xl:max-w-[90%] p-5 md:p-10 rounded flex flex-col'>
                 <div className='flex flex-col gap-1'>
                     <h1 className='text-[24px] font-bold'>Raport wyceny</h1>
                     <span className='font-[500] mt-2'><span className='opacity-75 font-normal'>z dnia</span> {new Date(data.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span>
                     <span className='font-[500]'><span className='opacity-75 font-normal'>Identyfikator: </span> {data.id}</span>
                 </div>
                 <div ref={contentRef} className='differentOnPrint flex-1 mt-2 noTopMargin md:mt-5 max-w-[700px] bg-gray-50 shadow border py-10 px-5 md:px-8 w-full mx-auto rounded-lg overflow-y-auto'>
-                    <DetailedRaportAdmin data={data} />
+                    <DetailedRaportAdmin printAuto={automaticDownload ? true : false} print={automaticDownload ? reactToPrintFn() : false} data={data} />
                 </div>
                 <div className='flex flex-col gap-2.5 mt-2 md:mt-5'>
                     <div onClick={() => loading ? null : reactToPrintFn()} className='bg-[#FF4510] text-lg text-white py-5 px-10 rounded flex items-center justify-center text-center cursor-pointer font-semibold'>Wydrukuj / Zapisz .PDF</div>
