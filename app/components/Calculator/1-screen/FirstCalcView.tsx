@@ -183,7 +183,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
   
     return (
     <div className='flex flex-col items-center w-full'>
-        <div style={{backgroundImage: `url(${bg.src})`, backgroundAttachment: 'fixed', backgroundSize: 'cover',}} className='w-full relative flex items-end justify-center h-[625px]'>
+        <div style={{backgroundImage: `url(${bg.src})`, backgroundAttachment: 'fixed', backgroundSize: 'cover',}} className='w-full relative flex items-end justify-center h-[400px] md:h-[625px]'>
             <div className='max-w-[1172px] px-5 xl:px-0 text-white flex flex-col gap-8 pb-8 z-20'>
                 <h1 className='text-[40px] sm:text-[60px] lg:text-[80px] font-bold leading-[110%]'>Kalkulator doboru<br/>pompy ciepła</h1>
                 <h2 className='text-[15px] md:text-[20px] font-light opacity-75'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <b>do eiusmod tempor incididunt</b> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </h2>

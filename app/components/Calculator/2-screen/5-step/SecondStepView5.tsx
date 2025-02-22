@@ -121,13 +121,11 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
     }
 
     useEffect(() => {
-        if(currentStep == 1){
-        }
-        if(currentStep == 2){
-        }
         if(currentStep == 3){
             handleAddNewRaport()
         }
+
+        window.scrollTo(0, 0);
     }, [currentStep])
   
     if(loading){

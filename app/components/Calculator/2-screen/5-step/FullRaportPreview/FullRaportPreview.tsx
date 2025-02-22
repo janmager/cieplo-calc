@@ -188,7 +188,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>Prezentujemy pełny raport</div>
             </div>
 
-            {<div className='mt-10 onPrintMarginBottom'>
+            {formData.id && <div className='mt-10 onPrintMarginBottom'>
                 <div className='flex flex-col md:flex-row items-start md:items-center gap-2.5' ref={raportLinkRef}>
                     <p className='onPrintText14'>Raport jest dostępny pod adresem: </p><a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id.substring(0,4)}...</a>
                     <Image 

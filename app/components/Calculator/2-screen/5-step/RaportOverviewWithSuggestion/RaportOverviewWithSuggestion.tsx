@@ -22,7 +22,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
             </div>
             <div className='grid grid-cols-1'>
                 <div className='flex flex-col gap-2.5'>
-                    {formData.heat_demand.kW || formData.api_max_heating_power && <div className='flex flex-col justify-start items-start'>
+                    {(formData.heat_demand.kW || formData.api_max_heating_power) && <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>{formData.api_max_heating_power ? 'Wyliczone z' : 'Z'}apotrzebowanie cieplne budynku</p>
                         <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : `${Number(formData.api_max_heating_power).toFixed(2)} kW`}</span>
                     </div>}
