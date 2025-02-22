@@ -38,7 +38,7 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
                 <div className='flex flex-col gap-1'>
                     <h1 className='text-[24px] font-bold'>Raport wyceny</h1>
                     <span className='font-[500] mt-2'><span className='opacity-75 font-normal'>z dnia</span> {new Date(data.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span>
-                    <span className='font-[500]'><span className='opacity-75 font-normal'>Identyfikator: </span> {data.id}</span>
+                    <span className='font-[500] text-xs'><span className='opacity-75 font-normal'>Identyfikator: </span> {data.id}</span>
                 </div>
                 <div ref={contentRef} className='differentOnPrint flex-1 mt-2 noTopMargin md:mt-5 max-w-[700px] bg-gray-50 shadow border py-10 px-5 md:px-8 w-full mx-auto rounded-lg overflow-y-auto'>
                     <DetailedRaportAdmin printAuto={automaticDownload ? true : false} print={automaticDownload ? reactToPrintFn() : false} data={data} />
