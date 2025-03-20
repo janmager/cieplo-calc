@@ -74,7 +74,7 @@ function SecondStepView3({formData, setFormData, errors, setErrors}: {formData: 
                         <Image src={info.src} height={24} width={24} alt="Info icon" />
                     </div>
                     <div className='flex flex-1 flex-col'>
-                        <p className='text-[14px]'>Podaj czy i jak izolowane są pomieszczenia ogrzewane od góry i od dołu budynku.</p>
+                        <p className='text-[14px]'>Podaj, czy i jak izolowane są pomieszczenia ogrzewane od góry i od dołu budynku.</p>
                     </div>
                 </div>
                 <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>

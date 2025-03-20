@@ -9,7 +9,7 @@ function SecondStepView0({formData, setFormData, errors, setErrors}: {formData: 
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
         <div>
-            <CustomLabel label='Wybierz lokalizację budynku:' />
+            <CustomLabel label='Wybierz rodzaj budynku:' />
             <div className={`flex flex-col gap-[14px] mt-[22px]`}>
                 {
                     building_types.map((item: any, idx: number) => {
@@ -28,13 +28,12 @@ function SecondStepView0({formData, setFormData, errors, setErrors}: {formData: 
                 <Image src={info.src} height={24} width={24} alt="Info icon" />
             </div>
             <div className='flex flex-1 flex-col'>
-                <b>Najpierw zbierz informacje</b>
-                <p className='pt-5 text-[15px]'>Im dokładniejsze informacje masz na temat tego jak zbudowany jest dom, tym precyzyjniejsze oszacowanie otrzymasz.</p>
-                <p className='pt-5 text-[15px]'>Będziesz potrzebować m.in takich informacji:</p>
+                <b>Przygotuj potrzebne dane</b>
+                <p className='pt-5 text-[15px]'>Im więcej szczegółowych informacji o konstrukcji domu uzupełnisz,  tym dokładniejsze oszacowanie uzyskasz. Będziesz potrzebować m.in takich danych:</p>
                 <ul className='list-disc pl-5 text-[15px] pt-2.5'>
-                    <li>zewnętrzna długość/szerokość budynku</li>
+                    <li>wymiary zewnętrzne budynku</li>
                     <li>grubość ścian zewnętrznych i materiały użyte do ich budowy</li>
-                    <li>materiały użyte do izolacji dachu/podłogi na parterze czy w piwnicy</li>
+                    <li>materiały do izolacji dachu/podłogi na parterze i w piwnicy</li>
                 </ul>
             </div>
         </div>

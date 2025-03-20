@@ -11,27 +11,27 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts'
 const steps: any = {
   0: {
     title: 'Obliczanie zapotrzebowania cieplnego budynku',
-    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na późniejszą pracę urządzenia.',
+    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na proponowane urządzenie i tym samym późniejszą jego pracę.',
     breadcrumbTitle: 'Rodzaj budynku',
   },
   1: {
     title: 'Wymiary',
-    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na późniejszą pracę urządzenia.',
+    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na proponowane urządzenie i tym samym późniejszą jego pracę.',
     breadcrumbTitle: 'Wymiary',
   },
   2: {
     title: 'Ściany',
-    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na późniejszą pracę urządzenia.',
+    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na proponowane urządzenie i tym samym późniejszą jego pracę.',
     breadcrumbTitle: 'Ściany',
   },
   3: {
     title: 'Poddasze i parter',
-    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na późniejszą pracę urządzenia.',
+    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na proponowane urządzenie i tym samym późniejszą jego pracę.',
     breadcrumbTitle: 'Poddasze i parter',
   },
   4: {
     title: 'Ogrzewanie budynku',
-    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na późniejszą pracę urządzenia.',
+    desc: 'Etap doboru jest bardzo ważny. Podane informacje będą miały wpływ na proponowane urządzenie i tym samym późniejszą jego pracę.',
     breadcrumbTitle: 'Ogrzewanie',
   },
   5: {
@@ -68,6 +68,12 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   const [ step, setStep ] = useState(formData.heat_demand.know ? 5 : 0)
   const [ products, setProducts ] = useState([]);
 
+  const transferToStep = (step: any) => {
+    if(step == 5) return false;
+    if(formData.building_type == '') return false;
+    setStep(Number(step))
+  }
+
   const getProducts = async () => {
     const p: any = await getAllProducts();
     if(p.response) setProducts(p.data)
@@ -77,6 +83,11 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   useEffect(() => {
     if(products.length == 0) getProducts()
   }, [])
+
+
+  useEffect(() => {
+    console.log(errors)
+  }, [errors])
 
   const validation = () => {
     let valid = true;
@@ -225,12 +236,12 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setErrors({...errors, 'is_roof_isolation' : true});
         return false;
       }
-      if(formData.is_roof_isolation == 'Tak, jest jakaś izolacja' && !formData.isolation_roof_material){
+      if(formData.is_roof_isolation == 'Tak, jest izolacja' && !formData.isolation_roof_material){
         valid = false;
         setErrors({...errors, 'isolation_roof_material' : {msg: 'Wybierz materiał z listy'}});
         return false;
       }
-      if(formData.is_roof_isolation == 'Tak, jest jakaś izolacja' && (formData.isolation_roof_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
+      if(formData.is_roof_isolation == 'Tak, jest izolacja' && (formData.isolation_roof_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
         valid = false;
         setErrors({...errors, 'isolation_roof_thickness' : {msg: 'Wybierz materiał z listy'}});
         return false;
@@ -240,12 +251,12 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setErrors({...errors, 'is_parter_floor_isolation' : true});
         return false;
       }
-      if(formData.is_parter_floor_isolation == 'Tak, jest jakaś izolacja' && !formData.isolation_parter_floor_material){
+      if(formData.is_parter_floor_isolation == 'Tak, jest izolacja' && !formData.isolation_parter_floor_material){
         valid = false;
         setErrors({...errors, 'isolation_parter_floor_material' : {msg: 'Wybierz materiał z listy'}});
         return false;
       }
-      if(formData.is_parter_floor_isolation == 'Tak, jest jakaś izolacja' && (formData.isolation_parter_floor_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
+      if(formData.is_parter_floor_isolation == 'Tak, jest izolacja' && (formData.isolation_parter_floor_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
         valid = false;
         setErrors({...errors, 'isolation_parter_floor_thickness' : {msg: 'Wybierz materiał z listy'}});
         return false;
@@ -268,11 +279,11 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setErrors({...errors, 'vent_type' : true});
         return false;
       }
-      if(!formData.max_temp_of_power_instalation){
-        valid = false;
-        setErrors({...errors, 'max_temp_of_power_instalation' : true});
-        return false;
-      }
+      // if(!formData.max_temp_of_power_instalation){
+      //   valid = false;
+      //   setErrors({...errors, 'max_temp_of_power_instalation' : true});
+      //   return false;
+      // }
       if(needInstalacjaGrzewcza.indexOf(formData.main_heat_sources) >= 0 && !formData.type_of_heating_instalation){
         valid = false;
         setErrors({...errors, 'type_of_heating_instalation' : true});
@@ -321,7 +332,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
     }
 
     if(valid){
-      setStep(step+1)
+      setStep(Number(step)+1)
       window.scrollTo(0, 0);
     }
   }
@@ -329,12 +340,12 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   return (
     <div className='flex flex-col'>
       {/* breadcrumbs */}
-      <div className='h-[165px] w-full flex items-center justify-center bg-[#F5F5F5]'>
+      {!formData.heat_demand.know && <div className='h-[165px] w-full flex items-center justify-center bg-[#F5F5F5]'>
         <div className='flex cursor-default flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 text-[13px] lg:text-[15px] items-center mt-[62px] justify-center'>
         {
           Object.keys(steps).map((item: any, idx) => {
             return (
-              <div key={idx} className='flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center'>
+              <div onClick={() => transferToStep(item)} key={idx} className={`flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center ${item == 5 ? '' : 'cursor-pointer'}`}>
                 <span className={`${item == step ? 'font-bold text-[#FF4510] text-center' : 'hidden md:block'}`}>{steps[item].breadcrumbTitle}</span>
                 {item != step && <span className={`rounded-full border ${parseInt(item) < step ? 'bg-[#FF4510] border-[#FF4510] text-white' : 'border-[#CACACA] text-gray-600'} font-[600] w-[28px] h-[28px] flex items-center justify-center md:hidden`}>{parseInt(item)+1}</span>}
                 {item < Object.keys(steps).length-1 && <div className='h-[1px] w-[10px] md:w-[30px] lg:w-[55px] bg-[#CACACA]'></div>}
@@ -343,11 +354,11 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
           })
         }
         </div>
-      </div>
+      </div>}
       {/* dynamic box */}
-      {step < 5 && <div className="max-w-[1172px] px-5 w-full mx-auto mt-10 mb-3">
+      {step < 5 && <div className={`max-w-[1172px] px-5 w-full mx-auto mt-10 mb-3`}>
         <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>{steps[step].title}</div>
-        <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{steps[step].desc}</div>
+        <div className='text-[20px] md:text-[28px] tracking-tighter leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{steps[step].desc}</div>
       </div>}
       {/* user interactive zone */}
       <div className='max-w-[1172px] px-5 w-full mx-auto mt-10 mb-5'>

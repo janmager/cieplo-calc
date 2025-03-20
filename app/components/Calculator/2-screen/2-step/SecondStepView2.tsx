@@ -25,7 +25,7 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
                 <div className='flex flex-col gap-10'>
                     <div>
-                        <CustomLabel label='Rodzaj konstrukcji budynku' />
+                        <CustomLabel label='Zaznacz rodzaj konstrukcji budynku' />
                         <div className='flex flex-col gap-[14px] mt-[22px]'>
                             {
                                 building_construction_type.map((item: any, idx: number) => {
@@ -52,7 +52,7 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                         </div>
                         <div className='flex flex-row gap-5 w-full px-2.5 items-start mt-5'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                            <p className='w-full flex-1 mt-[-5px]'>Jeśli ściany zewn. są z mieszanych materiałów, np. pustaka żużlowego i cegieł – tutaj wskaż drugi najczęściej występujący materiał. Zostaw pole puste jeśli ściany są z jednego materiału.</p>
+                            <p className='w-full flex-1 mt-[-5px]'>Jeśli ściany zewn. są z mieszanych materiałów, np. pustaka żużlowego i cegieł, tutaj wskaż drugi najczęściej występujący materiał. Zostaw pole puste, jeśli ściany są z jednego materiału.</p>
                         </div>
                     </div>}
                     <div>
@@ -99,29 +99,6 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                             </div>
                         }
                     </div>
-                    <div>
-                        <CustomLabel label='Okna' />
-                        <div className='flex w-full flex-col mt-5 gap-2'>
-                            <span>Rodzaj okien</span>
-                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'windows_type'} options={windows_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
-                        </div>
-                        <div className='mt-5 flex flex-col gap-2'>
-                            <label>Liczba okien</label>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'windows_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                        </div>
-                        <div className='flex flex-row gap-4 w-full px-2.5 items-center mt-5'>
-                            <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                            <p className='w-full flex-1'>W części ogrzewanej</p>
-                        </div>
-                        <div className='mt-5 flex flex-col gap-2'>
-                            <label>Liczba drzwi balkonowych</label>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'taras_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                        </div>
-                        <div className='mt-5 flex flex-col gap-2'>
-                            <label>Liczba dużych przeszkleń</label>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'large_glazings_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                        </div>
-                    </div>
                 </div>
                 <div className='flex h-fit flex-col pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full'>
                     <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>
@@ -155,6 +132,43 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                     </div>
                 </div>
             </div>
+                    <div className='grid md:col-span-2 grid-cols-1 md:grid-cols-2 w-full gap-5'>
+                        <div>
+                            <CustomLabel label='Okna' />
+                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                <span>Rodzaj okien</span>
+                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'windows_type'} options={windows_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            </div>
+                            <div className='mt-5 flex flex-col gap-2'>
+                                <label>Liczba okien</label>
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'windows_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            </div>
+                            <div className='flex flex-row gap-4 w-full px-2.5 items-center mt-5'>
+                                <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
+                                <p className='w-full flex-1'>W części ogrzewanej</p>
+                            </div>
+                            <div className='mt-5 flex flex-col gap-2'>
+                                <label>Liczba drzwi balkonowych</label>
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'taras_doors_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            </div>
+                            <div className='mt-5 flex flex-col gap-2'>
+                                <label>Liczba dużych przeszkleń</label>
+                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'large_glazings_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                            </div>
+                        </div>
+                        <div className='flex flex-col pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full h-fit'>
+                            <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>
+                                <div>
+                                    <Image src={info.src} height={24} width={24} alt="Info icon" />
+                                </div>
+                                <div className='flex flex-1 flex-col'>
+                                    <b>Jak policzyć okna?</b>
+                                    <p className='text-[14px] pt-4'>Jako sztukę rozumiemy tu okno o wymiarach <b>140x180cm</b>. Mniejsze okna policz jako pół tej sztuki, większe jako półtora, zsumuj i wpisz poprawną ilość.</p>
+                                    <p className='text-[14px] pt-4'>Osobno policz drzwi balkonowe oraz duże przeszklenia. Duże przeszklenie to okno na całą ścianę, tu załóżmy o wymiarach <b>2,5x3m</b>.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
             <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
                 <div className='flex flex-col gap-10'>

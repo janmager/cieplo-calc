@@ -73,6 +73,7 @@ model Raport {
   rules2                               Boolean?
   send_raport_to_email                 String?
   send_raport_to_near_companies        String?
+  send_raport_accept_24h               String?
   send_raport_email                    String?
   contact_phone_number                 String?
   contact_email_address                String?

@@ -55,6 +55,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
             <CustomAdminDetailsInputData checkBox={true} label='Zgoda na wysyłkę raportu do klienta' data={data.send_raport_to_email && data.send_raport_to_email.indexOf('Chcę') >= 0 ? 'yes' : 'no'} />
             {data.send_raport_to_email && data.send_raport_to_email.indexOf('Chcę') >= 0 && <CustomAdminDetailsInputData label='Adres email' data={data.send_raport_email} />}
             <CustomAdminDetailsInputData checkBox={true} label='Zgoda na wysyłkę oferty do firm' data={data.send_raport_to_near_companies && data.send_raport_to_near_companies.indexOf('Chcę') >= 0 ? 'yes' : 'no'} />
+            <CustomAdminDetailsInputData checkBox={true} label='Zgoda na kontakt z ekspertem Gree' data={data.send_raport_accept_24h && data.send_raport_accept_24h.indexOf('Tak') >= 0 ? 'yes' : 'no'} />
             {data.contact_phone_number && <CustomAdminDetailsInputData label='Numer telefonu' data={data.contact_phone_number} />}
             {data.contact_email_address && <CustomAdminDetailsInputData label='Adres email' data={data.contact_email_address} />}
             {/* <CustomAdminDetailsInputData checkBox={true} label='Akceptacja polityki prywatności' data={data.rules1 ? 'yes' : 'no'} /> */}
@@ -219,7 +220,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                     }
                 </div>
             </div>}
-            {instalators && <div className='flex flex-col gap-7'>
+            {/* {instalators && <div className='flex flex-col gap-7'>
                 <CustomAdminDetailsDivider text='Polecani instalatorzy' />
                 <div className="flex flex-col gap-5 mt-[-20px]">
                     {
@@ -242,7 +243,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                         ))
                     }
                 </div>
-            </div>}
+            </div>} */}
             <div className='mt-5 w-full'>
                 <a href={`/wynik/${data.id}`} target='_blank' className="w-full block text-center text-base font-[600] uppercase py-4 px-3 bg-[#FF4510] text-white rounded-md">Otwórz raport online</a>
             </div>

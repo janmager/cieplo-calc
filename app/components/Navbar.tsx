@@ -54,7 +54,7 @@ function Navbar() {
                     </Link>
                 </div>
                 <Link href={'#'} className='w-[150px] xl:w-[195px] h-full flex items-center justify-center text-center bg-[#FF4510] text-white text-[16px]'>
-                    <span>Stefa instruktora</span>
+                    <span>Stefa instalatora</span>
                 </Link>
             </div>
         </div>

@@ -161,19 +161,22 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                 valid = false;
                 return false;
             }
-            if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
-                setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
-                valid = false;
-                return false;
-            }
+            // if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
+            //     setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
+            //     valid = false;
+            //     return false;
+            // }
         }
-        else if(!formData.heat_demand.know){
-            if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
-                setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
-                valid = false;
-                return false;
-            }
+        else{
+            valid = true;
         }
+        // else if(!formData.heat_demand.know){
+        //     if(!formData.heat_demand.temp || formData.heat_demand.temp  < 10){
+        //         setErrors({...errors, 'heat_demand.temp': {msg: 'Podaj prawidłową temperaturę'}})
+        //         valid = false;
+        //         return false;
+        //     }
+        // }
 
         if(valid){
             setViewId(2)
@@ -183,17 +186,18 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
   
     return (
     <div className='flex flex-col items-center w-full'>
-        <div style={{backgroundImage: `url(${bg.src})`, backgroundAttachment: 'fixed', backgroundSize: 'cover',}} className='w-full relative flex items-end justify-center h-[400px] md:h-[625px]'>
+        <div style={{backgroundImage: `url(${bg.src})`, backgroundAttachment: 'fixed', backgroundSize: 'cover'}} className='w-full relative flex items-end justify-center h-[400px] md:h-[625px]'>
             <div className='max-w-[1172px] px-5 xl:px-0 text-white flex flex-col gap-8 pb-8 z-20'>
                 <h1 className='text-[40px] sm:text-[60px] lg:text-[80px] font-bold leading-[110%]'>Kalkulator doboru<br/>pompy ciepła</h1>
-                <h2 className='text-[15px] md:text-[20px] font-light opacity-75'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <b>do eiusmod tempor incididunt</b> ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </h2>
+                <h2 className='text-[15px] md:text-[20px] font-light opacity-75'>Poprawnie dobrana pompa ciepła to długa żywotność urządzenia i optymalne zużycie energii elektrycznej. Dokładność doboru zależy od informacji, jakie wprowadzisz do obliczeń. Zadbaj o to, by podane przez Ciebie dane, były zgodne z rzeczywistością – tylko wtedy będziesz mógł się posiłkować wynikiem, który otrzymasz.</h2>
+                <h2 className='text-[15px] md:text-[20px] font-light opacity-75'>Przed przystąpieniem do wypełniania kalkulatora, przygotuj projekt swojego budynku. (ewentualnie: Jeśli dysponujesz projektem budowlanym swojego budynku, przygotuj go przed przystąpieniem do wypełniania kalkulatora.)</h2>
             </div>
-            <div className='absolute w-full h-full bg-black opacity-70'></div>
+            <div className='absolute w-full h-full bg-black opacity-80'></div>
         </div>
         <div className='py-10 px-5 w-full max-w-[1172px] flex flex-col lg:grid grid-cols-1 lg:grid-cols-2'>
             <div className='flex w-full flex-col  gap-4'>
                 <CustomLabel label={'Lata budowy domu'} />
-                <CustomDropdownSelect formDataValue={'house_building_years'} setErrors={setErrors} errors={errors} options={house_building_years} setFormData={setFormData} formData={formData} placeholder={'2027+'} />
+                <CustomDropdownSelect formDataValue={'house_building_years'} setErrors={setErrors} errors={errors} options={house_building_years} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
             </div>
             <div className='flex w-full flex-col gap-3 lg:col-span-2 mt-7'>
                 <CustomLabel label={'Wybierz lokalizację budynku'} />
@@ -250,7 +254,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                                 <div className='mt-5 flex flex-col gap-2'>
                                     <label>Projektowa temperatura pomieszczenia</label>
                                     <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
-                                    <span className='mt-1 text-[14px] font-light opacity-50'>Informację odczytaj z projektu budowlanego lub audytu energetycznego</span>
+                                    <p className='text-[12px] text-gray-500 pt-2'>Za standardową temperaturę pokojową w takich obliczeniach przyjmuje się 20°C. <b>Ale jeśli marzniesz poniżej 25°C — wpisz właśnie tyle.</b> Chodzi o to, by obliczenia oddały <b>realne</b> zużycie ciepła w twoim domu.<br/><br/>Pamiętaj jednak, że im wyższa temperatura w pomieszczeniu, tym więcej ciepła do budynku będziemy musieli dostarczyć – w efekcie wymagana będzie mocniejsza pompa ciepła.</p>
                                 </div>
                             </div>
                         }
@@ -263,7 +267,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                             </div>
                             <span className='mt-[-4px]'><b>Nie znam</b> zapotrzebowania cieplnego mojego budynku i chcę go policzyć</span>
                         </div>
-                        {
+                        {/* {
                             formData.heat_demand && !formData.heat_demand.know &&
                             <div>
                                 <div className='mt-5 md:mt-10 flex flex-col gap-2'>
@@ -272,7 +276,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                                     <span className='mt-1 text-[14px] font-light opacity-50'>Informację odczytaj z projektu budowlanego lub audytu energetycznego</span>
                                 </div>
                             </div>
-                        }
+                        } */}
                     </div>
                 </div>
             </div>

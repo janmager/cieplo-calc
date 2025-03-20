@@ -5,7 +5,7 @@ import arrowDropdown from '@/assets/svg/arrow-dropdown-down.svg'
 import arrowDropdownRed from '@/assets/svg/arrow-dropdown-down-red.svg'
 import Image from 'next/image'
 
-function CustomDropdownSelect({placeholder, options, formDataValue, formData, setFormData, errors = {}, setErrors}: {placeholder: any, formDataValue: any, options: any, formData: any, setFormData: any, errors?: any, setErrors: any}) {
+function CustomDropdownSelect({placeholder, options, disabled = false, formDataValue, formData, setFormData, errors = {}, setErrors}: {placeholder: any, disabled?: any, formDataValue: any, options: any, formData: any, setFormData: any, errors?: any, setErrors: any}) {
     const [ open, setOpen ] = useState(false)
 
     const [ currValue, setCurrValue ] = useState(formData[formDataValue] ? formData[formDataValue] : '')
@@ -40,15 +40,15 @@ function CustomDropdownSelect({placeholder, options, formDataValue, formData, se
     return (
         <>
         <div ref={selectRef} className='w-full relative'>
-            <div onClick={() => setOpen(!open)} className={`w-full cursor-pointer ${errorStyle ? 'border-red-500 border-2' : 'border-[#CDCDCD]'} flex justify-between items-center flex-row border h-[60px]`}>
+            <div onClick={() => !disabled && setOpen(!open)} className={`w-full cursor-pointer ${errorStyle ? 'border-red-500 border-2' : 'border-[#CDCDCD]'} flex justify-between items-center flex-row border h-[60px]`}>
                 {!currValue && <span className='pl-5 text-[16px] opacity-30 flex-1'>{placeholder}</span>}
                 {currValue && <span className='pl-5 text-[16px] flex-1'>{formData[formDataValue]}</span>}
                 <div className='h-full flex w-[60px] items-center justify-center'>
-                    {!errorStyle ? <Image src={arrowDropdown} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} /> : 
-                    <Image src={arrowDropdownRed} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} />}
+                    {!errorStyle ? (!disabled && <Image src={arrowDropdown} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} />) : 
+                    (!disabled && <Image src={arrowDropdownRed} className={open ? 'rotate-180' : ''} alt="arrow" height={10} width={25} />)}
                 </div>
             </div>
-            {open && <div className='absolute mt-[59px] z-50 left-0 top-0 min-h-[220px] h-full overflow-y-auto max-h-[220px] bg-white flex flex-col w-full'>
+            {open && <div className='absolute mt-[59px] z-50 left-0 top-0 h-fit overflow-y-auto max-h-[220px] bg-white flex flex-col w-full'>
                 {
                     options.map((option: any, idx: any) => {
                         return (

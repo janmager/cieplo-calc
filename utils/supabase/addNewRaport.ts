@@ -69,6 +69,7 @@ export const addNewRaport = async (raport: any) => {
                 rules2: raport.rules2,
                 send_raport_to_email: raport.send_raport_to_email,
                 send_raport_to_near_companies: raport.send_raport_to_near_companies,
+                send_raport_accept_24h: raport.send_raport_accept_24h,
                 send_raport_email: raport.send_raport_email,
                 contact_phone_number: raport.contact_phone_number,
                 contact_email_address: raport.contact_email_address,

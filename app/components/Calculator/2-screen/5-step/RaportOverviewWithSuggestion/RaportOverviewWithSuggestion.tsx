@@ -24,11 +24,11 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                 <div className='flex flex-col gap-2.5'>
                     {(formData.heat_demand.kW || formData.api_max_heating_power) && <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>{formData.api_max_heating_power ? 'Wyliczone z' : 'Z'}apotrzebowanie cieplne budynku</p>
-                        <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : `${Number(formData.api_max_heating_power).toFixed(2)} kW`}</span>
+                        <span className='font-bold'>{formData.heat_demand && formData.heat_demand.know ? `${formData.heat_demand.kW} kW` : `${(Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)).toFixed(2)} kW`}</span>
                     </div>}
-                    {formData.heat_demand.temp && <div className='fflex flex-col justify-start items-start'>
+                    {formData.temp_in_heat_rooms && <div className='fflex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Projektowa temperatura pomieszczenia</p>
-                        <span className='font-bold'>{formData.heat_demand && formData.heat_demand.temp ? `${formData.heat_demand.temp}°C` : 'nie podano'}</span>
+                        <span className='font-bold'>{formData.heat_demand && formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms}°C` : 'nie podano'}</span>
                     </div>}
                     <div className='flex flex-col justify-start items-start'>
                         <p className='w-[350px]'>Lokalizacja budynku</p>
@@ -40,7 +40,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
             {suggestedProducts != null ?
             <div>
                 <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
-                <div className={`mt-5 grid grid-cols-1 ${suggestedProducts.length == 3 ? 'md:grid-cols-3' : suggestedProducts.length == 2 ? 'md:grid-cols-2' : ''} gap-10`}>
+                <div className={`mt-5 grid grid-cols-1 md:grid-cols-3 gap-10`}>
                     {
                         suggestedProducts.map((product: any) => {
                             let productObj = product.product;
@@ -69,7 +69,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
             {suggestedProducts != null && 
             <div className="w-full">
                 <div onClick={() => loadingUpper ? null : setStep(step + 1)} className={`border font-bold border-[#FF4510] h-[70px] text-[#FF4510] hover:text-white hover:cursor-pointer hover:bg-[#FF4510] uppercase flex items-center justify-center ${loadingUpper ? 'opacity-50 grayscale' : ''}`}>
-                    <span>{loadingUpper ? 'Ładowanie...' : 'Zapisz raport'}</span>
+                    <span>{loadingUpper ? 'Ładowanie...' : 'Przejdź do pełnego raportu'}</span>
                 </div>
             </div>}
         </div>

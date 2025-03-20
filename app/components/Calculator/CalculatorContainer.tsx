@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import FirstCalcView from './1-screen/FirstCalcView'
 import SecondCalcView from './2-screen/SecondCalcView'
+import { send_raport_accept_24h } from '@/app/consts/send_raport_accept_24h'
 
 function CalculatorContainer() {
     const [ viewId, setViewId ] = useState<Number>(1)
@@ -66,7 +67,7 @@ function CalculatorContainer() {
         isolation_parter_floor_thickness: '',
 
         // fifth step
-        main_heat_sources: '',
+        main_heat_sources: 'Pompa ciepła powietrze-woda',
         temp_in_heat_rooms: '',
         vent_type: '',
         heating_isolation_material: '',
@@ -84,6 +85,7 @@ function CalculatorContainer() {
         rules2: false,
         send_raport_to_email: '',
         send_raport_to_near_companies: '',
+        send_raport_accept_24h: '',
         send_raport_email: '',
         contact_phone_number: '',
         contact_email_address: '',

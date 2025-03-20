@@ -1,62 +1,50 @@
 export const house_building_years: any = [
     {
-        name: '2025+',
-        value: '2025+', 
+        name: '2025',
+        value: '2025', 
     },
     {
-        name: '2024+',
-        value: '2024+', 
+        name: '2024',
+        value: '2024', 
     },
     {
-        name: '2023+',
-        value: '2023+', 
+        name: '2023',
+        value: '2023', 
     },
     {
-        name: '2022+',
-        value: '2022+', 
+        name: '2022',
+        value: '2022', 
     },
     {
-        name: '2021+',
-        value: '2021+', 
+        name: '2021',
+        value: '2021', 
     },
     {
-        name: 'lata 2011-2020',
-        value: 'lata 2011-2020', 
+        name: '2020',
+        value: '2020', 
     },
     {
-        name: 'lata 2000-2010',
-        value: 'lata 2000-2010', 
+        name: '2010-2019',
+        value: '2010-2019', 
     },
     {
-        name: 'lata 90-te',
-        value: 'lata 90-te', 
+        name: '2000-2009',
+        value: '2000-2009', 
     },
     {
-        name: 'lata 80-te',
-        value: 'lata 80-te', 
+        name: '1990-1999',
+        value: '1990-1999', 
     },
     {
-        name: 'lata 70-te',
-        value: 'lata 70-te', 
+        name: '1980-1989',
+        value: '1980-1989', 
     },
     {
-        name: 'lata 60-te',
-        value: 'lata 60-te', 
+        name: '1970-1979',
+        value: '1970-1979', 
     },
     {
-        name: 'lata 50-te',
-        value: 'lata 50-te', 
-    },
-    {
-        name: 'lata 40-te',
-        value: 'lata 40-te', 
-    },
-    {
-        name: 'okolice II wojny światowej',
-        value: 'okolice II wojny światowej', 
-    },
-    {
-        name: 'okolice I wojny światowej',
-        value: 'okolice I wojny światowej', 
+        name: 'starsze',
+        value: 'starsze', 
     },
 ]

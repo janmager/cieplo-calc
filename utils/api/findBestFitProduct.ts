@@ -55,6 +55,8 @@ export const findBestFitProduct = ({
             }
         })
 
+        console.log(raport)
+
         let fitting_products: any = []
 
         raport = raport.filter((r: any) => r.isGood && r)

@@ -117,5 +117,6 @@ export const translateForCieploAPI = (data: any) => {
         },
     }
 
+    console.log(output)
     return output;
 }

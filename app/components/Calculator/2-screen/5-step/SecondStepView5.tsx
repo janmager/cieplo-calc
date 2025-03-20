@@ -80,6 +80,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             });
 
             let res = await result.json();
+            console.log('res', res);
             if(res.response){
                 fromApi = {
                     api_total_area: res.data.total_area,
@@ -106,7 +107,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             products: products, 
             proj_temp_outside: formData.project_outside_temp, 
             needed_kw: kw_need,
-            temp_inside: formData.heat_demand.temp,
+            temp_inside: formData.temp_in_heat_rooms,
             max_install_temp: formData.max_temp_of_power_instalation.split(' ')[0]
         })
 
@@ -127,6 +128,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
 
         window.scrollTo(0, 0);
     }, [currentStep])
+
   
     if(loading){
         return (
@@ -138,7 +140,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
     }
 
     if(products && !loading) return (
-        <div className='flex flex-col gap-14 w-full'>           
+        <div className={`flex flex-col gap-14 w-full ${formData.heat_demand.know ? 'mt-[90px]' : ''}`}>           
             <Toaster position="top-center" />
             {currentStep == 1 && <RaportOverviewWithSuggestion products={products} suggestedProducts={suggestedProducts} handleCountCieploAPI={handleCountCieploAPI} loadingUpper={loading} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }
             {currentStep == 2 && <ContactDetails loadingUpper={loading} errors={errors} setErrors={setErrors} formData={formData} step={currentStep} setStep={setCurrentStep} setFormData={setFormData} /> }

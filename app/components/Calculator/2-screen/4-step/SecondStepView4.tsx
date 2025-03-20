@@ -27,10 +27,10 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Główne źródło ciepła</span>
-                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'main_heat_sources'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            <CustomDropdownSelect disabled={true} errors={errors} setErrors={setErrors} formDataValue={'main_heat_sources'} options={main_heat_sources} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>  
                         <div className='flex w-full flex-col mt-5 gap-2'>
-                            <span>Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)</span>
+                            <span>Temperatura w pomieszczeniach ogrzewanych (przeciętna temperatura utrzymywana zimą)</span>
                             <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'temp_in_heat_rooms'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='flex w-full flex-col mt-5 gap-2'>
@@ -54,7 +54,7 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                         </div>
                         <div className='flex flex-1 flex-col'>
                             <b>Jaką temperaturę podać?</b>
-                            <p className='text-[14px] pt-4'>Taką, jaką uznajesz za komfortową w domu zimą bez noszenia dwóch swetrów i kaleson.<br/><br/>Za standardową temperaturę pokojową w takich obliczeniach przyjmuje się 20°C. <b>Ale jeśli marzniesz poniżej 25°C — wpisz właśnie tyle.</b> Chodzi o to, by obliczenia oddały <b>realne</b> zużycie ciepła w twoim domu.</p>
+                            <p className='text-[14px] pt-4'>Za standardową temperaturę pokojową w takich obliczeniach przyjmuje się 20°C. <b>Ale jeśli marzniesz poniżej 25°C — wpisz właśnie tyle.</b> Chodzi o to, by obliczenia oddały <b>realne</b> zużycie ciepła w twoim domu.<br/><br/>Pamiętaj jednak, że im wyższa temperatura w pomieszczeniu, tym więcej ciepła do budynku będziemy musieli dostarczyć – w efekcie wymagana będzie mocniejsza pompa ciepła.</p>
                         </div>
                     </div>
                 </div>
@@ -131,14 +131,15 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                                 <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>
                         </>}
+                        {(formData.type_of_heating_instalation.indexOf('100% grzejniki') >= 0 || formData.type_of_heating_instalation.indexOf('Mniej więcej po równo') >= 0 || formData.type_of_heating_instalation.indexOf('Przewaga') >= 0) && <>
                         <div className='flex w-full flex-col mb-5 gap-2'>
                             <span>Maksymalna temperatura zasilania instalacji</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                         <div className='flex flex-row gap-5 w-full mb-10 px-2.5 items-start mt-0'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                            <p className='w-full flex-1 mt-[-5px]'>Jaką max. temperaturą zasilane są grzejniki w największe mrozy? To przydatna informacja przy doborze niektórych źródeł ciepła.</p>
-                        </div>
+                            <p className='w-full flex-1 mt-[-5px]'>Jaką max. temperaturą zasilane są grzejniki w największe mrozy?</p>
+                        </div></>}
                         <CustomLabel label='Ciepła woda kranowa' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Przez inżynierów zwana Ciepłą Wodą Użytkową (CWU).</span>
@@ -161,7 +162,7 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                                 </div>
                             </div>
                         }
-                        <div className='mt-8'>
+                        {/* <div className='mt-8'>
                             <CustomLabel label='Dodatkowa instalacja grzewcza' />
                             <div className='flex w-full flex-col mt-5 gap-2'>
                                 <span>Czy budynek posiada któreś z tych urządzeń służące do wspomagania ogrzewania / przygotowania ciepłej wody?</span>
@@ -178,7 +179,7 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                                     <span>Kolektory słoneczne</span>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

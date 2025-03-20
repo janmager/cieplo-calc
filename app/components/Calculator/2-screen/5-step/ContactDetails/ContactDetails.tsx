@@ -8,6 +8,7 @@ import info from '@/assets/svg/info-icon.svg'
 import { send_raport_to_near_companies } from '@/app/consts/send_raport_to_near_companies'
 import check from '@/assets/svg/check-orange.svg'
 import NextButton from '@/app/components/Customs/NextButton'
+import { send_raport_accept_24h } from '@/app/consts/send_raport_accept_24h'
 
 function ContactDetails({formData, setFormData, step, setStep, errors, setErrors, loadingUpper}: {formData: any, setFormData: any, step: any, setStep: any, errors: any, setErrors: any, loadingUpper: boolean}) {
 
@@ -60,12 +61,12 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
         <div className='flex flex-col gap-0 pb-10'>
             <div className="max-w-[1172px] w-full mx-auto mb-0">
                 <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Pełny raport</div>
-                <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>Aby wygenerowac pełny raport wypełnij poniższe dane</div>
+                <div className='text-[20px] md:text-[24px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>Już za chwilę otrzymasz podsumowanie Twojego doboru wraz z wykazem urządzeń, które rekomendujemy do budynku na podstawie podanych przez Ciebie informacji.<br/><br/>Daj nam znać, co chcesz zrobić z wynikiem:</div>
             </div>
-            <div className='flex flex-col w-full lg:w-1/2 mt-16'>
-                <CustomLabel label='Czy wysłać link do wyniku na maila?' />
-                <div className='flex flex-col gap-[14px] mt-[15px] mb-[50px]'>
-                    <label>Możesz od razu wysłać link do wyniku np. instalatorowi, szwagrowi albo na twoją własną skrzynkę.</label>
+            <div className='flex flex-col w-full lg:w-3/4 mt-8'>
+                <CustomLabel label='Chcę dostać swój wynik na maila' />
+                <div className='flex flex-col gap-[14px] mt-[15px] mb-[30px]'>
+                    <label>Podaj nam swój adres e-mail, a wyślemy Ci link do Twojej kalkulacji doboru, który będziesz mógł skonsultować z fachowcem wykonującym instalację w Twoim budynku.</label>
                     {
                         send_raport_to_email.map((item: any, idx: number) => {
                             return (
@@ -73,21 +74,11 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
                             )
                         })
                     }
-                    {
-                        formData.send_raport_to_email && formData.send_raport_to_email.indexOf('Chcę') >= 0 && <div className='flex w-full flex-col mt-5 gap-2'>
-                            <span>Adres e-mail do wysyłki</span>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'email'} placeholder={''} formDataValue1={'send_raport_email'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                            <div className='flex flex-row gap-5 w-full px-2.5 items-start mt-2.5'>
-                                <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                                <p className='w-full flex-1 mt-[-5px]'>Adres nie będzie przechowywany. Nie dostaniesz od nas nic więcej poza jednorazową wiadomością z linkiem do wyniku.</p>
-                            </div>
-                        </div>
-                    }
                 </div>
 
-                <CustomLabel label='Zapytaj firmy z okolicy o oferty' />
+                <CustomLabel label='Chcę otrzymać ofertę na dobrane wstępnie pompy ciepła GREE' />
                 <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                    <label>Możemy przesłać twój wynik wraz z zapytaniem o wycenę do wybranej przez ciebie liczby firm z okolicy (max. 10) działających w branży ogrzewania domów i pokrewnych.</label>
+                    <label>Prześlemy Twój wynik do Autoryzowanego Instalatora Gree z Twojej okolicy, a on skontaktuje się z Tobą i przygotuje ofertę na wskazane w kalkulatorze produkty wraz z usługą montażu.</label>
                     {
                         send_raport_to_near_companies.map((item: any, idx: number) => {
                             return (
@@ -95,25 +86,34 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
                             )
                         })
                     }
+                </div>
+
+                <CustomLabel label='Chcę porozmawiać z ekspertem Gree' />
+                <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
+                    <label>Nie masz pewności, który typ pompy będzie dla Ciebie najlepszy? Chcesz zadać dodatkowe pytania? Zostaw nam swoje dane, a nasz doradca techniczny skontaktuje się z Tobą w ciągu 24 h.</label>
                     {
-                        formData.send_raport_to_near_companies && formData.send_raport_to_near_companies.indexOf('Chcę') >= 0 && 
-                        <div className='flex w-full flex-col mt-5 gap-2'>
-                            <CustomLabel label='Twoje dane kontaktowe' />
-                            <span className='mt-2.5'>Twój telefon kontaktowy</span>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'tel'} placeholder={''} formDataValue1={'contact_phone_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                            <div className='flex flex-row gap-5 w-full px-2.5 items-start mt-2.5'>
-                                <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                                <p className='w-full flex-1 mt-[-5px]'>Większość firm preferuje kontakt telefoniczny.</p>
-                            </div>
-                            <span className='mt-2.5'>Adres e-mail</span>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'email'} placeholder={''} formDataValue1={'contact_email_address'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                            <div className='flex flex-row gap-5 w-full px-2.5 items-start mt-2.5'>
-                                <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
-                                <p className='w-full flex-1 mt-[-5px]'>Adres przekażemy firmom do kontaktu w sprawie wyceny oraz prześlemy nań potwierdzenie wysłania zapytania.</p>
-                            </div>
-                        </div>
+                        send_raport_accept_24h.map((item: any, idx: number) => {
+                            return (
+                                <CustomRadioInput errors={errors} setErrors={setErrors} setFormData={setFormData} formData={formData} item={item} name='send_raport_accept_24h' key={idx} />
+                            )
+                        })
                     }
                 </div>
+
+                {((formData.send_raport_accept_24h && formData.send_raport_accept_24h.indexOf('Tak') >= 0) || (formData.send_raport_to_email && formData.send_raport_to_email.indexOf('Chcę') >= 0) || (formData.send_raport_to_near_companies && formData.send_raport_to_near_companies.indexOf('Chcę') >= 0)) && 
+                <div className='mb-[20px] grid grid-cols-1 mt-5 md:grid-cols-2 gap-5'>
+                    <div className='md:col-span-2'>    
+                        <CustomLabel label='Twoje dane kontaktowe' />
+                    </div> 
+                    {((formData.send_raport_accept_24h && formData.send_raport_accept_24h.indexOf('Tak') >= 0) || (formData.send_raport_to_email && formData.send_raport_to_email.indexOf('Chcę') >= 0) || (formData.send_raport_to_near_companies && formData.send_raport_to_near_companies.indexOf('Chcę') >= 0)) && <div className='flex w-full flex-col gap-2'>
+                        <span className=''>Adres e-mail</span>
+                        <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'email'} placeholder={''} formDataValue1={'contact_email_address'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                    </div>}     
+                    {((formData.send_raport_accept_24h && formData.send_raport_accept_24h.indexOf('Tak') >= 0) || (formData.send_raport_to_near_companies && formData.send_raport_to_near_companies.indexOf('Chcę') >= 0)) && <div className='flex w-full flex-col gap-2'>
+                        <span className=''>Twój telefon kontaktowy</span>
+                        <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'tel'} placeholder={''} formDataValue1={'contact_phone_number'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                    </div>}
+                </div>}
             </div>
 
             <div>
@@ -121,7 +121,7 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
                     <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
                         {formData.rules1 && <Image src={check.src} height={15} width={15} alt="check" />}
                     </div>
-                    <span className={`${errors['rules1'] ? 'text-red-600' : ''}`}>Zgadzam się dobrowolnie na kontakt mailowy i telefoniczny od firm w liczbie w/w, w celu przedstawienia mi ofert dot. w/w zakresu zlecenia. Potwierdzenie tej zgody wraz z listą firm, którym cieplo.app przekazuje moje dane kontaktowe, otrzymam mailowo na podany przeze mnie powyżej adres e-mail. Zapoznawszy się z <a href='https://cieplo.app/prywatnosc' className='underline' target="_blank">Polityką Prywatności Cieplo.app</a>, akceptuję ją.</span>
+                    <span className={`${errors['rules1'] ? 'text-red-600' : ''}`}>Zgadzam się dobrowolnie na kontakt mailowy i telefoniczny od trzech autoryzowanych firm instalacyjnych, w celu przedstawienia mi ofert dot. w/w zakresu zlecenia. Potwierdzenie tej zgody wraz z listą firm, którym Free Polska przekazuje moje dane kontaktowe, otrzymam mailowo na podany przeze mnie powyżej adres e-mail. Zapoznałem się z <a href='https://cieplo.app/prywatnosc' className='underline' target="_blank">Polityką</a> prywatności Free Polska i akceptuję ją.</span>
                 </div>
             </div>
 
