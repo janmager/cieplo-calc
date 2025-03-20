@@ -38,11 +38,11 @@ const ADMIN_LINKS: any = {
     //     viewId: 4,
     //     icon: plusImg
     // },
-    5: {
-        name: 'Polecani instalatorzy',
-        viewId: 5,
-        icon: rulerImg
-    }
+    // 5: {
+    //     name: 'Polecani instalatorzy',
+    //     viewId: 5,
+    //     icon: rulerImg
+    // }
 }
 
 function AdminContainer() {

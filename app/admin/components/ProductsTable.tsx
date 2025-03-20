@@ -1,3 +1,5 @@
+'use client'
+
 import { Instalators, Product } from '@prisma/client'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
@@ -11,15 +13,21 @@ import editIco from '@/assets/svg/pencil.svg'
 import { deleteProductFromDb } from '@/utils/supabase/deleteProductFromDb copy'
 import ShowRaportDetailsAdminModal from './ShowRaportDetailsAdminModal'
 import DetailsProductModal from '@/app/components/Customs/DetailsProductModal'
+import AddNewProductView from './AddNewProductView'
 
 function ProductsTable({products, fetchAllProducts}: {products: Product[], fetchAllProducts: any}) {
     const [ showConfirm, setShowConfirm ] = useState<any>(false)
     const [ loading, setLoading ] = useState(false)
     const [ currentDetails, setCurrentDetails ] = useState<Product | null>(null)
     const [ showDetails, setShowDetails ] = useState(false)
+    const [ showAddNewProduct, setShowAddNewProduct ] = useState(false)
 
     const confirmDelete = (raport: any) => {
         setShowConfirm(raport)
+    }
+
+    const addNewProductTrigger = () => {
+        setShowAddNewProduct(true)
     }
     
     const deleteProduct = async () => {
@@ -53,8 +61,19 @@ function ProductsTable({products, fetchAllProducts}: {products: Product[], fetch
         setCurrentDetails(product)
     }
 
+    if(showAddNewProduct){
+        return (
+            <div>
+                <AddNewProductView />
+            </div>
+        )
+    }
+
     return (
-        <div className='text-[14px]'>
+        <div className='text-[14px] mt-[-10px]'>
+            <div onClick={() => addNewProductTrigger()} className='border border-[#FF4510] hover:text-white hover:bg-[#FF4510] transition-all duration-200 cursor-pointer inline-flex rounded-lg mb-3 px-4 py-1 text-[#FF4510]'>
+                + nowy produkt
+            </div>
             {/* header */}
             <div className='hidden md:flex flex-row flex-nowrap border py-2 font-bold'>
                 <div className='w-full border-r px-4 min-w-[300px] max-w-[300px]'>
