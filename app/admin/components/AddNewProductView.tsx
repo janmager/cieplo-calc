@@ -68,13 +68,21 @@ function AddNewProductView() {
     };
 
     return (
-        <div className='flex flex-col gap-5 items-start'>
+        <div className='flex flex-col gap-5 items-start max-w-[742px]'>
             <div className='flex w-full flex-1 flex-col gap-1'>
                 <label>Nazwa</label>
                 <input onChange={(e) => setNewProduct({...newProduct, name: e.target.value})} value={newProduct.name} placeholder='podaj nazwę produktu...' className='w-full outline-none border px-3 py-2' type='text' />
             </div>
             <div className='flex w-full flex-1 flex-col gap-1'>
-                <label>Opis</label>
+                <label>Typ</label>
+                <select onChange={(e) => setNewProduct({...newProduct, type: e.target.value})} value={newProduct.type} className='w-full outline-none border px-3 py-2'>
+                    <option value="All-In-One">All-In-One</option>
+                    <option value="Monoblok">Monoblok</option>
+                    <option value="Split">Split</option>
+                </select>
+            </div>
+            <div className='flex w-full flex-1 flex-col gap-1'>
+                <label>Model</label>
                 <input onChange={(e) => setNewProduct({...newProduct, desc: e.target.value})} value={newProduct.desc} placeholder='podaj opis produktu...' className='w-full outline-none border px-3 py-2' type='text' />
             </div>
             <div className='flex w-full flex-1 flex-col gap-1'>

@@ -1,134 +1,90 @@
 export const raportEmailTemplate = ({email, raport_url, raportId}: {email: string, raport_url: string, raportId: string}) => {
     let html = ''
     html = /*html*/`
-    <!doctype html>
-        <html lang="en">
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-                <title>Wynik raportu</title>
-                <style media="all" type="text/css">
-                    @media all {
-                    .btn-primary table td:hover {
-                        background-color: #ec0867 !important;
-                }
-                    
-                    .btn-primary a:hover {
-                        background-color: #ec0867 !important;
-                        border-color: #ec0867 !important;
-                    }
-                    }
-                    @media only screen and (max-width: 640px) {
-                    .main p,
-                    .main td,
-                    .main span {
-                        font-size: 16px !important;
-                    }
-                    
-                    .wrapper {
-                        padding: 8px !important;
-                    }
-                    
-                    .content {
-                        padding: 0 !important;
-                    }
-                    
-                    .container {
-                        padding: 0 !important;
-                        padding-top: 8px !important;
-                        width: 100% !important;
-                    }
-                    
-                    .main {
-                        border-left-width: 0 !important;
-                        border-radius: 0 !important;
-                        border-right-width: 0 !important;
-                    }
-                    
-                    .btn table {
-                        max-width: 100% !important;
-                        width: 100% !important;
-                    }
-                    
-                    .btn a {
-                        font-size: 16px !important;
-                        max-width: 100% !important;
-                        width: 100% !important;
-                    }
-                    }
-                    @media all {
-                    .ExternalClass {
-                        width: 100%;
-                    }
-                    
-                    .ExternalClass,
-                    .ExternalClass p,
-                    .ExternalClass span,
-                    .ExternalClass font,
-                    .ExternalClass td,
-                    .ExternalClass div {
-                        line-height: 100%;
-                    }
-                    
-                    .apple-link a {
-                        color: inherit !important;
-                        font-family: inherit !important;
-                        font-size: inherit !important;
-                        font-weight: inherit !important;
-                        line-height: inherit !important;
-                        text-decoration: none !important;
-                    }
-                    
-                    #MessageViewBody a {
-                        color: inherit;
-                        text-decoration: none;
-                        font-size: inherit;
-                        font-family: inherit;
-                        font-weight: inherit;
-                        line-height: inherit;
-                    }
-                    }
-                </style>
-            </head>
-            <body style="font-family: Helvetica, sans-serif; -webkit-font-smoothing: antialiased; font-size: 16px; line-height: 1.3; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; background-color: #f4f5f6; margin: 0; padding: 0;">
-                <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding-top: 30px; padding-bottom: 30px; background-color: #f4f5f6; width: 100%;" width="100%" bgcolor="#f4f5f6">
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align: center;">
-                        <img src="https://i.ibb.co/924Yvxw/logo-black-small.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
-                    </td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;" valign="top">&nbsp;</td>
-                    <td class="container" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; max-width: 600px; padding: 0; padding-top: 24px; width: 600px; margin: 0 auto;" width="600" valign="top">
-                        <div class="content" style="box-sizing: border-box; display: block; margin: 0 auto; max-width: 600px; padding: 0;">
-                            <span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Wynik raportu</span>
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background: #ffffff; border: 1px solid #eaebed; border-radius: 16px; width: 100%; height: 100%;" width="100%">
-                                <tr>
-                                    <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px 24px 68px 24px;" valign="top">
-                                    <p style="color: black; font-family: Helvetica, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 16px; margin-top: 10px; margin-left: 5px;">Nowy raport</p>
-                                    <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px; margin-left: 5px;">Twój raport wyceny został wygenerowany</p><br/>
-                                    <a style="background: #FF4510; margin-bottom: 20px; width: 100%; text-decoration: none; font-size: 17px; color: white; padding: 15px 30px; display: block; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
-                                    </td>
-                                </tr>
-                            </table>
-                            <div class="footer" style="clear: both; padding-top: 24px; text-align: center; width: 100%;">
-                                <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
-                                    <tr>
-                                    <td class="content-block powered-by" style="font-family: Helvetica, sans-serif; vertical-align: top; color: #9a9ea6; font-size: 14px; text-align: center;" valign="top" align="center">
-                                        &copy; 2025 GreeCalc
-                                    </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </td>
-                    <td style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top;" valign="top">&nbsp;</td>
-                </tr>
-                </table>
-            </body>
-        </html>
+    <!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Wymuszenie jasnego motywu -->
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Nowy Raport</title>
+  <style>
+    /* Reset stylów i podstawowe ustawienia */
+    body, table, td, a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    table {
+      border-collapse: collapse !important;
+    }
+    img {
+      border: 0;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      display: block;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f4f5f6 !important;
+    }
+    /* Kontener emaila */
+    .email-container {
+      max-width: 600px;
+      width: 100%;
+      margin: auto;
+    }
+  </style>
+</head>
+<body style="background-color: #f4f5f6; margin:0; padding:0;">
+  <!--[if mso]>
+    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>
+  <![endif]-->
+  <table role="presentation" border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f5f6; padding: 30px 0;">
+    <tr>
+      <td align="center">
+        <!-- Główny kontener emaila -->
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="email-container" style="background: #ffffff; border: 1px solid #eaebed; border-radius: 16px;">
+          <tr>
+            <td align="center" style="padding: 24px 24px 0 24px;">
+              <!-- Logo -->
+              <img src="https://i.ibb.co/924Yvxw/logo-black-small.png" alt="logo" width="164" height="32" style="margin-bottom: 20px;">
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 0 24px 68px 24px; font-family: Helvetica, Arial, sans-serif; font-size: 16px; color: #000;">
+              <!-- Nagłówek -->
+              <p style="font-size: 20px; font-weight: bold; margin: 10px 0 16px 5px;">Nowy raport</p>
+              <!-- Treść wiadomości -->
+              <p style="font-size: 15px; color: gray; margin: 0 0 8px 5px;">Twój raport wyceny został wygenerowany</p>
+              <!-- Przycisk pobierania -->
+              <a href="https://cieplo-calc.vercel.app/wynik/e4a53385-3ef9-40b3-a4cd-4f1b9e32d295?auto_download=true" target="_blank" style="background: #ff4510; text-decoration: none; font-size: 17px; color: #fff; padding: 15px 30px; display: inline-block; border-radius: 5px; margin-bottom: 20px;">
+                Pobierz Raport
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding: 24px; font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: #9a9ea6;">
+              © 2025 GreeCalc
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+  <!--[if mso]>
+        </td>
+      </tr>
+    </table>
+  <![endif]-->
+</body>
+</html>
+
     `
 
     return html;

@@ -33,17 +33,23 @@ function DetailsProductModal({product, show, setShow, fetchAllProducts}: {produc
     if(show && tempProduct != null) return (
         <div className='fixed top-0 left-0 z-50 w-dvw h-dvh flex items-center justify-center'>
             <div className='z-40 bg-white p-10 flex items-center flex-col rounded-lg text-gray-800'>
-                <div className="flex flex-col w-full">
-                    <label>Typ</label>
-                    <input type="text" value={tempProduct.type ? tempProduct.type : ''} onChange={(e) => setTempProduct({...tempProduct, type: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                <div className='grid grid-cols-1 w-full md:grid-cols-2 gap-10 items-center'>
+                    <div className="flex mt-2.5 flex-col w-full">
+                        <label>Model</label>
+                        <input type="text" value={tempProduct.desc ? tempProduct.desc : ''} onChange={(e) => setTempProduct({...tempProduct, desc: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
+                    </div>
+                    <div className="flex flex-col w-full">
+                        <label>Typ</label>
+                        <select className='border px-2 mt-3 w-full py-2.5 rounded-lg' defaultValue={tempProduct.type as string} onChange={(e) => setTempProduct({...tempProduct, type: e.target.value})}>
+                            <option value="All-In-One">All-In-One</option>
+                            <option value="Monoblok">Monoblok</option>
+                            <option value="Split">Split</option>
+                        </select>
+                    </div>
                 </div>
                 <div className="flex mt-2.5 flex-col w-full">
                     <label>Nazwa</label>
                     <input type="text" value={tempProduct.name ? tempProduct.name : ''} onChange={(e) => setTempProduct({...tempProduct, name: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
-                </div>
-                <div className="flex mt-2.5 flex-col w-full">
-                    <label>Model</label>
-                    <input type="text" value={tempProduct.desc ? tempProduct.desc : ''} onChange={(e) => setTempProduct({...tempProduct, desc: e.target.value})} className='p-2 border rounded-md w-full mt-2' />
                 </div>
                 <div className="flex mt-2.5 flex-col w-full">
                     <label>Link do karty produktu</label>
