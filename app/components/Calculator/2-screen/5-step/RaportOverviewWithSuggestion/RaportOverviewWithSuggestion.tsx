@@ -54,7 +54,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                         <span className='text-sm font-[400] text-gray-500'>{productObj.desc}</span>
                                     </div>
                                     {productObj.product_link && <a target='_blank' href={productObj.product_link} className='bg-[#FF4510] product-link hideOnPrint mt-7 flex items-center justify-center h-[54px] w-full uppercase text-white font-[700]'>
-                                        <span>ZOBACZ KARTĘ PRODUKTU</span>
+                                        <span className='text-center text-[14px] md:text-[14px]'>ZOBACZ KARTĘ PRODUKTU</span>
                                     </a>}
                                 </div>
                             )

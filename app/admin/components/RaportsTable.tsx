@@ -50,7 +50,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
         try {
             const response = await fetch('/api/mail/raport/send', {
                 method: 'post',
-                body: JSON.stringify({email: raport.send_raport_email, raportId: raport.id})
+                body: JSON.stringify({email: raport.contact_email_address, raportId: raport.id})
             });
 
             if (!response.ok) {
@@ -135,8 +135,8 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                                     )
                                 }) : <div><span className='text-[11px] font-[500] opacity-30'>brak</span></div>}
                             </div>
-                            {(raport.send_raport_email || raport.contact_phone_number) ? <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-2 border-r flex truncate items-center overflow-auto'>
-                                <span className='truncate'>{raport.send_raport_email}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}</span>
+                            {(raport.contact_email_address || raport.contact_phone_number) ? <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-2 border-r flex truncate items-center overflow-auto'>
+                                <span className='truncate'>{raport.contact_email_address}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}</span>
                             </div> : <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-0 border-r flex truncate items-center overflow-auto'>
                                 <span className='text-[11px] font-[500] opacity-30'>nie podano informacji</span>    
                             </div>}

@@ -53,7 +53,6 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
             
             <CustomAdminDetailsDivider text='Dane klienta' />
             <CustomAdminDetailsInputData checkBox={true} label='Zgoda na wysyłkę raportu do klienta' data={data.send_raport_to_email && data.send_raport_to_email.indexOf('Chcę') >= 0 ? 'yes' : 'no'} />
-            {data.send_raport_to_email && data.send_raport_to_email.indexOf('Chcę') >= 0 && <CustomAdminDetailsInputData label='Adres email' data={data.send_raport_email} />}
             <CustomAdminDetailsInputData checkBox={true} label='Zgoda na wysyłkę oferty do firm' data={data.send_raport_to_near_companies && data.send_raport_to_near_companies.indexOf('Chcę') >= 0 ? 'yes' : 'no'} />
             <CustomAdminDetailsInputData checkBox={true} label='Zgoda na kontakt z ekspertem Gree' data={data.send_raport_accept_24h && data.send_raport_accept_24h.indexOf('Tak') >= 0 ? 'yes' : 'no'} />
             {data.contact_phone_number && <CustomAdminDetailsInputData label='Numer telefonu' data={data.contact_phone_number} />}

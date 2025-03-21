@@ -32,11 +32,11 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
     
             if(add.response){
                 // toast.success('Zapisano poprawnie Twój raport')
-                if(add.response && formData.send_raport_email){
+                if(add.response && formData.contact_email_address){
                     try {
                         const response = await fetch('/api/mail/raport/send', {
                             method: 'post',
-                            body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
+                            body: JSON.stringify({email: formData.contact_email_address, raportId: formData.id})
                         });
                 
                         if (!response.ok) {

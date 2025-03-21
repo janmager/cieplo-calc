@@ -14,7 +14,7 @@ export async function POST(request) {
         const username = 'GreeCalc';
         const myEmail = 'greekalkulator@gmail.com';
 
-        const email = getRaportData.data.send_raport_email
+        const email = getRaportData.data.contact_email_address
 
         const transporter = nodemailer.createTransport({
             service: "Gmail",

@@ -32,7 +32,7 @@ function InputWithPlaceholder({placeholder, formDataValue1, formDataValue2, form
     return (
         <>
         <div ref={inputRef} className={`border h-[60px] flex flex-row ${errorStyle ? 'border-red-500 border-2' : 'border-[#CDCDCD]'}`}>
-            <input className='text-[20px] px-2 text-right w-full h-full outline-none' type={type} value={formDataValue2 ? formData[formDataValue1][formDataValue2] : formData[formDataValue1]} onChange={(e) => {if(type == 'number' && Number(e.target.value) < 0) return false;setFormData(formDataValue2 ? {...formData, [formDataValue1]: {...formData[formDataValue1], [formDataValue2]: e.target.value}} : {...formData, [formDataValue1]: e.target.value});let old = errors;delete old[formDataValue2 ? formDataValue1+'.'+formDataValue2 : formDataValue1];setErrors(old)}} />
+            <input className={`text-[20px] px-2 ${type == 'email' ? 'text-left pl-4' : 'text-right'} w-full h-full outline-none`} type={type} value={formDataValue2 ? formData[formDataValue1][formDataValue2] : formData[formDataValue1]} onChange={(e) => {if(type == 'number' && Number(e.target.value) < 0) return false;setFormData(formDataValue2 ? {...formData, [formDataValue1]: {...formData[formDataValue1], [formDataValue2]: e.target.value}} : {...formData, [formDataValue1]: e.target.value});let old = errors;delete old[formDataValue2 ? formDataValue1+'.'+formDataValue2 : formDataValue1];setErrors(old)}} />
             <div className='flex items-center cursor-default select-none pr-5 pl-3 text-[#8E8E8E]'>
                 {placeholder}
             </div>

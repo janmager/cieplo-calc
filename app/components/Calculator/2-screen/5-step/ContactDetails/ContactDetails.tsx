@@ -20,9 +20,9 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
             setErrors({...errors, 'send_raport_to_email' : true});
             return false;
         }
-        if(formData.send_raport_to_email.indexOf('Chcę') >=0 && (formData.send_raport_email == '' || formData.send_raport_email.indexOf('@') < 0)){
+        if(formData.send_raport_to_email.indexOf('Chcę') >=0 && (formData.contact_email_address == '' || formData.contact_email_address.indexOf('@') < 0)){
             valid = false;
-            setErrors({...errors, 'send_raport_email' : {msg: 'Podaj prawidłowy adres email'}});
+            setErrors({...errors, 'contact_email_address' : {msg: 'Podaj prawidłowy adres email'}});
             return false;
         }
         if(!formData.send_raport_to_near_companies){
