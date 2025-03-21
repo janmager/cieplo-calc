@@ -253,7 +253,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                                 </div>
                                 <div className='mt-5 flex flex-col gap-2'>
                                     <label>Projektowa temperatura pomieszczenia</label>
-                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'heat_demand'} formDataValue2={'temp'} setFormData={setFormData} formData={formData} />
+                                    <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'°C'} formDataValue1={'temp_in_heat_rooms'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                                     <p className='text-[12px] text-gray-500 pt-2'>Za standardową temperaturę pokojową w takich obliczeniach przyjmuje się 20°C. <b>Ale jeśli marzniesz poniżej 25°C — wpisz właśnie tyle.</b> Chodzi o to, by obliczenia oddały <b>realne</b> zużycie ciepła w twoim domu.<br/><br/>Pamiętaj jednak, że im wyższa temperatura w pomieszczeniu, tym więcej ciepła do budynku będziemy musieli dostarczyć – w efekcie wymagana będzie mocniejsza pompa ciepła.</p>
                                 </div>
                             </div>

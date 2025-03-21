@@ -103,6 +103,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             }
         }
 
+        console.log(formData)
         const checkedProducts: any = findBestFitProduct({
             products: products, 
             proj_temp_outside: formData.project_outside_temp, 

@@ -84,11 +84,6 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
     if(products.length == 0) getProducts()
   }, [])
 
-
-  useEffect(() => {
-    console.log(errors)
-  }, [errors])
-
   const validation = () => {
     let valid = true;
 

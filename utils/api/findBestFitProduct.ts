@@ -20,6 +20,12 @@ export const findBestFitProduct = ({
         const toTempArray = [-25, -20, -15, -10, -7, -2, 2, 7, 10, 15];
         const toPompArray = [-25, -20, -15, -10, -7, -2, 2, 7, 10, 15];
 
+        console.log(products, 
+            proj_temp_outside, 
+            needed_kw,
+            temp_inside,
+            max_install_temp)
+
         let tempArray: Point[] = [];
 
         let raport: any = []
