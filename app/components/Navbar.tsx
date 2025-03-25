@@ -19,8 +19,8 @@ function Navbar() {
     const [ isOpen, setIsOpen ] = useState(false)
 
     return (
-        <>
-        <div className='w-full shadow fixed z-40 bg-white justify-between items-center max-w-[1550px] hidden lg:flex flex-row h-[62px]'>
+        <div className='flex w-full justify-center'>
+        <div className='w-full shadow fixed z-40 bg-white justify-between items-center max-w-[1550px] mx-auto hidden lg:flex flex-row h-[62px]'>
             <div className='w-full h-full flex flex-row flex-1'>
                 <Link href={'/'} className='bg-black w-[240px] h-full flex items-center justify-center'>
                     <Image src={logo.src} alt="Logo Gree" width={160} height={40} />
@@ -104,7 +104,7 @@ function Navbar() {
                 </div>
             }
         </div>
-        </>
+        </div>
     )
 }
 

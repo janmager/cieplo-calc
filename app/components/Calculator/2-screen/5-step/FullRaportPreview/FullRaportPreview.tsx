@@ -190,15 +190,18 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
 
             {formData.id && <div className='mt-10 onPrintMarginBottom'>
                 <div className='flex flex-col md:flex-row items-start md:items-center gap-2.5' ref={raportLinkRef}>
-                    <p className='onPrintText14'>Raport jest dostępny pod adresem: </p><a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id.substring(0,4)}...</a>
-                    <Image 
-                        onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
-                        src={copy.src} 
-                        alt="copy icon" 
-                        height={20} 
-                        width={20} 
-                        className='hover:cursor-pointer'
-                    />
+                    <p className='onPrintText14'>Raport jest dostępny pod adresem: </p>
+                    <div className='flex flex-row gap-4 md:gap-2 items-center justify-center'>
+                        <a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id.substring(0,4)}...</a>
+                        <Image 
+                            onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
+                            src={copy.src} 
+                            alt="copy icon" 
+                            height={20} 
+                            width={20} 
+                            className='hover:cursor-pointer mt-[-3px]'
+                        />
+                    </div>
                 </div>
             </div>}
             
@@ -345,9 +348,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                                 <InfoBox title='Jak intensywnie używana jest ciepła woda?' value={formData.hot_water_using_style ? formData.hot_water_using_style : ''} />
                             </>
                         }
-                        <div className='my-7 w-[100px] h-[1px] bg-[#FF4510]' />
+                        {/* <div className='my-7 w-[100px] h-[1px] bg-[#FF4510]' />
                         <CustomLabel label='Energia odnawialna' />
-                        <p className='font-[700] mt-2.5 onPrintText14'>{!formData.hot_water_steroid_foto && !formData.how_water_steroid_kolektor ? 'brak' : `${formData.hot_water_steroid_foto ? 'Instalacja fotowoltaiczna' : ''}${formData.how_water_steroid_kolektor && formData.hot_water_steroid_foto ? ', Kolektory słoneczne' : formData.how_water_steroid_kolektor ? 'Kolektory słoneczne' : ''}`}</p>
+                        <p className='font-[700] mt-2.5 onPrintText14'>{!formData.hot_water_steroid_foto && !formData.how_water_steroid_kolektor ? 'brak' : `${formData.hot_water_steroid_foto ? 'Instalacja fotowoltaiczna' : ''}${formData.how_water_steroid_kolektor && formData.hot_water_steroid_foto ? ', Kolektory słoneczne' : formData.how_water_steroid_kolektor ? 'Kolektory słoneczne' : ''}`}</p> */}
                     </div>
                 </div>
             </div>}
