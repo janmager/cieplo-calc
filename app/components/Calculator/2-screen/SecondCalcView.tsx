@@ -340,7 +340,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         {
           Object.keys(steps).map((item: any, idx) => {
             return (
-              <div onClick={() => transferToStep(item)} key={idx} className={`flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center ${item == 5 ? '' : 'cursor-pointer'}`}>
+              <div onClick={() => {transferToStep(item);}} key={idx} className={`flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center ${item == 5 ? '' : 'cursor-pointer'}`}>
                 <span className={`${item == step ? 'font-bold text-[#FF4510] text-center' : 'hidden md:block'}`}>{steps[item].breadcrumbTitle}</span>
                 {item != step && <span className={`rounded-full border ${parseInt(item) < step ? 'bg-[#FF4510] border-[#FF4510] text-white' : 'border-[#CACACA] text-gray-600'} font-[600] w-[28px] h-[28px] flex items-center justify-center md:hidden`}>{parseInt(item)+1}</span>}
                 {item < Object.keys(steps).length-1 && <div className='h-[1px] w-[10px] md:w-[30px] lg:w-[55px] bg-[#CACACA]'></div>}

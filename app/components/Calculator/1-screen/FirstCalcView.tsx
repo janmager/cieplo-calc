@@ -72,13 +72,13 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
 
             // @ts-ignore
             map.removeLayer(vectorLayer);
-            if(pinInfo){
+            if(pinInfo && x[1] && x[0]){
                 let data = await pinInfo.json();
 
                 // get climate zone
-                const climateZone = getClimateZone(x[1], x[0]);
+                const climateZone: any = getClimateZone(x[1], x[0]);
                 const outsideProjectTemp = getProjectOutsideTemp(climateZone);
-
+                
                 setClickedMap({
                     climateZone: climateZone,
                     outsideProjectTemp: outsideProjectTemp,

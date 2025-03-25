@@ -9,12 +9,13 @@ import CustomDropdownSelect from '@/app/components/Customs/CustomDropdownSelect'
 import { is_roof_isolation } from '@/app/consts/is_roof_isolation'
 import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
 import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'
+import { unheated_over_type } from '@/app/consts/unheated_over_type'
 
 function SecondStepView3({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
   return (
     <div className='flex flex-col gap-14 w-full'>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
-            <div className='flex flex-col gap-10'>
+        <div className='grid grid-cols-1 md:grid-cols-12 gap-10'>
+            <div className='flex flex-col gap-10 md:col-span-7'>
                 <div>
                     <CustomLabel label='Izoalcja dachu' />
                     <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
@@ -67,8 +68,15 @@ function SecondStepView3({formData, setFormData, errors, setErrors}: {formData: 
                         </div>
                     }
                 </div>
+                {(formData.heating_levels.indexOf('Poddasze') == -1 && formData.house_roof_plan.toLowerCase() == 'skośny z poddaszem') && <div>
+                    <CustomLabel label='Nieogrzewane poddasze' />
+                    <div className='flex w-full flex-col mt-2.5 gap-4'>
+                        <span>Jak wygląda sytuacja na nieogrzewanym poddaszu?</span>
+                        <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'unheated_space_type'} options={unheated_over_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                    </div>
+                </div>}
             </div>
-            <div className='flex flex-col h-fit pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full'>
+            <div className='flex flex-col h-fit pb-[30px] md:col-span-5 gap-5 items-start bg-[#F8F8F8] w-full'>
                 <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>
                     <div>
                         <Image src={info.src} height={24} width={24} alt="Info icon" />

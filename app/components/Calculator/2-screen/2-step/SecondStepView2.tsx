@@ -38,6 +38,10 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                                 <label>Całkowita (razem z ew. dociepleniem) grubość ścian zewnętrznych</label>
                                 <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'total_wall_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                             </div>
+                            <div className='flex flex-row gap-5 w-full px-2.5 items-center mt-0'>
+                                <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
+                                <p className='w-full text-sm flex-1'>np. jeśli ściana zewnętrzna Twojego budynku składa się z porothermu o grubości 25 cm i styropianu o grubości 15 cm, to wpisz 40 cm.</p>
+                            </div>
                         </div>
                     </div>
                     {formData.building_construction_type.indexOf('Tradycyjna') >= 0 && <div>
@@ -95,6 +99,10 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                                 <div className='flex w-full flex-col mt-5 gap-2'>
                                     <span>Grubość</span>
                                     <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'insulation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                </div>
+                                <div className='flex flex-row gap-5 w-full px-2.5 items-center mt-5'>
+                                    <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
+                                    <p className='w-full flex-1'>W tym miejscu wpisz, jakiego materiału użyto do izolacji ścian zewnętrznych</p>
                                 </div>
                             </div>
                         }

@@ -87,6 +87,9 @@ export const translateForCieploAPI = (data: any) => {
                 "size": parseInt(data.isolation_parter_floor_thickness)
             },
         },
+        ...(data.heating_levels.indexOf('Poddasze') == -1 && data.house_roof_plan.toLowerCase() == 'skośny z poddaszem') && {
+            "unheated_space_over_type": translate(data.unheated_space_type)
+        },
         "number_doors": parseInt(data.outside_doors_number),
         "number_balcony_doors": parseInt(data.taras_doors_number),
         "number_windows": parseInt(data.windows_number),

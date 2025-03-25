@@ -33,7 +33,7 @@ function CalculatorContainer() {
         building_outline_length_m: '',
         building_outline_width_m: '',
         house_floor_plan: 'Parterowy',
-        house_roof_plan: 'Płaski',
+        house_roof_plan: 'Skośny z poddaszem',
         heating_levels: ['Parter'],
         building_has_basement: false,
         house_levels_height: '',
@@ -65,6 +65,7 @@ function CalculatorContainer() {
         is_parter_floor_isolation: '',
         isolation_parter_floor_material: '',
         isolation_parter_floor_thickness: '',
+        unheated_space_type: 'Brak izolacji i odczuwalne są silne przeciągi',
 
         // fifth step
         main_heat_sources: 'Pompa ciepła powietrze-woda',

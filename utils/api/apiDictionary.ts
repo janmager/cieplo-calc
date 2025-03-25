@@ -139,6 +139,11 @@ export const apiDictionary: any = {
     'Grunt' : 'ground',
     'Nieogrzewany lokal / korytarz / klatka schodowa' : 'unheated_room',
 
+    "Brak izolacji i odczuwalne są silne przeciągi" : "worst",
+    "Brak izolacji, ale bez przeciągów, odczuwalna jest niska temperatura" : "poor",
+    "Ocieplenie dachu jest, ale słabej jakości" : "medium",
+    "Dach jest dobrze ocieplony" : "great",
+
     '' : null,
     '-' : null
 }

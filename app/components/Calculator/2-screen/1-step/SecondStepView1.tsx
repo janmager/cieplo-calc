@@ -101,19 +101,19 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                                         <label>Szerokość obrysu budynku</label>
                                         <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m'} formDataValue1={'building_outline_width_m'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                                     </div>
-                                    <div className='mt-2.5 flex flex-col gap-2'>
+                                    {/* <div className='mt-2.5 flex flex-col gap-2'>
                                         <label>Powierzchnia budynku</label>
                                         <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'api_total_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                                    </div>
+                                    </div> */}
                                 </div>
                             }
                             {
                                 formData.building_outline_sizes == 'Znam powierzchnię zabudowy' &&
                                 <div className='mt-5'>
-                                    <div className='mt-2.5 flex flex-col gap-2'>
+                                    {/* <div className='mt-2.5 flex flex-col gap-2'>
                                         <label>Powierzchnia budynku</label>
                                         <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'api_total_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                                    </div>
+                                    </div> */}
                                     <div className='mt-2.5 flex flex-col gap-2'>
                                         <label>Powierzchnia zabudowy</label>
                                         <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'building_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
@@ -187,7 +187,7 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                         <span>Dach jest</span>
                         <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_roof_plan'} options={building_roof_plan} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>
-                    <p className='mt-5 text-[14px]'><b>Dach skośny bez poddasza</b> dotyczy sytuacji gdy bezpośrednio pod ten dach nie da się wejść wcale lub tylko na czworaka.</p>
+                    <p className='mt-5 text-[14px]'><b>Dach skośny bez poddasza</b> dotyczy sytuacji gdy bezpośrednio pod ten dach nie da się wejść wcale lub tylko na kolanach.</p>
                     <p className='mt-2.5 text-[14px]'><b>Dach skośny z poddaszem</b> to każda inna sytuacja gdy bezpośrednio pod dachem istnieje prawie pełnowymiarowa kondygnacja (zamieszkała lub nie).</p>
                     <div className='flex flex-row gap-5 cursor-pointer mt-7 items-center' onClick={() => setFormData({...formData, 'building_has_basement': !formData['building_has_basement'] })}>
                         <div className='min-w-[20px] max-w-[20px] min-h-[20px] max-h-[20px] border border-[#8E8E8E] flex items-center justify-center'>

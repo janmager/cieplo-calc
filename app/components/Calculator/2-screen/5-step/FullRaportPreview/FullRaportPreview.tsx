@@ -80,7 +80,6 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         if(instalators == null){
             fetchAllInstalators()
         }
-        console.log(formData)
     }, [])
 
     const contentRef = useRef<HTMLDivElement>(null);
