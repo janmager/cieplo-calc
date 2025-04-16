@@ -80,7 +80,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             });
 
             let res = await result.json();
-            console.log('res', res);
             if(res.response){
                 fromApi = {
                     api_total_area: res.data.total_area,
