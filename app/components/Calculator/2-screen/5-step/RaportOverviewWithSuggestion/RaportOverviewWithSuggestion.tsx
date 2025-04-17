@@ -42,7 +42,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                 <span className='text-[30px] tracking-tighter font-bold text-[#FF4510]'>Sugerowane urządzenia do Twojego budynku</span>
                 <div className={`mt-5 grid grid-cols-1 md:grid-cols-3 gap-10`}>
                     {
-                        suggestedProducts.map((product: any) => {
+                        suggestedProducts.length ? suggestedProducts.map((product: any) => {
                             let productObj = product.product;
 
                             return (
@@ -58,7 +58,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                     </a>}
                                 </div>
                             )
-                        })
+                        }) : <span className='font-[300] text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
                     }
                 </div>
             </div> : 
