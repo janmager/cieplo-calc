@@ -150,8 +150,6 @@
     // Dla 3 strefy klimatycznej idealny punkt biwalentny to -10 stopni C
     const idealBivalent = proj_temp_outside/2;
     const results: any = [];
-
-    console.log(proj_temp_outside)
     
     for (const product of products) {
       const bivalentPoint = findBivalentPoint(
@@ -179,8 +177,12 @@
     // Sortujemy wyniki według wartości bezwzględnej odchylenia (od najmniejszego)
     results.sort((a: any, b: any) => Math.abs(a.differenceBivalent) - Math.abs(b.differenceBivalent));
     
+    let monobloks = results.filter((r: any) => r.product.type == 'Monoblok')
+    let splits = results.filter((r: any) => r.product.type == 'Split')
+    let allinones = results.filter((r: any) => r.product.type == 'All-In-One')
+
     console.log(results)
-    return results;
+    return [monobloks[0], splits[0], allinones[0]];
   }
   
   // Przykład użycia:
