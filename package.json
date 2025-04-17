@@ -32,7 +32,8 @@
     "react-drag-drop-files": "^2.4.0",
     "react-hot-toast": "^2.5.1",
     "react-to-print": "^3.0.4",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

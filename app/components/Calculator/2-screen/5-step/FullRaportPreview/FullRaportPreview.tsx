@@ -23,12 +23,15 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts';
 import ShowRaportDetailsAdminModal from '@/app/admin/components/ShowRaportDetailsAdminModal';
 import { Product } from '@prisma/client';
 import { numberWithSpaces } from '@/utils/globals/numberWithSpaces';
+import { findBestFitProduct } from '@/utils/api/findBestFitProduct';
+import { saveSuggestedUpdate } from '@/utils/supabase/saveSuggestedUpdate';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
     const [ suggestedProducts, setSuggestedProducts ] = useState<any>(null) 
     const [ loading, setLoading ] = useState(false)
     const [ openModalRaport, setOpenModalRaport ] = useState(false)
+
 
     const hideOnGeneratePdf = () => {
         document.querySelectorAll('.product-link').forEach((el: any) => {
@@ -56,29 +59,28 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         raportLinkRef.current.style.display = 'flex';
     }
 
-    const fetchAllInstalators = async () => {
-        const ins = await getAllInstalators();
-        // const suggested = await getAllProducts();
-        let suggested: any = JSON.parse(formData.recommendedProducts);
-        autoDownload && handleOpenModalRaport(true);
+    const fetchSuggested = async () => {
+        // const ins = await getAllInstalators();
+        const products: any = await getAllProducts();
 
-        if(ins.response && (suggested.length || suggested.response)){
-            setInstalators(ins.data)
-            setSuggestedProducts(suggested.data ? suggested.data : suggested)
+        const checkedProducts: any = findBestFitProduct({
+            products: products.data, 
+            proj_temp_outside: Number(formData.project_outside_temp), 
+            needed_kw: Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power ? formData.api_hot_water_power : 0),
+            temp_inside: Number(formData.temp_in_heat_rooms),
+            max_install_temp: Number(formData.max_temp_of_power_instalation.split(' ')[0])
+        })
 
-            // if(!formData.raport_url && !loading){
-            //     setTimeout(() => savetoPDF({first: true}), 2_000);
-            // }
-        }
-        else {
-            setInstalators([])
-            setSuggestedProducts([])
-        }
+        let suggested: any = checkedProducts
+        const saveSuggested = await saveSuggestedUpdate({id: formData.id, recommend: JSON.stringify(checkedProducts)})
+        // autoDownload && handleOpenModalRaport(true);
+        
+        setSuggestedProducts(suggested.data ? suggested.data : suggested)
     }
 
     useEffect(() => {
         if(instalators == null){
-            fetchAllInstalators()
+            fetchSuggested()
         }
 
         console.log(formData)
@@ -188,7 +190,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             <div className="max-w-[1172px] w-full mx-auto mb-0">
                 <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Pełny raport</div>
                 <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{formData.building_type} {formData.house_floor_plan.toLowerCase()}</div>
-                <div className='mt-2 text-gray-500'>ogrzewane {formData.api_heated_area}m², {formData.house_building_years.indexOf('-') >= 0 ? 'lata' : 'rok'} {formData.house_building_years}, {formData.house_location.full_name.split(',')[2].trim()}</div>
+                <div className='mt-2 text-gray-500'>ogrzewane {formData.api_heated_area}m², {formData.house_building_years.indexOf('-') >= 0 ? 'lata' : 'rok'} {formData.house_building_years}, {formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ""}</div>
             </div>
 
             {formData.id && <div className='mt-5 onPrintMarginBottom'>
@@ -213,8 +215,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='pt-2' />
                 <div className='grid md:grid-cols-2 gap-0 w-full'>
                     <div className='flex flex-col w-full'>
-                        <InfoBox title='Lokalizacja' value={`${formData.house_location.full_name.split(',')[2].trim()}, ${formData.house_location.full_name.split(',')[4].trim()}`} />
-                        <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Dane klimatyczne dla m. {formData.house_location.full_name.split(',')[2].trim()}, PL</p>
+                        <InfoBox title='Lokalizacja' value={`${formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ''}${formData.house_location.full_name.split(',')[4] ? `, ${formData.house_location.full_name.split(',')[4].trim()}` : ''}`} />
+                        {formData.house_location.full_name.split(',')[2] ? <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Dane klimatyczne dla m. {formData.house_location.full_name.split(',')[2].trim()}, PL</p> : null}
                     </div>
                     <InfoBox title='Powierzchnia ogrzewana' value={`${formData.api_heated_area} m²`} />
                     {/* <InfoBox title='Jakość izolacji' value={'x'} /> */}
@@ -440,7 +442,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 </div>
             </div>
 
-            { openModalRaport && <ShowRaportDetailsAdminModal automaticDownload={true} visible={openModalRaport} setVisible={setOpenModalRaport} data={formData} /> }
+            { openModalRaport && <ShowRaportDetailsAdminModal automaticDownload={false} visible={openModalRaport} setVisible={setOpenModalRaport} data={formData} /> }
         </div>
     )
 }

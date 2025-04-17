@@ -274,11 +274,11 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setErrors({...errors, 'vent_type' : true});
         return false;
       }
-      // if(!formData.max_temp_of_power_instalation){
-      //   valid = false;
-      //   setErrors({...errors, 'max_temp_of_power_instalation' : true});
-      //   return false;
-      // }
+      if(!formData.max_temp_of_power_instalation){
+        valid = false;
+        setErrors({...errors, 'max_temp_of_power_instalation' : true});
+        return false;
+      }
       if(needInstalacjaGrzewcza.indexOf(formData.main_heat_sources) >= 0 && !formData.type_of_heating_instalation){
         valid = false;
         setErrors({...errors, 'type_of_heating_instalation' : true});
