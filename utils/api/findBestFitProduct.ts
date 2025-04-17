@@ -33,7 +33,7 @@ export const findBestFitProduct = ({
             }))})
         })
 
-        products.map((singleProduct: Product) =>  {
+        products.map((singleProduct: Product, idSP: number) =>  {
             let pompArray: Point[] = [];
 
             toPompArray.forEach((number: any) => {
@@ -50,10 +50,12 @@ export const findBestFitProduct = ({
                     productName: singleProduct.desc,
                     isGood: isGood,
                     type: singleProduct.type,
-                    range: Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x))
+                    range: Number(Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x)).toFixed(3))
                 })
             }
         })
+
+        let r = raport.sort((a: any, b: any) => a.range > b.range ? 1 : -1)
 
         let fitting_products: any = []
 

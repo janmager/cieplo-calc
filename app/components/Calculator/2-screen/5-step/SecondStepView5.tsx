@@ -12,6 +12,7 @@ import { getPompaData } from '@/utils/api/getPompaData'
 import { getPunktBiwalentny } from '@/utils/api/getPunktBiwalentny'
 import { Product } from '@prisma/client'
 import { findBestFitProduct } from '@/utils/api/findBestFitProduct'
+import { selectHeatPumps } from '@/utils/api/selectHeatPumps'
 
 function SecondStepView5({formData, setFormData, errors, setErrors, products}: {formData: any, setFormData: any, errors: any, setErrors: any, products: any}) {
     const [ currentStep, setCurrentStep ] = useState(1)
@@ -80,7 +81,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             });
 
             let res = await result.json();
-            console.log('res', res);
             if(res.response){
                 fromApi = {
                     api_total_area: res.data.total_area,
@@ -95,7 +95,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                     api_design_outdoor_temperature: res.data.design_outdoor_temperature,
                     api_avg_outdoor_temperature: res.data.avg_outdoor_temperature
                 }
-                kw_need = res.data.max_heating_power + (res.data.hot_water_power ? res.data.hot_water_power : 0)
+                kw_need = Number(res.data.max_heating_power) + Number(res.data.hot_water_power ? res.data.hot_water_power : 0)
             }
             else{
                 toast.error('Błąd pobierania danych z API')
@@ -103,12 +103,16 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             }
         }
 
-        const checkedProducts: any = findBestFitProduct({
+        let checkedProducts: any = selectHeatPumps({
             products: products, 
             proj_temp_outside: formData.project_outside_temp, 
             needed_kw: kw_need,
             temp_inside: formData.temp_in_heat_rooms,
             max_install_temp: formData.max_temp_of_power_instalation.split(' ')[0]
+        })
+
+        checkedProducts = checkedProducts.filter((product: any) => {
+            return product.differenceBivalent <= 2
         })
 
         setFormData({
