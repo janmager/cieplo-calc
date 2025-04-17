@@ -423,7 +423,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     return (
                         <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
                     )}) : 
-                    <div className='opacity-50 pt-5 pb-0'>brak poleceń</div>
+                    <span className='font-[300] lg:col-span-3 pt-5 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
                 }
                 </div>
             </div>
