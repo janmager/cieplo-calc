@@ -17,10 +17,8 @@ function AllRaportsBrowse() {
 
     const convertExcelFileData = (data: any) => {
         let out: any = []
-        console.log(data)
 
         data.map((singleRaport: any, idx: number) => {
-            console.log(JSON.parse(singleRaport.recommendedProducts))
             out.push({
                 'ID': singleRaport.id,
                 'Data utworzenia': new Date(singleRaport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}),
@@ -28,14 +26,13 @@ function AllRaportsBrowse() {
                 'Email kontaktowy': singleRaport.contact_email_address,
                 'Numer telefonu' : singleRaport.contact_phone_number,
                 'Zapotrzebowanie cieplne' : `${(Number(singleRaport.api_max_heating_power) + Number(singleRaport.api_hot_water_power ? singleRaport.api_hot_water_power : 0)).toFixed(2)} kW`,
-                'Sugerowany Monoblok' : JSON.parse(singleRaport.recommendedProducts)[0] ? `${JSON.parse(singleRaport.recommendedProducts)[0].productName}\n${JSON.parse(singleRaport.recommendedProducts)[0].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[0].range.toFixed(2)}°C` : '-',
-                'Sugerowany Split' :  JSON.parse(singleRaport.recommendedProducts)[1] ? `${JSON.parse(singleRaport.recommendedProducts)[1].productName}\n${JSON.parse(singleRaport.recommendedProducts)[1].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[1].range.toFixed(2)}°C` : '-',
-                'Sugerowany All-In-One' :  JSON.parse(singleRaport.recommendedProducts)[2] ? `${JSON.parse(singleRaport.recommendedProducts)[2].productName}\n${JSON.parse(singleRaport.recommendedProducts)[2].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[2].range.toFixed(2)}°C` : '-',
+                'Sugerowany Monoblok' : JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[0] ? `${JSON.parse(singleRaport.recommendedProducts)[0].productName}\n${JSON.parse(singleRaport.recommendedProducts)[0].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[0].range ? Number(JSON.parse(singleRaport.recommendedProducts)[0].range).toFixed(2) : '-'}°C` : '-',
+                'Sugerowany Split' :  JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[1] ? `${JSON.parse(singleRaport.recommendedProducts)[1].productName}\n${JSON.parse(singleRaport.recommendedProducts)[1].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[1].range ? Number(JSON.parse(singleRaport.recommendedProducts)[1].range).toFixed(2) : '-'}°C` : '-',
+                'Sugerowany All-In-One' :  JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[2] ? `${JSON.parse(singleRaport.recommendedProducts)[2].productName}\n${JSON.parse(singleRaport.recommendedProducts)[2].product.name}\nodchylenie od pkt biwa: ${JSON.parse(singleRaport.recommendedProducts)[2].range ? Number(JSON.parse(singleRaport.recommendedProducts)[2].range).toFixed(2) : '-'}°C` : '-',
                 'Link do raportu' : { f: `HYPERLINK("${window.location.origin}/wynik/${singleRaport.id}"; "otwórz raport")` },
             })
         })
 
-        console.log(out)
         setExcelRaports(out)
     }
 

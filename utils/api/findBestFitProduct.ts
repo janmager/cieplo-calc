@@ -17,16 +17,6 @@ export const findBestFitProduct = ({
     temp_inside: number,
     max_install_temp: number
 }) => {
-        console.log('start counting recommending products...')
-        console.log('init data')
-        console.log({
-            'products': products, 
-            'proj_temp_outside' : proj_temp_outside, 
-            'needed_kw' : needed_kw,
-            'temp_inside' : temp_inside,
-            'max_install_temp' : max_install_temp
-        })
-
         const toTempArray = [-25, -20, -15, -10, -7, -2, 2, 7, 10, 15];
         const toPompArray = [-25, -20, -15, -10, -7, -2, 2, 7, 10, 15];
 
@@ -43,7 +33,7 @@ export const findBestFitProduct = ({
             }))})
         })
 
-        products.map((singleProduct: Product) =>  {
+        products.map((singleProduct: Product, idSP: number) =>  {
             let pompArray: Point[] = [];
 
             toPompArray.forEach((number: any) => {
@@ -60,13 +50,12 @@ export const findBestFitProduct = ({
                     productName: singleProduct.desc,
                     isGood: isGood,
                     type: singleProduct.type,
-                    range: Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x))
+                    range: Number(Math.abs(Math.abs(perfectBiwaPoint)-Math.abs(punktBiwa.x)).toFixed(3))
                 })
             }
         })
 
-        console.log('raport from counting recommending products...')
-        console.log(raport)
+        let r = raport.sort((a: any, b: any) => a.range > b.range ? 1 : -1)
 
         let fitting_products: any = []
 
@@ -83,8 +72,5 @@ export const findBestFitProduct = ({
         splits[0] && fitting_products.push(splits[0])
         allinones[0] && fitting_products.push(allinones[0])
 
-        console.log('final recommending products...')
-        console.log(fitting_products)
-        
         return fitting_products;
 }

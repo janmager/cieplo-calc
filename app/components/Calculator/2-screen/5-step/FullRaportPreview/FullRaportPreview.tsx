@@ -25,6 +25,7 @@ import { Product } from '@prisma/client';
 import { numberWithSpaces } from '@/utils/globals/numberWithSpaces';
 import { findBestFitProduct } from '@/utils/api/findBestFitProduct';
 import { saveSuggestedUpdate } from '@/utils/supabase/saveSuggestedUpdate';
+import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
@@ -63,12 +64,16 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         // const ins = await getAllInstalators();
         const products: any = await getAllProducts();
 
-        const checkedProducts: any = findBestFitProduct({
+        let checkedProducts: any = selectHeatPumps({
             products: products.data, 
             proj_temp_outside: Number(formData.project_outside_temp), 
             needed_kw: Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power ? formData.api_hot_water_power : 0),
             temp_inside: Number(formData.temp_in_heat_rooms),
             max_install_temp: Number(formData.max_temp_of_power_instalation.split(' ')[0])
+        })
+
+        checkedProducts = checkedProducts.filter((product: any) => {
+            return product.differenceBivalent <= 2
         })
 
         let suggested: any = checkedProducts
@@ -82,8 +87,6 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         if(instalators == null){
             fetchSuggested()
         }
-
-        console.log(formData)
     }, [])
 
     const contentRef = useRef<HTMLDivElement>(null);
