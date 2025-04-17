@@ -64,10 +64,11 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         // const ins = await getAllInstalators();
         const products: any = await getAllProducts();
 
+        console.log(formData)
         let checkedProducts: any = selectHeatPumps({
             products: products.data, 
             proj_temp_outside: Number(formData.project_outside_temp), 
-            needed_kw: Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power ? formData.api_hot_water_power : 0),
+            needed_kw: formData.heat_demand.know ? Number(formData.heat_demand.kW) : Number(formData.api_max_heating_power) + Number(formData.api_hot_water_power ? formData.api_hot_water_power : 0),
             temp_inside: Number(formData.temp_in_heat_rooms),
             max_install_temp: Number(formData.max_temp_of_power_instalation.split(' ')[0])
         })
@@ -87,6 +88,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         if(instalators == null){
             fetchSuggested()
         }
+        console.log(formData)
     }, [])
 
     const contentRef = useRef<HTMLDivElement>(null);
@@ -192,8 +194,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             </div>
             <div className="max-w-[1172px] w-full mx-auto mb-0">
                 <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Pełny raport</div>
-                <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{formData.building_type} {formData.house_floor_plan.toLowerCase()}</div>
-                <div className='mt-2 text-gray-500'>ogrzewane {formData.api_heated_area}m², {formData.house_building_years.indexOf('-') >= 0 ? 'lata' : 'rok'} {formData.house_building_years}, {formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ""}</div>
+                {formData.building_type ? <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{formData.building_type} {formData.house_floor_plan.toLowerCase()}</div> : ''}
+                {formData.building_type ? <div className='mt-2 text-gray-500'>ogrzewane {formData.api_heated_area}m², {formData.house_building_years.indexOf('-') >= 0 ? 'lata' : 'rok'} {formData.house_building_years}, {formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ""}</div> : ''}
             </div>
 
             {formData.id && <div className='mt-5 onPrintMarginBottom'>
@@ -221,13 +223,13 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         <InfoBox title='Lokalizacja' value={`${formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ''}${formData.house_location.full_name.split(',')[4] ? `, ${formData.house_location.full_name.split(',')[4].trim()}` : ''}`} />
                         {formData.house_location.full_name.split(',')[2] ? <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Dane klimatyczne dla m. {formData.house_location.full_name.split(',')[2].trim()}, PL</p> : null}
                     </div>
-                    <InfoBox title='Powierzchnia ogrzewana' value={`${formData.api_heated_area} m²`} />
+                    {formData.building_type ? <InfoBox title='Powierzchnia ogrzewana' value={`${formData.api_heated_area} m²`} /> : ''}
                     {/* <InfoBox title='Jakość izolacji' value={'x'} /> */}
                     <InfoBox title='Średnia temperatura w domu' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms} °C` : '? °C'} />
-                    <div className='flex flex-col w-full md:mt-[-16px]'>
+                    {formData.building_type ? <div className='flex flex-col w-full md:mt-[-16px]'>
                         <InfoBox title='Ogrzewanie' value={`${formData.main_heat_sources}`} />
                         <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Instalacja c.o: {formData.type_of_heating_instalation}, max. temp. {formData.max_temp_of_power_instalation}</p>
-                    </div>
+                    </div> : ''}
                 </div>
                 {/* <InfoBox title='Rok budowy' value={formData.house_building_years ? formData.house_building_years : ''} />
                 <InfoBox title='Lokalizacja' value={formData['house_location'] && formData['house_location']['full_name']} />
@@ -236,24 +238,24 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <InfoBox title='Zakładana temperatura w pomieszczeniu' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms} °C` : '? °C'} /> */}
             </div>
 
-            {formData.api_bivalent_point_heating_power && <div className='mt-20'>
-                <p className='text-[28px] md:text-[40px] xl:text-[50px] font-[600] max-w-[800px] onPrintTopMarginExtra leading-[110%]'>Szacunkowe zapotrzebowanie na moc i energię cieplną</p>
+            {(formData.heat_demand_know || formData.api_bivalent_point_heating_power) && <div className='mt-20'>
+                <p className={`text-[28px] md:text-[40px] ${formData.heat_demand_know ? 'xl:text-[40px]' : 'xl:text-[50px]'} font-[600] max-w-[800px] onPrintTopMarginExtra leading-[110%]`}>{formData.heat_demand_know ? 'Z' : 'Szacunkowe z'}apotrzebowanie na moc i energię cieplną</p>
                 <div className='flex flex-col lg:flex-row mt-10 mb-10 gap-5 lg:gap-10 items-start justify-start'>
                     <div className='pdf-padding-bottom flex flex-col w-full md:w-auto text-white bg-[#FF4510] items-start justify-start py-2.5 pl-7 pr-10'>
                         <span className='font-[400] text-[24px]'>Moc grzewcza</span>
                         <div className='flex flex-col items-start gap-0'>
-                            <span className='text-[38px] onPrintText20 font-[700]'>{formData.api_max_heating_power ? (Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)).toFixed(2) : '?'}kW</span>
+                            <span className='text-[38px] onPrintText20 font-[700]'>{formData.heat_demand_know ? formData.heat_demand_kW : formData.api_max_heating_power ? (Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)).toFixed(2) : '?'}kW</span>
                             <p className='font-[400] onPrintText20 mt-[-3px] text-[20px]'>(C.O. + CWU)</p>
                         </div>
                     </div>
-                    <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-7'>
+                    {!formData.heat_demand_know && <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-7'>
                         <span className='font-[400] text-[24px]'>Maksymalna moc grzewcza</span>
                         <div className='flex flex-row items-center gap-2.5'>
                             <span className='text-[30px] onPrintText20 font-[700]'>{formData.api_max_heating_power ? (Number(formData.api_max_heating_power)).toFixed(2) : '?'}kW</span>
                             <span className='font-[400] onPrintText20 text-[20px]'>(C.O)</span>
                         </div>
                         <p className='text-[13px] max-w-[400px] opacity-100 font-[300]'>w "najmroźniejszy" dzień zimy, tj. przy średniej dobowej za oknem <b>{Number(formData.api_design_outdoor_temperature).toFixed(1)} °C</b> i średniej temperaturze w domu <b>{Number(formData.temp_in_heat_rooms).toFixed(1)} °C</b></p>
-                    </div>
+                    </div>}
                     {/* <div className='pdf-padding-bottom flex w-full lg:w-auto flex-col text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Energia cieplna</span>
                         <div className='flex flex-row items-center gap-2.5'>
@@ -262,7 +264,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         </div>
                     </div> */}
                 </div>
-                <InfoBox title='Wskaźnik zapotrzebowania na moc grzewczą' value={`${Number(formData.api_heating_power_factor).toFixed(1)} W/m²`} />
+                {!formData.heat_demand_know && <InfoBox title='Wskaźnik zapotrzebowania na moc grzewczą' value={`${Number(formData.api_heating_power_factor).toFixed(1)} W/m²`} />}
             </div>}
 
             {formData.building_type && <div className='mt-20 pagebreak'>
