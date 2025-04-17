@@ -131,7 +131,7 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                                 <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'type_of_heating_instalation'} options={type_of_heating_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                             </div>
                         </>}
-                        {(formData.type_of_heating_instalation.indexOf('100% grzejniki') >= 0 || formData.type_of_heating_instalation.indexOf('Mniej więcej po równo') >= 0 || formData.type_of_heating_instalation.indexOf('Przewaga') >= 0) && <>
+                        {/* {(formData.type_of_heating_instalation.indexOf('100% grzejniki') >= 0 || formData.type_of_heating_instalation.indexOf('Mniej więcej po równo') >= 0 || formData.type_of_heating_instalation.indexOf('Przewaga') >= 0) && <> */}
                         <div className='flex w-full flex-col mb-5 gap-2'>
                             <span>Maksymalna temperatura zasilania instalacji</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'max_temp_of_power_instalation'} options={max_temp_of_power_instalation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
@@ -139,7 +139,7 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                         <div className='flex flex-row gap-5 w-full mb-10 px-2.5 items-start mt-0'>
                             <Image src={info.src} height={22} width={22} className='w-[22px] h-[22px]' alt='alert icon' />
                             <p className='w-full flex-1 mt-[-5px]'>Jaką max. temperaturą zasilane są grzejniki w największe mrozy?</p>
-                        </div></>}
+                        </div>
                         <CustomLabel label='Ciepła woda kranowa' />
                         <div className='flex w-full flex-col mt-5 gap-2'>
                             <span>Przez inżynierów zwana Ciepłą Wodą Użytkową (CWU).</span>

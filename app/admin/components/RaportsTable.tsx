@@ -136,7 +136,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                                 }) : <div><span className='text-[11px] font-[500] opacity-30'>brak</span></div>}
                             </div>
                             {(raport.contact_email_address || raport.contact_phone_number) ? <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-2 border-r flex truncate items-center overflow-auto'>
-                                <span className='truncate'>{raport.contact_email_address}{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `, tel: ${raport.contact_phone_number }`: ''}</span>
+                                <span className='truncate leading-[160%]'>{raport.contact_email_address}<br/>{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `tel: ${raport.contact_phone_number }`: ''}</span>
                             </div> : <div className='col-span-2 text-center justify-center md:justify-start md:text-left pt-4 md:pt-0 w-full px-0 border-r flex truncate items-center overflow-auto'>
                                 <span className='text-[11px] font-[500] opacity-30'>nie podano informacji</span>    
                             </div>}
