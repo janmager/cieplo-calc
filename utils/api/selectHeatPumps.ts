@@ -139,13 +139,15 @@
     proj_temp_outside,
     needed_kw,
     temp_inside,
-    max_install_temp
+    max_install_temp,
+    all = false
   }: {
     products: any[],
     proj_temp_outside: number,
     needed_kw: number,
     temp_inside: number,
-    max_install_temp: number
+    max_install_temp: number,
+    all?: boolean
   }): ProductResult[] =>  {
     // Dla 3 strefy klimatycznej idealny punkt biwalentny to -10 stopni C
     const idealBivalent = proj_temp_outside/2;
@@ -177,6 +179,8 @@
     // Sortujemy wyniki według wartości bezwzględnej odchylenia (od najmniejszego)
     results.sort((a: any, b: any) => Math.abs(a.differenceBivalent) - Math.abs(b.differenceBivalent));
     
+    if(all) return results;
+
     let monobloks = results.filter((r: any) => r.product.type == 'Monoblok')
     let splits = results.filter((r: any) => r.product.type == 'Split')
     let allinones = results.filter((r: any) => r.product.type == 'All-In-One')

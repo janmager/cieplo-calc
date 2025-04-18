@@ -93,7 +93,8 @@ function page() {
             proj_temp_outside: apiData.proj_temp_outside,
             needed_kw: apiData.needed_kw,
             temp_inside: apiData.temp_inside,
-            products: products
+            products: products,
+            all: true
         })
 
         let oldProds = products
