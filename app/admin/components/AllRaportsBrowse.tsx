@@ -20,15 +20,13 @@ function AllRaportsBrowse() {
 
         data.map((singleRaport: any, idx: number) => {
             out.push({
-                'ID': singleRaport.id,
+                'ID': singleRaport.human_id,
                 'Data utworzenia': new Date(singleRaport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}),
-                'Zgoda na kontakt' : singleRaport.send_raport_accept_24h.indexOf('Tak') >= 0 ? 'Tak' : 'Nie',
+                'Zgoda na kontakt z ekspertem Gree' : singleRaport.send_raport_accept_24h.indexOf('Tak') >= 0 ? 'Tak' : 'Nie',
                 'Email kontaktowy': singleRaport.contact_email_address,
                 'Numer telefonu' : singleRaport.contact_phone_number,
-                'Zapotrzebowanie cieplne' : `${(Number(singleRaport.api_max_heating_power) + Number(singleRaport.api_hot_water_power ? singleRaport.api_hot_water_power : 0)).toFixed(2)} kW`,
-                'Sugerowany Monoblok' : JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[0] ? `${JSON.parse(singleRaport.recommendedProducts)[0].product.desc}\n${JSON.parse(singleRaport.recommendedProducts)[0].product.name}` : '-',
-                'Sugerowany Split' :  JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[1] ? `${JSON.parse(singleRaport.recommendedProducts)[1].product.desc}\n${JSON.parse(singleRaport.recommendedProducts)[1].product.name}` : '-',
-                'Sugerowany All-In-One' :  JSON.parse(singleRaport.recommendedProducts) && JSON.parse(singleRaport.recommendedProducts)[2] ? `${JSON.parse(singleRaport.recommendedProducts)[2].product.desc}\n${JSON.parse(singleRaport.recommendedProducts)[2].product.name}` : '-',
+                'Zapotrzebowanie cieplne' : `${!singleRaport.heat_demand_know ? (Number(singleRaport.api_max_heating_power) + Number(singleRaport.api_hot_water_power ? singleRaport.api_hot_water_power : 0)).toFixed(2) : Number(singleRaport.heat_demand_kW).toFixed(2)} kW`,
+                'Sugerowane produkty' : `${JSON.parse(singleRaport.recommendedProducts) ? JSON.parse(singleRaport.recommendedProducts).map((p: any) => `${p.product.desc} (${p.product.type})\n`).join('').trim() : 'brak'}`,
                 'Link do raportu' : { f: `HYPERLINK("${window.location.origin}/wynik/${singleRaport.id}"; "otwórz raport")` },
             })
         })
