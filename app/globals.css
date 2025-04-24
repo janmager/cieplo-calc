@@ -26,6 +26,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 ::-webkit-scrollbar {
     width: 5px;
+    height: 1px;
 }
 
 
@@ -165,6 +166,9 @@ input[type=number]::-webkit-outer-spin-button {
     }
     .onPrintText14 {
         font-size: 14px !important
+    }
+    .onPrintText12 {
+        font-size: 12px !important
     }
     .grid-cols-1 {
         grid-template-columns: repeat(2, minmax(0, 1fr));

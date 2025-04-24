@@ -58,7 +58,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                     </a>}
                                 </div>
                             )
-                        }) : <span className='font-[300] text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
+                        }) : <span className='font-[300] lg:col-span-3 py-5 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
                     }
                 </div>
             </div> : 

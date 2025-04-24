@@ -108,7 +108,7 @@ export const raportEmailTemplate = ({email, raport_url, raportId}: {email: strin
                                 <tr>
                                     <td class="wrapper" style="font-family: Helvetica, sans-serif; font-size: 16px; vertical-align: top; box-sizing: border-box; padding: 24px 24px 68px 24px;" valign="top">
                                     <p style="color: black; font-family: Helvetica, sans-serif; font-size: 20px; font-weight: bold; margin-bottom: 16px; margin-top: 10px; margin-left: 5px;">Nowy raport</p>
-                                    <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px; margin-left: 5px;">Twój raport wyceny został wygenerowany</p><br/>
+                                    <p style="font-family: Helvetica, sans-serif; font-size: 15px; font-weight: normal; color: gray; margin: 0; margin-bottom: 8px; margin-left: 5px;">Twój raport doboru mocy pompy ciepła GREE został utworzony.</p><br/>
                                     <a style="background: #FF4510; margin-bottom: 20px; width: fit; text-decoration: none; font-size: 17px; color: white; padding: 15px 30px; display: block; border-radius: 5px;" href="${`https://cieplo-calc.vercel.app/wynik/${raportId}?auto_download=true`}">Pobierz Raport</a>
                                     </td>
                                 </tr>

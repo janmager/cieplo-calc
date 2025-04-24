@@ -44,7 +44,6 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                             throw new Error(`response status: ${response.status}`);
                         }
                         const responseData = await response.json();
-
                     }
                     catch(e){
                         console.log(e);
@@ -56,12 +55,14 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             else{
                 toast.error('Wystąpił błąd podczas zapisywania raportu')
             }
-            setLoading(false)
         }
         catch(error){
             toast.error('Wystąpił błąd podczas zapisywania raportu')
             console.log(error)
             setLoading(false)
+        }
+        finally{
+            router.push(`/wynik/${formData.id}`)
         }
     }
 

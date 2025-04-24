@@ -14,6 +14,7 @@ import { links } from '@/app/consts/links';
 import { useReactToPrint } from 'react-to-print';
 import logo from '@/assets/png/logo.png'
 import { getAllInstalators } from '@/utils/supabase/getAllInstalators';
+import loaderIco from '@/assets/svg/loader.svg'
 
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -30,7 +31,7 @@ import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
     const [ suggestedProducts, setSuggestedProducts ] = useState<any>(null) 
-    const [ loading, setLoading ] = useState(false)
+    const [ loading, setLoading ] = useState(true)
     const [ openModalRaport, setOpenModalRaport ] = useState(false)
 
 
@@ -64,7 +65,6 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
         // const ins = await getAllInstalators();
         const products: any = await getAllProducts();
 
-        console.log(formData)
         let checkedProducts: any = selectHeatPumps({
             products: products.data, 
             proj_temp_outside: Number(formData.project_outside_temp), 
@@ -72,23 +72,19 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             temp_inside: Number(formData.temp_in_heat_rooms),
             max_install_temp: Number(formData.max_temp_of_power_instalation.split(' ')[0])
         })
-
-        checkedProducts = checkedProducts.filter((product: any) => {
-            return product.differenceBivalent <= 2
-        })
-
+        
         let suggested: any = checkedProducts
         const saveSuggested = await saveSuggestedUpdate({id: formData.id, recommend: JSON.stringify(checkedProducts)})
         // autoDownload && handleOpenModalRaport(true);
         
         setSuggestedProducts(suggested.data ? suggested.data : suggested)
+        setLoading(false)
     }
 
     useEffect(() => {
         if(instalators == null){
             fetchSuggested()
         }
-        console.log(formData)
     }, [])
 
     const contentRef = useRef<HTMLDivElement>(null);
@@ -97,103 +93,122 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
     const reactToPrintFn = useReactToPrint({ 
         contentRef,
         onBeforePrint: async () => {
-            document.title = `Raport-${links.host}-${formData.id}`;
+            document.title = `Raport-${links.host}-${formData.human_id}`;
         },
     });
 
     // generate pdf, save pdf to db, send email with download pdf url
-    const savetoPDF = async ({first = false}: {first?: boolean}) => {
-        if(loading) return false;
+    // const savetoPDF = async ({first = false}: {first?: boolean}) => {
+    //     if(loading) return false;
 
-        if(formData.raport_url){
-            window.open(formData.raport_url);
-            return false;
-        }
+    //     if(formData.raport_url){
+    //         window.open(formData.raport_url);
+    //         return false;
+    //     }
 
-        hideOnGeneratePdf();
-        setLoading(true);
-        try{
-            const canvas = await html2canvas(contentRef.current!);
-            const imgData = canvas.toDataURL('image/png');
+    //     hideOnGeneratePdf();
+    //     setLoading(true);
+    //     try{
+    //         const canvas = await html2canvas(contentRef.current!);
+    //         const imgData = canvas.toDataURL('image/png');
 
-            const pdf = new jsPDF({
-                orientation: 'portrait',
-                unit: 'px',
-                format: [canvas.width, canvas.height],
-            })
+    //         const pdf = new jsPDF({
+    //             orientation: 'portrait',
+    //             unit: 'px',
+    //             format: [canvas.width, canvas.height],
+    //         })
 
-            const width = pdf.internal.pageSize.getWidth();
-            const height = (canvas.height * width) / canvas.width;
+    //         const width = pdf.internal.pageSize.getWidth();
+    //         const height = (canvas.height * width) / canvas.width;
 
-            pdf.addImage(imgData, 'PNG', 0, 0, width, height, '', 'FAST');
-            const out = pdf.output('blob');
-            try{
-                const {data,error} = await supabase.storage.from("raports").upload(`${formData.id}/raport-${new Date().valueOf()}.pdf`, out, {upsert: true, contentType: "application/pdf"});
+    //         pdf.addImage(imgData, 'PNG', 0, 0, width, height, '', 'FAST');
+    //         const out = pdf.output('blob');
+    //         try{
+    //             const {data,error} = await supabase.storage.from("raports").upload(`${formData.id}/raport-${new Date().valueOf()}.pdf`, out, {upsert: true, contentType: "application/pdf"});
             
-                if (error) {
-                    console.error("Error uploading file:", error.message);
-                    toast.error('Wystąpił błąd podczas przesyłania raportu')
-                } else {
-                    showOnGeneratePdf();
-                    const { data: file } = await supabase.storage.from("raports").getPublicUrl(data?.path);
-                    setFormData({...formData, raport_url: file.publicUrl})
-                    const updateRaportUrlDb = await updateRaportUrl({raportId: formData.id, raportUrl: file.publicUrl});
+    //             if (error) {
+    //                 console.error("Error uploading file:", error.message);
+    //                 toast.error('Wystąpił błąd podczas przesyłania raportu')
+    //             } else {
+    //                 showOnGeneratePdf();
+    //                 const { data: file } = await supabase.storage.from("raports").getPublicUrl(data?.path);
+    //                 setFormData({...formData, raport_url: file.publicUrl})
+    //                 const updateRaportUrlDb = await updateRaportUrl({raportId: formData.id, raportUrl: file.publicUrl});
 
-                    // if(updateRaportUrlDb.response && formData.send_raport_email){
-                    //     try {
-                    //         const response = await fetch('/api/mail/raport/send', {
-                    //             method: 'post',
-                    //             body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
-                    //         });
+    //                 // if(updateRaportUrlDb.response && formData.send_raport_email){
+    //                 //     try {
+    //                 //         const response = await fetch('/api/mail/raport/send', {
+    //                 //             method: 'post',
+    //                 //             body: JSON.stringify({email: formData.send_raport_email, raportId: formData.id})
+    //                 //         });
                     
-                    //         if (!response.ok) {
-                    //             throw new Error(`response status: ${response.status}`);
-                    //         }
-                    //         const responseData = await response.json();
+    //                 //         if (!response.ok) {
+    //                 //             throw new Error(`response status: ${response.status}`);
+    //                 //         }
+    //                 //         const responseData = await response.json();
 
-                    //         setLoading(false);
-                    //         setLoading(false)
-                    //         // if(!first)toast.success('Poprawnie wygenerowano PDF')
-                    //     }
-                    //     catch(e){
-                    //         console.log(e);
-                    //         if(!first) toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
-                    //         setLoading(false)
-                    //     }   
-                    // }
-                    // else if(!updateRaportUrlDb.response){
-                    //     if(!first) toast.error('Wystąpił błąd podczas generowania PDF')
-                    // }
-                    if(updateRaportUrlDb.response) setLoading(false);
-                    else{
-                        toast.error('Wystąpił błąd podczas generowania raportu')
-                    }
-                }
-            }
-            catch(e){ 
-                toast.error('Wystąpił błąd podczas przesyłania raportu')
-                showOnGeneratePdf();
-                setLoading(false);
-            }
-            // pdf.save(`raport-${new Date().valueOf()}.pdf`);
-        }
-        catch(e){
-            console.log(e)
-        }
-    }
+    //                 //         setLoading(false);
+    //                 //         setLoading(false)
+    //                 //         // if(!first)toast.success('Poprawnie wygenerowano PDF')
+    //                 //     }
+    //                 //     catch(e){
+    //                 //         console.log(e);
+    //                 //         if(!first) toast.error('Wystąpił błąd podczas wysyłania raportu do klienta')
+    //                 //         setLoading(false)
+    //                 //     }   
+    //                 // }
+    //                 // else if(!updateRaportUrlDb.response){
+    //                 //     if(!first) toast.error('Wystąpił błąd podczas generowania PDF')
+    //                 // }
+    //                 if(updateRaportUrlDb.response) setLoading(false);
+    //                 else{
+    //                     toast.error('Wystąpił błąd podczas generowania raportu')
+    //                 }
+    //             }
+    //         }
+    //         catch(e){ 
+    //             toast.error('Wystąpił błąd podczas przesyłania raportu')
+    //             showOnGeneratePdf();
+    //             setLoading(false);
+    //         }
+    //         // pdf.save(`raport-${new Date().valueOf()}.pdf`);
+    //     }
+    //     catch(e){
+    //         console.log(e)
+    //     }
+    // }
 
     const handleOpenModalRaport = (force = false) => {
         setOpenModalRaport(true)
     }
+
+    if(loading){
+        return <div className='pt-20 pb-20'>
+            <img src={loaderIco.src}  className='h-10 w-10 animate-spin opacity-10' />
+        </div>
+    }
     
     return (
-        <div className='flex flex-col gap-0 pb-10 px-5 md:px-10' ref={contentRef}>
+        <div className='flex flex-col gap-0 pb-0 px-5 md:px-10' ref={contentRef}>
             <Toaster position="top-center" />
             <div className='py-10 w-full hidden mt-[-30px] mb-5 bg-black items-center justify-center px-10 showOnPrint'>
                 <Image src={logo.src} className='mt-[20px]' alt="Logo Gree" width={160} height={40} />
             </div>
             <div className="max-w-[1172px] w-full mx-auto mb-0">
-                <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Pełny raport</div>
+                <div className='text-[32px] md:text-[48px] font-[600] max-w-[1000px] uppercase tracking-tighter leading-[110%]'>Raport doboru mocy pompy ciepła GREE</div>
+                
+                <div className='mt-5 pagebreak'>
+                    <p className='text-[24px] md:text-[30px] text-[#FF4510] font-[700] max-md:tracking-wide'>Sugerowane urządzenia do Twojego budynku</p>
+                    <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-5'>
+                    {suggestedProducts && suggestedProducts.length ? suggestedProducts.map((p: any) => {
+                        return (
+                            <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
+                        )}) : 
+                        <span className='font-[300] lg:col-span-3 pt-5 pb-10 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
+                    }
+                    </div>
+                </div>
+
                 {formData.building_type ? <div className='text-[20px] md:text-[30px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>{formData.building_type} {formData.house_floor_plan.toLowerCase()}</div> : ''}
                 {formData.building_type ? <div className='mt-2 text-gray-500'>ogrzewane {formData.api_heated_area}m², {formData.house_building_years.indexOf('-') >= 0 ? 'lata' : 'rok'} {formData.house_building_years}, {formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ""}</div> : ''}
             </div>
@@ -218,7 +233,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
             <div className='mt-10'>
                 <CustomLabel label='W skrócie o budynku' />
                 <div className='pt-2' />
-                <div className='grid md:grid-cols-2 gap-0 w-full'>
+                <div className='grid md:grid-cols-3 gap-5 w-full'>
                     <div className='flex flex-col w-full'>
                         <InfoBox title='Lokalizacja' value={`${formData.house_location.full_name.split(',')[2] ? formData.house_location.full_name.split(',')[2].trim() : ''}${formData.house_location.full_name.split(',')[4] ? `, ${formData.house_location.full_name.split(',')[4].trim()}` : ''}`} />
                         {formData.house_location.full_name.split(',')[2] ? <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Dane klimatyczne dla m. {formData.house_location.full_name.split(',')[2].trim()}, PL</p> : null}
@@ -226,7 +241,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     {formData.building_type ? <InfoBox title='Powierzchnia ogrzewana' value={`${formData.api_heated_area} m²`} /> : ''}
                     {/* <InfoBox title='Jakość izolacji' value={'x'} /> */}
                     <InfoBox title='Średnia temperatura w domu' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms} °C` : '? °C'} />
-                    {formData.building_type ? <div className='flex flex-col w-full md:mt-[-16px]'>
+                    <InfoBox title='Maksymalna temperatura instalacji' value={formData.max_temp_of_power_instalation ? `${formData.max_temp_of_power_instalation}` : '? °C'} />
+                    {formData.building_type ? <div className='flex flex-col w-full md:col-span-2 md:mt-[-16px]'>
                         <InfoBox title='Ogrzewanie' value={`${formData.main_heat_sources}`} />
                         <p className='text-[12px] font-[300] text-gray-500 mt-[-2px]'>Instalacja c.o: {formData.type_of_heating_instalation}, max. temp. {formData.max_temp_of_power_instalation}</p>
                     </div> : ''}
@@ -238,23 +254,23 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <InfoBox title='Zakładana temperatura w pomieszczeniu' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms} °C` : '? °C'} /> */}
             </div>
 
-            {(formData.heat_demand_know || formData.api_bivalent_point_heating_power) && <div className='mt-20'>
+            {(formData.heat_demand_know || formData.api_bivalent_point_heating_power) && <div className='mt-10 md:mt-20'>
                 <p className={`text-[28px] md:text-[40px] ${formData.heat_demand_know ? 'xl:text-[40px]' : 'xl:text-[50px]'} font-[600] max-w-[800px] onPrintTopMarginExtra leading-[110%]`}>{formData.heat_demand_know ? 'Z' : 'Szacunkowe z'}apotrzebowanie na moc i energię cieplną</p>
                 <div className='flex flex-col lg:flex-row mt-10 mb-10 gap-5 lg:gap-10 items-start justify-start'>
-                    <div className='pdf-padding-bottom flex flex-col w-full md:w-auto text-white bg-[#FF4510] items-start justify-start py-2.5 pl-7 pr-10'>
-                        <span className='font-[400] text-[24px]'>Moc grzewcza</span>
-                        <div className='flex flex-col items-start gap-0'>
-                            <span className='text-[38px] onPrintText20 font-[700]'>{formData.heat_demand_know ? formData.heat_demand_kW : formData.api_max_heating_power ? (Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)).toFixed(2) : '?'}kW</span>
-                            <p className='font-[400] onPrintText20 mt-[-3px] text-[20px]'>(C.O. + CWU)</p>
+                    <div className='pdf-padding-bottom flex flex-col w-full md:w-auto text-white bg-[#FF4510] items-center md:items-start justify-start py-2.5 pl-7 pr-7 md:pr-10'>
+                        <span className='font-[700] text-[32px]'>Moc grzewcza</span>
+                        <div className='flex flex-col items-center md:items-start gap-0'>
+                            <span className='text-[48px] mt-[-8px] onPrintText20 font-[700]'>{formData.heat_demand_know ? formData.heat_demand_kW : formData.api_max_heating_power ? (Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)).toFixed(2) : '?'}kW</span>
+                            <p className='font-[400] onPrintText20 mt-[-3px] pb-2 text-[20px]'>(C.O. + CWU)</p>
                         </div>
                     </div>
-                    {!formData.heat_demand_know && <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-start justify-center py-2.5 px-7'>
-                        <span className='font-[400] text-[24px]'>Maksymalna moc grzewcza</span>
+                    {!formData.heat_demand_know && <div className='pdf-padding-bottom flex flex-col w-full lg:w-auto text-white bg-[#FF4510] items-center md:items-start justify-center py-2.5 px-7'>
+                        <span className='font-[700] max-md:text-center text-[32px]'>Maksymalna moc grzewcza</span>
                         <div className='flex flex-row items-center gap-2.5'>
-                            <span className='text-[30px] onPrintText20 font-[700]'>{formData.api_max_heating_power ? (Number(formData.api_max_heating_power)).toFixed(2) : '?'}kW</span>
-                            <span className='font-[400] onPrintText20 text-[20px]'>(C.O)</span>
+                            <span className='text-[48px] mt-[-8px] onPrintText20 font-[700]'>{formData.api_max_heating_power ? (Number(formData.api_max_heating_power)).toFixed(2) : '?'}kW</span>
+                            <span className='font-[400] mt-[2px] onPrintText20 text-[20px]'>(C.O)</span>
                         </div>
-                        <p className='text-[13px] max-w-[400px] opacity-100 font-[300]'>w "najmroźniejszy" dzień zimy, tj. przy średniej dobowej za oknem <b>{Number(formData.api_design_outdoor_temperature).toFixed(1)} °C</b> i średniej temperaturze w domu <b>{Number(formData.temp_in_heat_rooms).toFixed(1)} °C</b></p>
+                        <p className='text-[13px] max-w-[400px] max-md:text-center opacity-100 font-[300]'>w "najmroźniejszy" dzień zimy, tj. przy średniej dobowej za oknem <b>{Number(formData.api_design_outdoor_temperature).toFixed(1)} °C</b> i średniej temperaturze w domu <b>{Number(formData.temp_in_heat_rooms).toFixed(1)} °C</b></p>
                     </div>}
                     {/* <div className='pdf-padding-bottom flex w-full lg:w-auto flex-col text-white bg-[#FF4510] items-start justify-center py-2.5 px-5'>
                         <span className='font-[400] text-[24px]'>Energia cieplna</span>
@@ -267,13 +283,13 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 {!formData.heat_demand_know && <InfoBox title='Wskaźnik zapotrzebowania na moc grzewczą' value={`${Number(formData.api_heating_power_factor).toFixed(1)} W/m²`} />}
             </div>}
 
-            {formData.building_type && <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-10 md:mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Wymiary</p>
                 <div className='grid grid-cols-1 md:grid-cols-10 gap-10 mt-10'>
                     <div className='flex flex-col md:col-span-4'>
                         <CustomLabel label='Obrys budynku' />
                         <div className='pt-2' />
-                        <InfoBox title='Powierzchnia zabudowy' value={formData.building_area ? `${formData.building_area} mkw.` : formData.building_outline_width_m ? `${formData.building_outline_width_m}m x ${formData.building_outline_length_m}m` : ''} />
+                        <InfoBox title='Powierzchnia zabudowy' value={formData.building_area ? `${formData.building_area} m²` : formData.building_outline_width_m ? `${formData.building_outline_width_m}m x ${formData.building_outline_length_m}m` : ''} />
                         <div className='w-[100px] h-[1px] mt-7 mb-7 bg-[#FF1F1F]' />
                         <CustomLabel label='Układ pięter' />
                         <div className='pt-2' />
@@ -292,7 +308,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 </div>
             </div>}
 
-            {formData.building_type && <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-10 md:mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Ściany</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
@@ -331,7 +347,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 </div>
             </div>}
 
-            {formData.building_type && <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-10 md:mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Poddasze i parter</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
@@ -356,15 +372,20 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                             </>
                         }
                     </div>
+                    {
+                        (!formData.heat_demand_know && formData.heating_levels.indexOf('Poddasze') == -1 && formData.house_roof_plan && formData.house_roof_plan.toLowerCase() == 'skośny z poddaszem') && !formData.heat_demand_know && 
+                        <div className='md:col-span-2'>
+                            <InfoBox title='Jak wygląda sytuacja na nieogrzewanym poddaszu?' value={formData.unheated_space_type ? formData.unheated_space_type : ''} />
+                        </div>
+                    }
                 </div>
             </div>}
 
-            {formData.building_type && <div className='mt-20 pagebreak'>
+            {formData.building_type && <div className='mt-10 md:mt-20 pagebreak'>
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Ogrzewanie budynku</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
                         <InfoBox title='Główne źródło ciepła' value={formData.main_heat_sources ? formData.main_heat_sources : ''} />
-                        <InfoBox title='Temperatura w pomieszczeniach ogrzewanych (Przeciętna temperatura utrzymywana zimą)' value={formData.temp_in_heat_rooms ? `${formData.temp_in_heat_rooms}°C` : ''} />
                         <InfoBox title='Rodzaj wentylacji' value={formData.vent_type ? formData.vent_type : ''} />
                         {formData.heating_isolation_material && <InfoBox title='Materiał' value={formData.heating_isolation_material ? formData.heating_isolation_material : ''} />}
                         {formData.heating_isolation_material_thickness && <InfoBox title='Grubość' value={formData.heating_isolation_material_thickness ? `${formData.heating_isolation_material_thickness}cm` : ''} />}
@@ -372,7 +393,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     <div>
                         <CustomLabel label='Instalacja grzewcza' />
                         <p className='pt-2.5 onPrintLabel'>Przez inżynierów zwana Ciepłą Wodą Użytkową (CWU).</p>
-                        <p className='pt-5 onPrintLabel'>Oblicz zapotrzebowanie energii na podgrzewanie CWU</p>
+                        <p className='pt-1.5 onPrintLabel'>Oblicz zapotrzebowanie energii na podgrzewanie CWU</p>
                         <p className='font-[700] pt-1 onPrintText14'>{formData.count_need_energy_cwu ? 'Tak' : 'Nie'}</p>
                         { formData.count_need_energy_cwu && 
                             <>
@@ -418,24 +439,12 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 </div>
             </div>} */}
 
-            <div className='mt-20 pagebreak'>
-                <p className='text-[30px] text-[#FF4510] font-[700]'>Sugerowane urządzenia do Twojego budynku</p>
-                <div className='grid grid-cols-1 onPrintHardGrid3 onPrintSmaller mt-7 lg:grid-cols-3 gap-5 lg:gap-5'>
-                {suggestedProducts && suggestedProducts.length ? suggestedProducts.map((p: any) => {
-                    return (
-                        <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
-                    )}) : 
-                    <span className='font-[300] lg:col-span-3 pt-5 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
-                }
-                </div>
-            </div>
-
             {/* <div className='mt-20 pagebreak'>
                 <p className='text-[30px] text-[#FF4510] font-[700] pb-10'>Rekomendowani instalatorzy</p>
                 <RecommendedInstalators instalators={instalators} />
             </div> */}
 
-            <div className={`flex flex-col sm:flex-row gap-7 mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
+            <div className={`flex flex-col sm:flex-row gap-7 md:mt-14 hideOnPrint ${loading ? 'opacity-50 pointer-events-none grayscale' : ''}`}>
                 {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div> */}
@@ -445,6 +454,12 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div onClick={() => handleOpenModalRaport()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>{loading ? 'trwa pobieranie...' : 'pobierz raport pdf'}</span>
                 </div>
+            </div>
+
+            <div className='flex w-full mt-10 flex-col gap-5 text-xs md:text-sm text-gray-400 font-[400]'>
+                <p className='leading-[200%]'>Raport pochodzi z autorskiego kalkulatora doboru mocy pompy ciepła GREE.</p>
+
+                <p className='leading-[200%]'>Kalkulator doboru mocy pompy ciepła został przygotowany z najwyższą starannością, jednak jego poprawne działanie zależy od prawidłowego wprowadzenia danych wejściowych przez użytkownika. Nie ponosimy odpowiedzialności za ewentualne błędne wyniki wynikające z nieprawidłowych lub niepełnych danych. Kalkulator ma charakter pomocniczy i nie zastępuje profesjonalnego projektu instalacji</p>
             </div>
 
             { openModalRaport && <ShowRaportDetailsAdminModal automaticDownload={false} visible={openModalRaport} setVisible={setOpenModalRaport} data={formData} /> }
