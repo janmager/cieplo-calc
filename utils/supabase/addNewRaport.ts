@@ -1,12 +1,17 @@
 'use server'
 
 import prisma from '@/app/libs/db';
+import { getCurrentMonthRaports } from './getCurrentMonthRaports';
 
 export const addNewRaport = async (raport: any) => {
     try{
+        const currentMonthRaports: any = await getCurrentMonthRaports();
+        if(!currentMonthRaports || !currentMonthRaports?.response) return { response: false};
+        const numberOfRaportInCurrentMonth = currentMonthRaports.length+1;
         const add = await prisma.raport.create({
             data: {
                 id: raport.id,
+                human_id: `${numberOfRaportInCurrentMonth < 10 ? '0' : ''}${numberOfRaportInCurrentMonth}/${new Date().getMonth()+1 < 10 ? '0' : ''}${new Date().getMonth()+1}/${new Date().getFullYear().toString().substring(2,)}`,
                 created_at: raport.created_at,
                 house_building_years: raport.house_building_years,
                 house_location_full_name: raport.house_location.full_name,
@@ -17,6 +22,7 @@ export const addNewRaport = async (raport: any) => {
                 heat_demand_kW: raport.heat_demand.kW,
                 building_type: raport.building_type,
                 building_outline: raport.building_outline,
+                unheated_space_type: raport.unheated_space_type,
                 building_area: raport.building_area,
                 climate_zone: raport.climate_zone, 
                 project_outside_temp: raport.project_outside_temp,

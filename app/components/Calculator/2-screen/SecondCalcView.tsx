@@ -68,10 +68,11 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   const [ step, setStep ] = useState(formData.heat_demand.know ? 5 : 0)
   const [ products, setProducts ] = useState([]);
 
-  const transferToStep = (step: any) => {
+  const transferToStep = (stepNew: any) => {
     if(step == 5) return false;
+    if(stepNew == 5) return false;
     if(formData.building_type == '') return false;
-    setStep(Number(step))
+    setStep(Number(stepNew))
   }
 
   const getProducts = async () => {
@@ -84,244 +85,294 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
     if(products.length == 0) getProducts()
   }, [])
 
-  const validation = () => {
+  const setAndScroll = (stepNum: number) => {
+    setStep(stepNum)
+    window.scrollTo(0, 0);
+  }
+
+  const validation = (checkAll: boolean = false) => {
     let valid = true;
 
-    if(step == 0){
+    if(step == 0 || checkAll){
       if(!formData.building_type){
         valid = false;
         setErrors({...errors, 'building_type' : true});
+        setAndScroll(0);
         return false;
       }
     }
     
-    if(step == 1){
+    if(step == 1 || checkAll){
       if(!formData.building_outline){
         valid = false;
         setErrors({...errors, 'building_outline' : true});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Regularny – prostokątny' && !formData.building_outline_sizes){
         valid = false;
         setErrors({...errors, 'building_outline_sizes' : true});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Regularny – prostokątny' && formData.building_outline_sizes == 'Znam wymiary zewnętrzne budynku' && Number(formData.building_outline_length_m) < 2){
         valid = false;
         setErrors({...errors, 'building_outline_length_m' : {msg: 'Podaj prawidłową długość obrysu'}});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Regularny – prostokątny' && formData.building_outline_sizes == 'Znam wymiary zewnętrzne budynku' && Number(formData.building_outline_width_m) < 2){
         valid = false;
         setErrors({...errors, 'building_outline_width_m' : {msg: 'Podaj prawidłową szerokość obrysu'}});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Regularny – prostokątny' && formData.building_outline_sizes == 'Znam powierzchnię zabudowy' && Number(formData.building_area) < 2){
         valid = false;
         setErrors({...errors, 'building_area' : {msg: 'Podaj prawidłową powierzchnię zabudowy'}});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Nieregularny (wszelkie inne kształty)' && Number(formData.building_area) < 2){
         valid = false;
         setErrors({...errors, 'building_area' : {msg: 'Podaj prawidłową powierzchnię zabudowy'}});
+        setAndScroll(1);
         return false;
       }
       if(formData.building_outline == 'Nieregularny (wszelkie inne kształty)' && Number(formData.building_outline_m) < 2){
         valid = false;
         setErrors({...errors, 'building_outline_m' : {msg: 'Podaj prawidłowy obwód budynku'}});
+        setAndScroll(1);
         return false;
       } 
       if(!formData.house_levels_height){
         valid = false;
         setErrors({...errors, 'house_levels_height' : true});
+        setAndScroll(1);
         return false;
       }
       if(!formData.house_garage){
         valid = false;
         setErrors({...errors, 'house_garage' : true});
+        setAndScroll(1);
         return false;
       }
     }
 
-    if(step == 2){
+    if(step == 2 || checkAll){
       if(!formData.building_construction_type){
         valid = false;
         setErrors({...errors, 'building_construction_type' : true});
+        setAndScroll(2);
         return false;
       }
       if(Number(formData.total_wall_thickness) <= 0){
         valid = false;
         setErrors({...errors, 'total_wall_thickness' : {msg: 'Podaj prowidłową grubość ścian'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.building_construction_type == 'Tradycyjna - murowana lub z drewna' && !formData.basic_construction_material){
         valid = false;
         setErrors({...errors, 'basic_construction_material' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.building_construction_type == 'Szkieletowa - dom kanadyjski' && !formData.wall_insulation){
         valid = false;
+        setAndScroll(2);
         return false;
       }
       if(formData.wall_insulation && !formData.wall_inside_insulation){
         valid = false;
         setErrors({...errors, 'wall_inside_insulation' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.wall_insulation && Number(formData.wall_insulation_thickness) <= 0){
         valid = false;
         setErrors({...errors, 'wall_insulation_thickness' : {msg: 'Podaj poprawną grubość'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.house_insulation && !formData.outside_insulation){
         valid = false;
         setErrors({...errors, 'outside_insulation' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.house_insulation && Number(formData.insulation_thickness) <= 0){
         valid = false;
         setErrors({...errors, 'insulation_thickness' : {msg: 'Podaj poprawną grubość'}});
+        setAndScroll(2);
         return false;
       }
       if(!formData.windows_type){
         valid = false;
         setErrors({...errors, 'windows_type' : {msg: 'Wybierz rodzaj okien z listy'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.windows_number  == ''|| Number(formData.windows_number) < 0){
         valid = false;
         setErrors({...errors, 'windows_number' : {msg: 'Podaj prawidłową ilość okien'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.taras_doors_number == '' || Number(formData.taras_doors_number) < 0){
         valid = false;
         setErrors({...errors, 'taras_doors_number' : {msg: 'Podaj prawidłową ilość drzwi balkonowych'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.large_glazings_number == '' || Number(formData.large_glazings_number) < 0){
         valid = false;
         setErrors({...errors, 'large_glazings_number' : {msg: 'Podaj prawidłową ilość dużych przeszkleń'}});
+        setAndScroll(2);
         return false;
       }
       if(!formData.doors_type){
         valid = false;
         setErrors({...errors, 'doors_type' : {msg: 'Wybierz rodzaj drzwi z listy'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.outside_doors_number == '' || Number(formData.outside_doors_number) < 0){
         valid = false;
         setErrors({...errors, 'outside_doors_number' : {msg: 'Podaj prawidłową ilość drzwi zewnętrznych'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_stairways == '' || Number(formData.number_stairways) < 0)){
         valid = false;
         setErrors({...errors, 'number_stairways' : {msg: 'Podaj prawidłową ilość klatek schodowych'}});
+        setAndScroll(2);
         return false;
       }
       if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_elevators == '' || Number(formData.number_elevators) < 0)){
         valid = false;
         setErrors({...errors, 'number_elevators' : {msg: 'Podaj prawidłową ilość wind w budynku'}});
+        setAndScroll(2);
         return false;
       }
     }
 
-    if(step == 3){
+    if(step == 3 || checkAll){
       if(!formData.is_roof_isolation){
         valid = false;
         setErrors({...errors, 'is_roof_isolation' : true});
+        setAndScroll(3);
         return false;
       }
       if(formData.is_roof_isolation == 'Tak, jest izolacja' && !formData.isolation_roof_material){
         valid = false;
         setErrors({...errors, 'isolation_roof_material' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(3);
         return false;
       }
       if(formData.is_roof_isolation == 'Tak, jest izolacja' && (formData.isolation_roof_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
         valid = false;
         setErrors({...errors, 'isolation_roof_thickness' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(3);
         return false;
       }
       if(!formData.is_parter_floor_isolation){
         valid = false;
         setErrors({...errors, 'is_parter_floor_isolation' : true});
+        setAndScroll(3);
         return false;
       }
       if(formData.is_parter_floor_isolation == 'Tak, jest izolacja' && !formData.isolation_parter_floor_material){
         valid = false;
         setErrors({...errors, 'isolation_parter_floor_material' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(3);
         return false;
       }
       if(formData.is_parter_floor_isolation == 'Tak, jest izolacja' && (formData.isolation_parter_floor_thickness == '' || Number(formData.isolation_roof_thickness) < 0)){
         valid = false;
         setErrors({...errors, 'isolation_parter_floor_thickness' : {msg: 'Wybierz materiał z listy'}});
+        setAndScroll(3);
         return false;
       }
     }
 
-    if(step == 4){
+    if(step == 4 || checkAll){
       if(!formData.main_heat_sources){
         valid = false;
         setErrors({...errors, 'main_heat_sources' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.temp_in_heat_rooms  == ''|| Number(formData.temp_in_heat_rooms) < 0){
         valid = false;
         setErrors({...errors, 'temp_in_heat_rooms' : {msg: 'Podaj prawidłową temperaturę'}});
+        setAndScroll(4);
         return false;
       }
       if(!formData.vent_type){
         valid = false;
         setErrors({...errors, 'vent_type' : true});
+        setAndScroll(4);
         return false;
       }
       if(!formData.max_temp_of_power_instalation){
         valid = false;
         setErrors({...errors, 'max_temp_of_power_instalation' : true});
+        setAndScroll(4);
         return false;
       }
       if(needInstalacjaGrzewcza.indexOf(formData.main_heat_sources) >= 0 && !formData.type_of_heating_instalation){
         valid = false;
         setErrors({...errors, 'type_of_heating_instalation' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_over){
         valid = false;
         setErrors({...errors, 'whats_over' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_under){
         valid = false;
         setErrors({...errors, 'whats_under' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_north){
         valid = false;
         setErrors({...errors, 'whats_north' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_east){
         valid = false;
         setErrors({...errors, 'whats_east' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_south){
         valid = false;
         setErrors({...errors, 'whats_south' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.building_type == 'Mieszkanie' && !formData.whats_west){
         valid = false;
         setErrors({...errors, 'whats_west' : true});
+        setAndScroll(4);
         return false;
       }
       if(formData.count_need_energy_cwu && (formData.hot_water_person_using == '' || Number(formData.hot_water_person_using) < 0)){
         valid = false;
         setErrors({...errors, 'hot_water_person_using' : {msg: 'Podaj poprawną ilość osób'}});
+        setAndScroll(4);
         return false;
       }
       if(formData.count_need_energy_cwu && !formData.hot_water_using_style){
         valid = false;
         setErrors({...errors, 'hot_water_using_style' : true});
+        setAndScroll(4);
         return false;
       }
     }
@@ -371,7 +422,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         {step == 5 && <SecondStepView5 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} products={products} />}
       </div>
       {step < 5 && <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
-        <NextButton onClick={validation} />
+        <NextButton onClick={() => validation(step == 4 ? true : false)} />
       </div>}
     </div>
   )

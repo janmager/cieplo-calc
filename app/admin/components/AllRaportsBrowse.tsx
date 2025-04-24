@@ -19,7 +19,6 @@ function AllRaportsBrowse() {
         let out: any = []
 
         data.map((singleRaport: any, idx: number) => {
-            console.log(JSON.parse(singleRaport.recommendedProducts))
             out.push({
                 'ID': singleRaport.id,
                 'Data utworzenia': new Date(singleRaport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}),

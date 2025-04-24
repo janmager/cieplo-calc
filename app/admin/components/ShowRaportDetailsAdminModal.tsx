@@ -13,7 +13,7 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
     const reactToPrintFn = useReactToPrint({ 
         contentRef,
         onBeforePrint: async () => {
-            document.title = `Raport-${data.id}`;
+            document.title = `Raport_${data.human_id}`;
         },
     });
 
@@ -34,13 +34,13 @@ function ShowRaportDetailsAdminModal({visible, setVisible, data, automaticDownlo
                 <Image src={loadingIcon.src} height="24" width="24" alt="Loading..." className="animate-spin opacity-30" />
             </div>
             :
-            <div className='bg-white gap-4 md:gap-8 relative z-[101] h-full lg:h-[90%] w-full max-w-full lg:max-w-[900px] p-5 md:p-10 rounded flex flex-col'>
+            <div className='bg-white gap-4 md:gap-4 relative z-[101] h-full lg:h-[90%] w-full max-w-full lg:max-w-[900px] p-5 md:p-10 rounded flex flex-col'>
                 <div className='flex flex-col gap-1'>
-                    <h1 className='text-[24px] font-bold'>Raport wyceny</h1>
-                    <span className='font-[500] mt-2'><span className='opacity-75 font-normal'>z dnia</span> {new Date(data.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span>
-                    <span className='font-[500] text-xs'><span className='opacity-75 font-normal'>Identyfikator: </span> {data.id}</span>
+                    <h1 className='text-[24px] font-bold'>Raport doboru mocy pompy ciepła GREE</h1>
+                    {/* <span className='font-[500] mt-2'><span className='opacity-75 font-normal'>z dnia</span> {new Date(data.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'long', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span> */}
+                    {/* <span className='font-[500] text-xs'><span className='opacity-75 font-normal'>Identyfikator: </span> {data.human_id}</span> */}
                 </div>
-                <div ref={contentRef} className='differentOnPrint flex-1 mt-2 noTopMargin md:mt-5 max-w-[700px] bg-gray-50 shadow border py-10 px-5 md:px-8 w-full mx-auto rounded-lg overflow-y-auto'>
+                <div ref={contentRef} className='differentOnPrint flex-1 noTopMargin md:mt-5 max-w-[800px] bg-gray-50 shadow border py-10 px-5 md:px-8 w-full mx-auto rounded-lg overflow-y-auto'>
                     <DetailedRaportAdmin printAuto={automaticDownload ? true : false} print={automaticDownload ? reactToPrintFn() : false} data={data} />
                 </div>
                 <div className='flex flex-col gap-2.5 mt-2 md:mt-5'>

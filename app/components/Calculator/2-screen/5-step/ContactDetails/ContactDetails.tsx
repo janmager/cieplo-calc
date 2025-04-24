@@ -60,7 +60,7 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
     return (
         <div className='flex flex-col gap-0 pb-10'>
             <div className="max-w-[1172px] w-full mx-auto mb-0">
-                <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Pełny raport</div>
+                <div className='text-[32px] md:text-[50px] font-[600] max-w-[800px] uppercase leading-[110%]'>Raport doboru mocy pompy ciepła GREE</div>
                 <div className='text-[20px] md:text-[24px] leading-[36px] font-[400] mt-5 md:mt-10 max-w-[900px]'>Już za chwilę otrzymasz podsumowanie Twojego doboru wraz z wykazem urządzeń, które rekomendujemy do budynku na podstawie podanych przez Ciebie informacji.<br/><br/>Daj nam znać, co chcesz zrobić z wynikiem:</div>
             </div>
             <div className='flex flex-col w-full lg:w-3/4 mt-8'>

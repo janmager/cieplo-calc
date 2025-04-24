@@ -181,14 +181,11 @@
     
     if(all) return results;
 
-    let monobloks = results.filter((r: any) => r.product.type == 'Monoblok')
-    let splits = results.filter((r: any) => r.product.type == 'Split')
-    let allinones = results.filter((r: any) => r.product.type == 'All-In-One')
+    let monobloks = results.filter((r: any) => r.product.type == 'Monoblok' && r.differenceBivalent <= 2)
+    let splits = results.filter((r: any) => r.product.type == 'Split' && r.differenceBivalent <= 2)
+    let allinones = results.filter((r: any) => r.product.type == 'All-In-One' && r.differenceBivalent <= 2);
 
-    console.log(results)
-    return [monobloks[0], splits[0], allinones[0]];
+    let lastArr = monobloks.concat(splits).concat(allinones)
+
+    return lastArr;
   }
-  
-  // Przykład użycia:
-  // const selectedPumps = selectHeatPumps(products, -20, 8.5, 20, 35);
-  // console.log(selectedPumps);

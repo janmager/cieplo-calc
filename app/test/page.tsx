@@ -3,6 +3,7 @@ import { countKwForSpecificTemp } from '@/utils/api/countKwForSpecificTemp';
 import { getPompaData } from '@/utils/api/getPompaData';
 import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
 import { getAllProducts } from '@/utils/supabase/getAllProducts'
+import { getCurrentMonthRaports } from '@/utils/supabase/getCurrentMonthRaports';
 import { difference } from 'next/dist/build/utils';
 import React, { useEffect, PureComponent, useState } from 'react'
 type OutsideTemp = '-25' | '-20' | '-15' | '-10' | '-7' | '-2' | '2' | '7' | '10' | '15';
@@ -10,68 +11,6 @@ type OutsideTemp = '-25' | '-20' | '-15' | '-10' | '-7' | '-2' | '2' | '7' | '10
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceArea } from 'recharts';
 
 const range = ['-20', '-15', '-10', '-7', '-2', '2', '7', '10'].reverse()
-const data = [
-  {
-    name: '-25',
-    pompa: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: '-20',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: '-15',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: '-10',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: '-7',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: '-2',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: '2',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: '7',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: '10',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: '15',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
 
 function page() {
     const [ products, setProducts ] = useState<any>([])
@@ -116,6 +55,8 @@ function page() {
     useEffect(() => {
         const get = async () => {
             const prods = await getAllProducts()
+            const currentMonthRaports: any = await getCurrentMonthRaports();
+
             if(prods.data) setProducts(prods.data)
         }
         get()

@@ -29,13 +29,13 @@ export async function POST(request) {
 
         const d = new Date()
 
-        let printDate = `${d.getHours() > 10 ? '' : '0'}${d.getHours()}:${d.getMinutes() > 10 ? '' : '0'}${d.getMinutes()} ${d.getDate() > 10 ? '' : '0'}${d.getDate()}.${d.getMonth()+1 > 10 ? '' : '0'}${d.getMonth()+1}.${d.getFullYear()}`
+        let printDate = `${d.getHours() >= 10 ? '' : '0'}${d.getHours()}:${d.getMinutes() >= 10 ? '' : '0'}${d.getMinutes()} ${d.getDate() >= 10 ? '' : '0'}${d.getDate()}.${d.getMonth()+1 >= 10 ? '' : '0'}${d.getMonth()+1}.${d.getFullYear()}`
 
         try {
             const mail = await transporter.sendMail({
                 from: username,
                 to: [email, myEmail],
-                subject: `Twój raport wyceny doboru pompy ciepła na GreeCalc | ${printDate}`,
+                subject: `Twój raport doboru mocy pompy ciepła GREE | ${printDate}`,
                 html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url, raportId: getRaportData.data.id})
             })
             

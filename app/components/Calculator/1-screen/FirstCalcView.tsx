@@ -114,7 +114,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
     }, []);
 
     useEffect(() => {
-        clickedMap.lat && clickedMap.lng && setFormData({
+        if(clickedMap.lat && clickedMap.lng && clickedMap.climateZone) setFormData({
             ...formData, 
             house_location: {
                 lat: clickedMap.lat,
@@ -124,6 +124,9 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
             climate_zone: (clickedMap.climateZone).toString(),
             project_outside_temp: (clickedMap.outsideProjectTemp).toString()
         })
+        else if(Object.keys(clickedMap).length != 0){
+            setErrors({...errors, 'house_location': true})
+        }
     }, [clickedMap])
 
     const validation = () => {
@@ -140,7 +143,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
             return false;
         }
 
-        if(formData['house_location'].lng == '' || formData['house_location'].lon == ''){
+        if(formData['house_location'].lng == '' || formData['house_location'].lon == '' ||  !clickedMap.climateZone){
             setErrors({...errors, 'house_location': true})
             valid = false;
             return false;
@@ -215,7 +218,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
                     errors['house_location'] ? 
                     <div className='bg-red-500/10 w-full min-h-[50px] mt-1 py-2 flex-row gap-4 flex items-center pl-5'>
                         <Image src={infoIcon.src} height={24} width={24} alt="info icon" />
-                        <span className='tx-[16px] text-red-600'>Wybierz punkt na mapie, aby przejść dalej</span>
+                        <span className='tx-[16px] text-red-600'>Wybierz punkt na mapie w granicach Polski, aby przejść dalej</span>
                     </div> : null
                 }
                 <div className={`max-h-[480px] transition-all relative cursor-pointer duration-300 bg-gray-100 ${!formData['house_location'] ? 'grayscale hover:grayscale-0' : ``}`}>

@@ -11,6 +11,7 @@ datasource db {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model Raport {
   id                                   String   @id @unique
+  human_id                             String   @default("")
   created_at                           DateTime @default(now())
   house_building_years                 String?
   house_location_full_name             String?
@@ -85,6 +86,7 @@ model Raport {
   whats_south                          String?
   whats_east                           String?
   whats_west                           String?
+  unheated_space_type String?
   on_corner                            Boolean?
   number_stairways                     String?
   number_elevators                     String?
