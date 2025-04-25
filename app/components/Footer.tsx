@@ -17,7 +17,7 @@ function Footer() {
   const [ checkbox, setCheckbox ] = useState(false)
 
   return (
-    <div className='px-10 bg-black w-full mt-10'>
+    <div className={`px-10 bg-black ${window.location.pathname != '/clean' ? 'flex' : 'hidden'} w-full mt-10`}>
       <div className='w-full gap-0 mt-[80px] mb-[50px] md:mb-[25px] grid grid-cols-1 lg:grid-cols-4 max-w-[1450px] mx-auto text-white'>
           <div className='flex flex-col col-span-1'>
             <Image src={logo.src} height={35} width={154} alt="Logo Gree" />
