@@ -6,6 +6,7 @@ const fileTypes = ["JPG", "PNG", "GIF"];
 import { createClient } from '@supabase/supabase-js';
 import toast from "react-hot-toast";
 import { addProduct } from "@/utils/supabase/addProduct";
+import { uuid } from "uuidv4";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_KEY as string;
 export const supabase: any = createClient(supabaseUrl, supabaseKey);
@@ -16,7 +17,7 @@ function AddNewProductView() {
     const [ successUpload, setSuccessUpload ] = useState(false);
     
     const [ newProduct, setNewProduct ] = useState<any>({
-        id: crypto.randomUUID(),
+        id: uuid(),
         name: '',
         desc: '',
         product_link: '',
@@ -33,7 +34,7 @@ function AddNewProductView() {
             toast.success('Zapisano poprawnie nowy produkt')
             setSuccessUpload(false)
             setLoading(false)
-            setNewProduct({id: crypto.randomUUID(), name: '', desc: '', image: '', product_link: ''})
+            setNewProduct({id: uuid(), name: '', desc: '', image: '', product_link: ''})
             setValid(false)
         }
         else {
