@@ -6,13 +6,14 @@ import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import loadingIco from '@/assets/svg/loader.svg'
 import { saveInstalator } from '@/utils/supabase/saveInstalator'
+import { uuid } from 'uuidv4';
 
 function AddNewInstalatorModal({ fetchAllInstalators, hideModal, edit = {on: false, id: ''} } : {fetchAllInstalators: any, hideModal?: any, edit?: {on?: boolean, id?: string}}) {
     const [ visible, setVisible ] = useState(false)
     const [ loading, setLoading ] = useState(false)
     const [ valid, setValid ] = useState(false)
     const [ newInstalator, setNewInstalator ] = useState<Instalators>({
-        id: crypto.randomUUID(),
+        id: uuid(),
         name: '',
         phone: '',
         postalAndCity: '',

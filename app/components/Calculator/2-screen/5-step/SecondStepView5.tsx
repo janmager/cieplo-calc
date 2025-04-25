@@ -13,6 +13,7 @@ import { getPunktBiwalentny } from '@/utils/api/getPunktBiwalentny'
 import { Product } from '@prisma/client'
 import { findBestFitProduct } from '@/utils/api/findBestFitProduct'
 import { selectHeatPumps } from '@/utils/api/selectHeatPumps'
+import { uuid } from 'uuidv4'
 
 function SecondStepView5({formData, setFormData, errors, setErrors, products}: {formData: any, setFormData: any, errors: any, setErrors: any, products: any}) {
     const [ currentStep, setCurrentStep ] = useState(1)
@@ -26,7 +27,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
         
         try{
             let data = formData;
-            data.id = crypto.randomUUID();
+            data.id = uuid();
             data.created_at =  new Date(),
             setFormData(data)
             const add = await addNewRaport(data);
