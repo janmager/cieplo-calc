@@ -140,7 +140,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                             </div> : <div className='col-span-2 max-md:pl-4 max-md:border-b md:border-l border-gray-100 md:border-gray-200 max-md:pb-4 justify-start text-left pt-4 md:pt-0 w-full pr-2 pl-3 border-r flex truncate items-center overflow-auto'>
                                 <span className='text-[11px] font-[500] opacity-30'>brak informacji kontaktowych</span>    
                             </div>}
-                            <div className='w-full md:w-fit col-span-2 min-w-[220px] md:col-span-1 flex justify-between mt-2.5 md:mt-0 flex-row gap-3 lg:justify-end md:pl-0 pr-3 lg:items-center'>
+                            <div className='w-full md:w-fit col-span-2 min-w-[200px] md:col-span-1 flex justify-between mt-2.5 md:mt-0 flex-row gap-3 lg:justify-end md:pl-0 pr-4 lg:items-center'>
                                 <div className='flex flex-row gap-3'>
                                     <span onClick={() => handleShowDetails(raport.id)} className='text-[11px] h-full items-center flex border-r pr-3 ml-4 md:ml-3 opacity-70 hover:opacity-100 cursor-pointer'>Szczegóły</span>
                                     <Link target='_blank' href={`/wynik/${raport.id}`} className='text-[11px] h-full items-center flex opacity-70 hover:opacity-100 border-r pr-3'>Otwórz</Link>
