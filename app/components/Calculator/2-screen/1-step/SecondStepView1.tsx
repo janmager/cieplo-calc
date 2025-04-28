@@ -59,10 +59,10 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                             <p className='w-full flex-1 mt-[-5px]'>W tym przypadku musisz ręcznie policzyć pole obrysu budynku (w projekcie pod nazwą <b>powierzchnia zabudowy</b>) oraz jego obwód.</p>
                         </div>
                         <div className='mt-5'>
-                            <div className='mt-2.5 flex flex-col gap-2'>
+                            {/* <div className='mt-2.5 flex flex-col gap-2'>
                                 <label>Powierzchnia budynku</label>
                                 <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'api_total_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                            </div>
+                            </div> */}
                             <div className='mt-2.5 flex flex-col gap-2'>
                                 <label>Powierzchnia zabudowy</label>
                                 <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'building_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />

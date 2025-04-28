@@ -185,7 +185,31 @@
     let splits = results.filter((r: any) => r.product.type == 'Split' && r.differenceBivalent <= 2)
     let allinones = results.filter((r: any) => r.product.type == 'All-In-One' && r.differenceBivalent <= 2);
 
-    let lastArr = monobloks.concat(splits).concat(allinones)
+    function filterProductsByBivalentDifference(productsData: any[]): any[] {
+      const filteredProducts: any[] = [];
+      const n = productsData.length;
+      let i = 0;
+  
+      if(n == 1) return productsData
+      
+      while (i < n) {
+        if(i == 0) filteredProducts.push(productsData[i]);
+        else{
+          if(productsData[i].differenceBivalent == filteredProducts[0].differenceBivalent){
+            filteredProducts.push(productsData[i])
+          }
+        }
+        i++;
+      }
+  
+      return filteredProducts;
+    }
+
+    let filteredMonoblocks = filterProductsByBivalentDifference(monobloks);
+    let filteredSplits = filterProductsByBivalentDifference(splits);
+    let filteredAllInOnes = filterProductsByBivalentDifference(allinones);
+
+    let lastArr = filteredMonoblocks.concat(filteredSplits).concat(filteredAllInOnes)
 
     return lastArr;
   }
