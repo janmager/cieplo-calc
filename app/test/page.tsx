@@ -4,7 +4,6 @@ import { getPompaData } from '@/utils/api/getPompaData';
 import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
 import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import { getCurrentMonthRaports } from '@/utils/supabase/getCurrentMonthRaports';
-import { difference } from 'next/dist/build/utils';
 import React, { useEffect, PureComponent, useState } from 'react'
 type OutsideTemp = '-25' | '-20' | '-15' | '-10' | '-7' | '-2' | '2' | '7' | '10' | '15';
 
@@ -113,7 +112,7 @@ function page() {
                 <div className='h-[30px] w-[30px] bg-[#ff7300] opacity-20'></div>
                 <span className='text-gray-600 text-[14px]'>- zaznaczony tolerowany zakres punktu biwalentnego dla projektowej temperatury zewnętrznej ({apiData.geo_biwa_point} °C +/- 2°C)</span>
             </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-5 lg:grid-cols-3 mt-5 w-full'>
+            <div className='grid grid-cols-1 md:grid-cols-1 gap-5 lg:grid-cols-2 mt-5 w-full'>
                 {
                     products && products.length ? products.map((product: any, idx: number) => {
                         const d: any = []
@@ -125,8 +124,8 @@ function page() {
                                 pompa: product
                             })
                             d.push({
-                                name: r,
-                                'Moc pompy ciepła': pomp,
+                                name: Number(r),
+                                'Moc pompy ciepła': Number(pomp),
                                 'Zapotrzebowanie budynku': countKwForSpecificTemp({
                                     power_kW: apiData.needed_kw,
                                     temp_outside_climate: apiData.proj_temp_outside,
@@ -153,7 +152,7 @@ function page() {
                                     {apiData && <ResponsiveContainer width="99%" height="100%">
                                         <LineChart
                                         width={500}
-                                        height={300}
+                                        height={400}
                                         data={d}
                                         margin={{
                                             top: 5,
@@ -174,9 +173,14 @@ function page() {
                                             reversed
                                             type="number"
                                             dataKey="name"
+                                            ticks={Array.from({ length: 10 - (-20) + 1 }, (_, i) => 10 - i)}
                                             domain={[-20, 10]}
                                             />
-                                        <YAxis type="number" domain={[2,17]} />
+                                        <YAxis 
+                                            type="number" 
+                                            domain={[2,17]} 
+                                            ticks={Array.from({ length: 18}, (_, i) => i)}
+                                        />
                                         <Tooltip />
                                         <Legend />
                                         <Line type="monotone" dataKey="Moc pompy ciepła" stroke="#8884d8" activeDot={{ r: 8 }} />
