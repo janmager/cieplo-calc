@@ -171,15 +171,19 @@ function page() {
                                         <CartesianGrid strokeDasharray="3 3" />
                                         <XAxis
                                             reversed
+                                            fontSize={12}
                                             type="number"
+                                            fontWeight={300}
                                             dataKey="name"
                                             ticks={Array.from({ length: 10 - (-20) + 1 }, (_, i) => 10 - i)}
                                             domain={[-20, 10]}
                                             />
                                         <YAxis 
                                             type="number" 
-                                            domain={[2,17]} 
-                                            ticks={Array.from({ length: 18}, (_, i) => i)}
+                                            fontSize={12}
+                                            fontWeight={300}
+                                            domain={[2,15]} 
+                                            ticks={Array.from({ length: 17}, (_, i) => i)}
                                         />
                                         <Tooltip />
                                         <Legend />
