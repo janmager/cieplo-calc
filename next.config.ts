@@ -35,6 +35,45 @@ module.exports = {
       }
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/admin',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/test',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/admin',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/error',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/clean',
+        destination: '/off',
+        permanent: false
+      },
+      {
+        source: '/wynik/:slug',
+        destination: '/off',
+        permanent: false
+      },
+    ]
+  },
   images: {
     domains: ['opewhxnwoeymcltcxllc.supabase.co'],
   }
