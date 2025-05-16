@@ -40,15 +40,23 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
             setErrors({...errors, 'contact_email_address' : {msg: 'Podaj prawidłowy adres email'}});
             return false;
         }
-        if(!formData.rules1){
+        if(!formData.send_raport_accept_24h){
             valid = false;
-            setErrors({...errors, 'rules1' : true});
+            setErrors({...errors, 'send_raport_accept_24h' : true});
             return false;
         }
-        if(!formData.rules2){
-            valid = false;
-            setErrors({...errors, 'rules2' : true});
-            return false;
+
+        if(formData.send_raport_to_email.indexOf('Chcę') >= 0 || formData.send_raport_to_near_companies.indexOf('Chcę') >= 0 || formData.send_raport_accept_24h.indexOf('Tak') >= 0){
+            if(!formData.rules1){
+                valid = false;
+                setErrors({...errors, 'rules1' : true});
+                return false;
+            }
+            if(!formData.rules2){
+                valid = false;
+                setErrors({...errors, 'rules2' : true});
+                return false;
+            }
         }
 
         if(valid){
