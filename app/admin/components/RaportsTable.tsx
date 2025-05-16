@@ -121,7 +121,7 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                 raports.map((raport: any) => {
                     return (
                         <div key={raport.id} className='min-h-[49px] flex border-t md:border-t-0 w-full text-xs md:flex-row overflow-x-auto flex-col border-b border-l border-r py-2'>
-                            <div className='w-full md:min-w-[150px] text-[11px] md:max-w-[150px] flex-col px-4 md:border-r flex items-start gap-1'>
+                            <div className='w-full md:min-w-[150px] text-[11px] md:max-w-[150px] flex-col px-4 md:border-r flex items-start justify-center gap-1'>
                                 <span className='text-[12px] font-[600]'>{(raport.human_id)}</span>
                                 <span className='opacity-75'>{new Date(raport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'})}</span>
                             </div>
@@ -133,12 +133,12 @@ function RaportsTable({raports, fetchAllRaports}: {raports: Raport[], fetchAllRa
                                             <SuggestedProductListItem item={item} />    
                                         </div>
                                     )
-                                }) : <div><span className='text-[11px] font-[500] opacity-30'>brak poleceń produktów</span></div>}
+                                }) : <div><span className='text-[10px] font-[400] opacity-30'>brak poleceń produktów</span></div>}
                             </div>
                             {(raport.contact_email_address || raport.contact_phone_number) ? <div className='col-span-2 max-md:pl-4 justify-start md:border-l text-left pt-4 md:pt-0 w-full pr-2 pl-3 border-r flex truncate items-center overflow-auto'>
-                                <span className='truncate leading-[160%] w-full max-md:pb-4 max-md:border-b border-gray-100'>{raport.contact_email_address}<br/>{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `tel: ${raport.contact_phone_number }`: ''}</span>
+                                <span className='truncate leading-[160%] w-full max-md:pb-4 max-md:border-b border-gray-100 text-[10px]'>{raport.contact_email_address}<br/>{raport.contact_phone_number && raport.contact_phone_number.length > 0 ? `tel: ${raport.contact_phone_number }`: <span className="text-gray-500 text-[9px] font-[300]">nie dodano nr. tel</span>}<br/><span className="text-[9px] font-[300] text-gray-500">email raport: {raport.send_raport_to_email.indexOf('Nie') >= 0 ? '❌' : '✅'}&nbsp; &nbsp;oferta: {raport.send_raport_to_near_companies.indexOf('Nie') >= 0 ? '❌' : '✅'}&nbsp; &nbsp;kontakt tel: {raport.send_raport_accept_24h.indexOf('Nie') >= 0 ? '❌' : '✅'}</span></span>
                             </div> : <div className='col-span-2 max-md:pl-4 max-md:border-b md:border-l border-gray-100 md:border-gray-200 max-md:pb-4 justify-start text-left pt-4 md:pt-0 w-full pr-2 pl-3 border-r flex truncate items-center overflow-auto'>
-                                <span className='text-[11px] font-[500] opacity-30'>brak informacji kontaktowych</span>    
+                                <span className='text-[10px] font-[400] opacity-30'>brak informacji kontaktowych</span>    
                             </div>}
                             <div className='w-full md:w-fit col-span-2 min-w-[200px] md:col-span-1 flex justify-between mt-2.5 md:mt-0 flex-row gap-3 lg:justify-end md:pl-0 pr-4 lg:items-center'>
                                 <div className='flex flex-row gap-3'>

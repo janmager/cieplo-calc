@@ -22,6 +22,8 @@ function AllRaportsBrowse() {
             out.push({
                 'ID': singleRaport.human_id,
                 'Data utworzenia': new Date(singleRaport.created_at).toLocaleString('pl-PL', {day: 'numeric', month: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric'}),
+                'Zgoda na wysyłkę raportu na email' : singleRaport.send_raport_to_email.indexOf('Chcę') >= 0 ? 'Tak' : 'Nie',
+                'Zgoda na przygotowanie oferty' : singleRaport.send_raport_to_near_companies.indexOf('Chcę') >= 0 ? 'Tak' : 'Nie',
                 'Zgoda na kontakt z ekspertem Gree' : singleRaport.send_raport_accept_24h.indexOf('Tak') >= 0 ? 'Tak' : 'Nie',
                 'Email kontaktowy': singleRaport.contact_email_address,
                 'Numer telefonu' : singleRaport.contact_phone_number,
