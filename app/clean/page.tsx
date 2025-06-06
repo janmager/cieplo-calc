@@ -4,41 +4,26 @@ import React, { useEffect, useRef } from 'react'
 import CalculatorContainer from '../components/Calculator/CalculatorContainer'
 
 function page() {
-  const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    // Upewnij się, że kod wykonuje się tylko w przeglądarce
-    if (typeof window === 'undefined' || !ref.current) {
-      return;
-    }
-
-    const element = ref.current;
-
-    // Funkcja wysyłająca wiadomość do rodzica (WordPress)
-    const postHeight = () => {
-      const height = element.scrollHeight;
-      // WAŻNE: Podaj tutaj domenę swojej strony WordPress dla bezpieczeństwa!
-      window.parent.postMessage({ frameHeight: height }, 'https://gree.ivn-works.com/');
+    const sendHeight = () => {
+      const height = document.body.scrollHeight;
+      window.parent.postMessage({ type: 'setHeight', height }, '*');
     };
 
-    // Utwórz obserwatora, który będzie reagował na zmiany rozmiaru
-    const resizeObserver = new ResizeObserver(() => {
-      postHeight();
-    });
+    sendHeight();
 
-    // Zacznij obserwować element
-    resizeObserver.observe(element);
+    // na wypadek dynamicznych zmian
+    const observer = new MutationObserver(sendHeight);
+    observer.observe(document.body, { childList: true, subtree: true, attributes: true });
 
-    // Wyślij wysokość zaraz po załadowaniu
-    postHeight();
+    window.addEventListener('resize', sendHeight);
 
-    // Funkcja czyszcząca: przestań obserwować, gdy komponent zostanie odmontowany
     return () => {
-      resizeObserver.disconnect();
+      observer.disconnect();
+      window.removeEventListener('resize', sendHeight);
     };
-
-  }, []); // Pusta tablica zależności sprawia, że useEffect uruchomi się raz po zamontowaniu
-
+  }, []);
+  
   return (
     <div>
       <CalculatorContainer />
