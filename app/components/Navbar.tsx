@@ -21,7 +21,7 @@ function Navbar() {
   const pathname = usePathname();
 
     return (
-        <div className={`${pathname != '/clean' && pathname != '/kalkulator-admin' ? 'flex' : 'hidden'} w-full justify-center`}>
+        <div className={`${pathname != '/clean' && pathname != '/kalkulator-admin' && pathname != '/kalkulator-manual' ? 'flex' : 'hidden'} w-full justify-center`}>
         <div className='w-full shadow fixed z-40 bg-white justify-between items-center max-w-[1550px] mx-auto hidden lg:flex flex-row h-[62px]'>
             <div className='w-full h-full flex flex-row flex-1'>
                 <Link href={'/'} className='bg-black w-[240px] h-full flex items-center justify-center'>

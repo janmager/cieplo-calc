@@ -11,7 +11,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const range = ['-20', '-15', '-10', '-7', '-2', '2', '7', '10'].reverse()
 
-function page() {
+function ManualCalc() {
     const [ products, setProducts ] = useState<any>([])
     const [ apiDataReturn, setApiDataReturn ] = useState<any>([])
 
@@ -201,4 +201,4 @@ function page() {
     )
 }
 
-export default page
+export default ManualCalc

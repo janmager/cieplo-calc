@@ -46,7 +46,7 @@ function Admin() {
     }
 
     return (
-        <div className={`${pathname != '/kalkulator-admin' ? 'pt-20 md:pt-32 pb-20' : 'py-10 mb-10'}  w-full`}>
+        <div className={`${pathname != '/kalkulator-admin' ? 'pt-20 md:pt-32 pb-20' : 'pt-20 mb-10'}  w-full`}>
             {
                 admin ? 
                 <AdminContainer /> : 
