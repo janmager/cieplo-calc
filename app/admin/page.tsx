@@ -11,31 +11,33 @@ import { usePathname } from 'next/navigation'
 
 function Admin() {
     const [ admin, setAdmin ] = useState(false)
-    const [ loading, setLoading ] = useState(true)
+    const [ loading, setLoading ] = useState(false)
 
     const pathname = usePathname();
 
     const checkAdminPassLocal = async (pass: any) => {
         let checkSecure = await checkAdminPass(pass)
+        console.log('checkSecure', checkSecure)
         if(checkSecure.response){
             setAdmin(true)
             setLoading(false)
+            return true;
         }
         else{
             setAdmin(false)
             setLoading(false)
+            return false;
         } 
-        
     }
 
-    useEffect(() => {
-        let pass: any = getCookie('admin');
-        if(pass && pass.length > 2){
-            checkAdminPassLocal(pass)
-        }else{
-            setLoading(false)
-        }
-    }, [])
+    // useEffect(() => {
+    //     let pass: any = getCookie('admin');
+    //     if(pass && pass.length > 2){
+    //         checkAdminPassLocal(pass)
+    //     }else{
+    //         setLoading(false)
+    //     }
+    // }, [])
 
     if(loading){
         return (
@@ -50,7 +52,7 @@ function Admin() {
             {
                 admin ? 
                 <AdminContainer /> : 
-                <AdminLoginContainer />
+                <AdminLoginContainer setAdmin={setAdmin} checkAdminPassLocal={checkAdminPassLocal} />
             }
         </div>
     )

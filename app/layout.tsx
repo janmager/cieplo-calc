@@ -26,10 +26,10 @@ export default function RootLayout({
         className={`${geistSans.variable} antialiased justify-between h-full min-h-dvh flex flex-col items-center`}
       >
         <div className="flex flex-col w-full h-full flex-1">
-          <Navbar />
+          {/* <Navbar /> */}
           {children}
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   );
