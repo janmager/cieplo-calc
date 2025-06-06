@@ -386,7 +386,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   return (
     <div className='flex flex-col'>
       {/* breadcrumbs */}
-      {!formData.heat_demand.know && <div className='h-[165px] w-full flex items-center justify-center bg-[#F5F5F5]'>
+      {!formData.heat_demand.know && <div className='h-[200px] w-full flex items-center justify-center bg-[#F5F5F5]'>
         <div className='flex cursor-default flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 text-[13px] lg:text-[15px] items-center mt-[62px] justify-center'>
         {
           Object.keys(steps).map((item: any, idx) => {
