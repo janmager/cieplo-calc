@@ -7,10 +7,13 @@ import { getCookie } from 'cookies-next'
 import { checkAdminPass } from '@/utils/supabase/checkAdminPass'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
+import { usePathname } from 'next/navigation'
 
-function page() {
+function Admin() {
     const [ admin, setAdmin ] = useState(false)
     const [ loading, setLoading ] = useState(true)
+
+    const pathname = usePathname();
 
     const checkAdminPassLocal = async (pass: any) => {
         let checkSecure = await checkAdminPass(pass)
@@ -43,7 +46,7 @@ function page() {
     }
 
     return (
-        <div className='pt-20 md:pt-32 pb-20 w-full'>
+        <div className={`${pathname != '/kalkulator-admin' ? 'pt-20 md:pt-32 pb-20' : 'py-10 mb-10'}  w-full`}>
             {
                 admin ? 
                 <AdminContainer /> : 
@@ -53,4 +56,4 @@ function page() {
     )
 }
 
-export default page
+export default Admin
