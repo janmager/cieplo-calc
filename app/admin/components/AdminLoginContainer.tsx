@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 import loadingIco from '@/assets/svg/loader.svg'
 
-function AdminLoginContainer() {
+function AdminLoginContainer({checkAdminPassLocal, setAdmin}: {checkAdminPassLocal: any, setAdmin: any}) {
     const [ password, setPassword ] = useState('')
     const [ error, setError ] = useState('')
     const [ loading, setLoading ] = useState(false)
@@ -28,19 +28,17 @@ function AdminLoginContainer() {
         }
         else if(password.length >= 3){
             setLoading(true);
-            const login = await checkAdminPass(password);
+            const login = await checkAdminPassLocal(password)
 
-            if(login.response){
-                setCookie('admin', password)
-                window.location.reload();
-                setError('')
+            if(login){
+                setAdmin(true)
             }
-            else{
-                setError('Podaj prawidłowe hasło')
-                passInput.current.focus()
-                setPassword('')
-                setLoading(false)
+            else {
+                setAdmin(false);
+                setError('Podaj prawidłowe hasło');
             }
+
+            setLoading(false)
         }
     }
 
