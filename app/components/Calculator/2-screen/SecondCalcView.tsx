@@ -93,7 +93,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
       const message = { type: 'scrollToTop' };
                 
       // Adres URL strony WordPressa - kluczowe dla bezpieczeństwa!
-      const targetOrigin = 'https://gree.ivn-works.com/'; 
+      const targetOrigin: string = process.env.NEXT_PUBLIC_TARGET_PAGE as string; 
 
       // Wysłanie wiadomości do rodzica
       window.parent.postMessage(message, targetOrigin);
@@ -395,7 +395,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         const message = { type: 'scrollToTop' };
                   
         // Adres URL strony WordPressa - kluczowe dla bezpieczeństwa!
-        const targetOrigin = 'https://gree.ivn-works.com/'; 
+        const targetOrigin: string = process.env.NEXT_PUBLIC_TARGET_PAGE as string; 
 
         // Wysłanie wiadomości do rodzica
         window.parent.postMessage(message, targetOrigin);
