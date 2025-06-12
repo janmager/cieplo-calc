@@ -88,6 +88,16 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
   const setAndScroll = (stepNum: number) => {
     setStep(stepNum)
     window.scrollTo(0, 0);
+    if (window.self !== window.top) {
+      // Obiekt wiadomości - możesz go nazwać jak chcesz
+      const message = { type: 'scrollToTop' };
+                
+      // Adres URL strony WordPressa - kluczowe dla bezpieczeństwa!
+      const targetOrigin = 'https://gree.ivn-works.com/'; 
+
+      // Wysłanie wiadomości do rodzica
+      window.parent.postMessage(message, targetOrigin);
+    }
   }
 
   const validation = (checkAll: boolean = false) => {
@@ -380,6 +390,16 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
     if(valid){
       setStep(Number(step)+1)
       window.scrollTo(0, 0);
+      if (window.self !== window.top) {
+        // Obiekt wiadomości - możesz go nazwać jak chcesz
+        const message = { type: 'scrollToTop' };
+                  
+        // Adres URL strony WordPressa - kluczowe dla bezpieczeństwa!
+        const targetOrigin = 'https://gree.ivn-works.com/'; 
+
+        // Wysłanie wiadomości do rodzica
+        window.parent.postMessage(message, targetOrigin);
+      }
     }
   }
 

@@ -186,6 +186,16 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
         if(valid){
             setViewId(2)
             window.scrollTo(0, 0);
+            if (window.self !== window.top) {
+                // Obiekt wiadomości - możesz go nazwać jak chcesz
+                const message = { type: 'scrollToTop' };
+                
+                // Adres URL strony WordPressa - kluczowe dla bezpieczeństwa!
+                const targetOrigin = 'https://gree.ivn-works.com/'; 
+
+                // Wysłanie wiadomości do rodzica
+                window.parent.postMessage(message, targetOrigin);
+            }
         }
     }
   
