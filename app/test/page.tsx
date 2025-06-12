@@ -66,9 +66,9 @@ function ManualCalc() {
     }, [])
 
     return (
-        <div className='py-20 max-w-[1550px] mx-auto px-5 w-full'>
+        <div className='py-20 max-w-[1650px] mx-auto px-5 w-full'>
             <h1 className='mt-10 font-[700] text-3xl tracking-tight'>Test sugerowanych produktów</h1>
-            <div className='my-5 border border-gray-200 rounded w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 px-5 py-3'>
+            <div className='my-5 border border-gray-200 rounded w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-5 px-5 py-3'>
                 <div className='flex gap-1 flex-col'>
                     <label>Zapotrzebowanie cieplne (kW)</label>
                     <input onChange={(e: any) => setApiData({...apiData, needed_kw: e.target.value})} value={apiData.needed_kw} className='px-2 py-1 border border-gray-200 rounded' type="number" placeholder='np. 8.45' />
