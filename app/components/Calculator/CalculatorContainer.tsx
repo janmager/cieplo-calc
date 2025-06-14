@@ -119,36 +119,6 @@ function CalculatorContainer() {
         api_avg_outdoor_temperature: null
     })
 
-    const [clientId, setClientId] = useState(null);
-
-    useEffect(() => {
-        // Funkcja obsługująca przychodzące wiadomości
-        const handleMessage = (event: any) => {
-            // WAŻNE: Sprawdź pochodzenie wiadomości dla bezpieczeństwa!
-            // Powinien to być adres URL Twojej strony WordPress.
-            const expectedOrigin = process.env.NEXT_PUBLIC_TARGET_PAGE;
-            if (event.origin !== expectedOrigin) {
-                console.warn(`Odrzucono wiadomość od nieoczekiwanego źródła: ${event.origin}`);
-                return;
-            }
-
-            // Sprawdź, czy dane istnieją i nie są puste
-            if (event.data && event.data.length > 10) {
-                console.log('Otrzymano ID od WordPress:', event.data);
-                router.push(`/wynik/${event.data}`);
-                setClientId(event.data);
-            }
-        };
-
-        // Dodaj słuchacza
-        window.addEventListener('message', handleMessage);
-
-        // WAŻNE: Pamiętaj o "posprzątaniu" po komponencie, aby uniknąć wycieków pamięci
-        return () => {
-            window.removeEventListener('message', handleMessage);
-        };
-    }, []);
-
     if(viewId == 1) return <div className='w-full'><FirstCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
     else if(viewId == 2) return <div><SecondCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} /></div> 
 }
