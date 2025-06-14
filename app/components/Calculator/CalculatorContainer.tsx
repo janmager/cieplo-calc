@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 
 function CalculatorContainer() {
     const router = useRouter();
+    const [ loading, setLoading ] = useState(true);
     const [ viewId, setViewId ] = useState<Number>(1)
     const [ errors, setErrors ] = useState({})
     const [ formData, setFormData ] = useState<any>({
@@ -125,7 +126,7 @@ function CalculatorContainer() {
         const handleMessage = (event: any) => {
             // WAŻNE: Sprawdź pochodzenie wiadomości dla bezpieczeństwa!
             // Powinien to być adres URL Twojej strony WordPress.
-            const expectedOrigin = 'https://gree.ivn-works.com';
+            const expectedOrigin = process.env.NEXT_PUBLIC_TARGET_PAGE;
             if (event.origin !== expectedOrigin) {
                 console.warn(`Odrzucono wiadomość od nieoczekiwanego źródła: ${event.origin}`);
                 return;
@@ -134,9 +135,8 @@ function CalculatorContainer() {
             // Sprawdź, czy dane istnieją i nie są puste
             if (event.data && event.data.length > 10) {
                 console.log('Otrzymano ID od WordPress:', event.data);
-                router.push(`/wynik/${event.data}`)
+                router.push(`/wynik/${event.data}`);
                 setClientId(event.data);
-
             }
         };
 
