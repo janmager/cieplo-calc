@@ -217,7 +217,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='flex flex-col md:flex-row items-start md:items-center gap-2.5' ref={raportLinkRef}>
                     <p className='onPrintText14'>Raport jest dostępny pod adresem: </p>
                     <div className='flex flex-row gap-4 md:gap-2 items-center justify-center'>
-                        <a href={`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${formData.id}`} className='underline'>{`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=`}{formData.id.substring(0,4)}...</a>
+                        <span onClick={() => { window.parent.postMessage({ type: 'redirectTo', id: formData.id }, '*')}} className='underline'>{`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=`}{formData.id.substring(0,4)}...</span>
                         <Image 
                             onClick={() => {copyToClipboard(`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
                             src={copy.src} 
@@ -448,7 +448,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 {/* <div onClick={() => reactToPrintFn()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>wydrukuj</span>
                 </div> */}
-                <div onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
+                <div onClick={() => {copyToClipboard(`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
                     <span>kopiuj link do raportu</span>
                 </div>
                 <div onClick={() => handleOpenModalRaport()} className='product-link uppercase font-[700] h-[50px] flex items-center justify-center px-6 border border-[#FF4510] text-[#FF4510] hover:bg-[#FF4510] hover:text-white cursor-pointer transition-all duration-200'>
