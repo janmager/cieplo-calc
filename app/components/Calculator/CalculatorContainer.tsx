@@ -119,6 +119,26 @@ function CalculatorContainer() {
         api_avg_outdoor_temperature: null
     })
 
+      useEffect(() => {
+        const sendHeight = () => {
+          const height = document.body.scrollHeight;
+          window.parent.postMessage({ type: 'setHeight', height }, '*');
+        };
+    
+        sendHeight();
+    
+        // na wypadek dynamicznych zmian
+        const observer = new MutationObserver(sendHeight);
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+    
+        window.addEventListener('resize', sendHeight);
+    
+        return () => {
+          observer.disconnect();
+          window.removeEventListener('resize', sendHeight);
+        };
+      }, [viewId]);
+
     if(viewId == 1) return <div className='w-full'><FirstCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} setViewId={setViewId} /></div>;
     else if(viewId == 2) return <div><SecondCalcView setErrors={setErrors} errors={errors} formData={formData} setFormData={setFormData} /></div> 
 }
