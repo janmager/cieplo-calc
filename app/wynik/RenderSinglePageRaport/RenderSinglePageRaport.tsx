@@ -38,6 +38,27 @@ function RenderSinglePageRaport({raport}: {raport: any}) {
             };
         }, []);
 
+    
+          useEffect(() => {
+            const sendHeight = () => {
+              const height = document.body.scrollHeight;
+              window.parent.postMessage({ type: 'setHeight', height }, '*');
+            };
+        
+            sendHeight();
+        
+            // na wypadek dynamicznych zmian
+            const observer = new MutationObserver(sendHeight);
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true });
+        
+            window.addEventListener('resize', sendHeight);
+        
+            return () => {
+              observer.disconnect();
+              window.removeEventListener('resize', sendHeight);
+            };
+          }, []);
+
     return (
         <div className='px-0 md:px-10 py-24 md:pt-32 md:pb-10 max-w-[1172px] mx-auto'>
             <FullRaportPreview autoDownload={download == 'true' ? true : false} singleView={true} formData={formData} setFormData={setFormData} />
