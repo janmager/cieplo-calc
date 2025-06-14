@@ -217,9 +217,9 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='flex flex-col md:flex-row items-start md:items-center gap-2.5' ref={raportLinkRef}>
                     <p className='onPrintText14'>Raport jest dostępny pod adresem: </p>
                     <div className='flex flex-row gap-4 md:gap-2 items-center justify-center'>
-                        <a href={`${links.host}/wynik/${formData.id}`} className='underline'>{links.host}/wynik/{formData.id.substring(0,4)}...</a>
+                        <a href={`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${formData.id}`} className='underline'>{`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=`}{formData.id.substring(0,4)}...</a>
                         <Image 
-                            onClick={() => {copyToClipboard(`${links.host}/wynik/${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
+                            onClick={() => {copyToClipboard(`${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${formData.id}`); toast.success('Poprawnie skopiowano link do schowka')}} 
                             src={copy.src} 
                             alt="copy icon" 
                             height={20} 
