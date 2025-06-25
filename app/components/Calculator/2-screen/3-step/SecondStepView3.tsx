@@ -17,7 +17,7 @@ function SecondStepView3({formData, setFormData, errors, setErrors}: {formData: 
         <div className='grid grid-cols-1 md:grid-cols-12 gap-10'>
             <div className='flex flex-col gap-10 md:col-span-7'>
                 <div>
-                    <CustomLabel label='Izoalcja dachu' />
+                    <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
                     <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
                         <label>Czy jest jakakolwiek izolacja dachu?</label>
                         {

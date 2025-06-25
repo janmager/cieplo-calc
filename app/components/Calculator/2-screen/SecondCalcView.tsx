@@ -7,6 +7,7 @@ import SecondStepView3 from './3-step/SecondStepView3'
 import SecondStepView4 from './4-step/SecondStepView4'
 import SecondStepView5 from './5-step/SecondStepView5'
 import { getAllProducts } from '@/utils/supabase/getAllProducts'
+import PrevButton from '../../Customs/PrevButton'
 
 const steps: any = {
   0: {
@@ -441,7 +442,8 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         {/* step 5 */}
         {step == 5 && <SecondStepView5 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} products={products} />}
       </div>
-      {step < 5 && <div className='max-w-[1172px] px-5 mt-10 w-full flex mb-5 justify-end mx-auto'>
+      {step < 5 && <div className={`max-w-[1172px] px-5 mt-10 w-full flex mb-5 ${step < 1 ? 'justify-end ': 'justify-between'} mx-auto`}>
+        {step >= 1 && <PrevButton onClick={() => setStep(step-1)} />}
         <NextButton onClick={() => validation(step == 4 ? true : false)} />
       </div>}
     </div>
