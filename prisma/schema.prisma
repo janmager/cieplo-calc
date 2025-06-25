@@ -70,8 +70,10 @@ model Raport {
   hot_water_using_style                String?
   hot_water_steroid_foto               Boolean?
   hot_water_steroid_kolektor           Boolean?
-  rules1                               Boolean?
-  rules2                               Boolean?
+  rule_privacy_policy                  Boolean?
+  rule_expert_gree                     Boolean?
+  rule_mail_raport                     Boolean?
+  rule_other_company_contact           Boolean?
   send_raport_to_email                 String?
   send_raport_to_near_companies        String?
   send_raport_accept_24h               String?
@@ -86,7 +88,7 @@ model Raport {
   whats_south                          String?
   whats_east                           String?
   whats_west                           String?
-  unheated_space_type String?
+  unheated_space_type                  String?
   on_corner                            Boolean?
   number_stairways                     String?
   number_elevators                     String?

@@ -71,7 +71,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                                     </div>
                                 </div>
                             )
-                        }) : <span className='text-gray-400 text-xs onPrintText12 w-full pt-4 pb-3 flex items-center justify-center text-center'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
+                        }) : <span className='text-gray-400 text-xs onPrintText12 w-full pt-4 pb-3 flex items-center justify-center text-center'>brak sugestii produktów na potrzeby zapotrzebowania cieplnego</span>
                     }
                 </div>
             </div>}
@@ -168,7 +168,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
 
             {data.building_type && <>
             <CustomAdminDetailsDivider text='Poddasze i parter' />
-            <CustomAdminDetailsInputData checkBox={true} label='Izolacja dachu' data={data.is_roof_isolation} />
+            <CustomAdminDetailsInputData checkBox={true} label='Izolacja stropu między poddaszem, a piętrem poniżej' data={data.is_roof_isolation} />
             </>}
             {
                 data.is_roof_isolation && data.is_roof_isolation.indexOf('Tak') >=0 &&

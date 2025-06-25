@@ -85,8 +85,10 @@ function CalculatorContainer() {
         hot_water_steroid_kolektor: false,
 
         // contact email
-        rules1: false,
-        rules2: false,
+        rule_privacy_policy: false,
+        rule_expert_gree: false,
+        rule_mail_raport: false,
+        rule_other_company_contact: false,
         send_raport_to_email: '',
         send_raport_to_near_companies: '',
         send_raport_accept_24h: '',

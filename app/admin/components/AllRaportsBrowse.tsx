@@ -29,7 +29,7 @@ function AllRaportsBrowse() {
                 'Numer telefonu' : singleRaport.contact_phone_number,
                 'Zapotrzebowanie cieplne' : `${!singleRaport.heat_demand_know ? (Number(singleRaport.api_max_heating_power) + Number(singleRaport.api_hot_water_power ? singleRaport.api_hot_water_power : 0)).toFixed(2) : Number(singleRaport.heat_demand_kW).toFixed(2)} kW`,
                 'Sugerowane produkty' : `${JSON.parse(singleRaport.recommendedProducts) ? JSON.parse(singleRaport.recommendedProducts).map((p: any) => `${p.product.desc} (${p.product.type})\n`).join('').trim() : 'brak'}`,
-                'Link do raportu' : { f: `HYPERLINK("https://gree.ivn-works.com/kalkulator-wynik?hash=${singleRaport.id}"; "otwórz raport")` },
+                'Link do raportu' : { f: `HYPERLINK("${process.env.NEXT_PUBLIC_TARGET_PAGE}/kalkulator-wynik?hash=${singleRaport.id}"; "otwórz raport")` },
             })
         })
 

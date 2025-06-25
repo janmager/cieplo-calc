@@ -27,6 +27,7 @@ import { numberWithSpaces } from '@/utils/globals/numberWithSpaces';
 import { findBestFitProduct } from '@/utils/api/findBestFitProduct';
 import { saveSuggestedUpdate } from '@/utils/supabase/saveSuggestedUpdate';
 import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
+import TooMuchkWInfo from '@/app/admin/components/TooMuchkWInfo';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
@@ -204,7 +205,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         return (
                             <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
                         )}) : 
-                        <span className='font-[300] lg:col-span-3 pt-5 pb-10 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
+                        <TooMuchkWInfo />
                     }
                     </div>
                 </div>
@@ -351,7 +352,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Poddasze i parter</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
-                        <CustomLabel label='Izolacja dachu' />
+                        <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
                         <InfoBox title='Czy jest jakakolwiek izolacja dachu?' value={formData.is_roof_isolation ? formData.is_roof_isolation : ''} />
                         {
                             formData.is_roof_isolation && formData.is_roof_isolation.indexOf('Tak') >= 0 && 

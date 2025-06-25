@@ -6,6 +6,7 @@ import { Product } from '@prisma/client'
 import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
+import TooMuchkWInfo from '@/app/admin/components/TooMuchkWInfo'
 
 function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, setStep, setFormData, handleCountCieploAPI, suggestedProducts}: {formData: any, loadingUpper: boolean, step: any, products: any, setStep: any, setFormData: any, handleCountCieploAPI: any, suggestedProducts: any}) {
 
@@ -58,7 +59,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                     </a>}
                                 </div>
                             )
-                        }) : <span className='font-[300] lg:col-span-3 py-5 text-gray-500'>brak sugestii produktów na potrzeby Twojego zapotrzebowania cieplnego</span>
+                        }) : <TooMuchkWInfo />
                     }
                 </div>
             </div> : 
