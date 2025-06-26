@@ -113,7 +113,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
       }
     }
     
-    if(step == 1 || checkAll){
+    if((step == 1 || checkAll) && formData.building_type != 'Mieszkanie'){
       if(!formData.building_outline){
         valid = false;
         setErrors({...errors, 'building_outline' : true});
@@ -165,6 +165,27 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
       if(!formData.house_garage){
         valid = false;
         setErrors({...errors, 'house_garage' : true});
+        setAndScroll(1);
+        return false;
+      }
+    }
+
+    if((step == 1 || checkAll) && formData.building_type == 'Mieszkanie'){
+      if(Number(formData.building_area) < 2){
+        valid = false;
+        setErrors({...errors, 'building_area' : {msg: 'Podaj prawidłową powierzchnię zabudowy'}});
+        setAndScroll(1);
+        return false;
+      }
+      if(!formData.house_levels_height){
+        valid = false;
+        setErrors({...errors, 'house_levels_height' : true});
+        setAndScroll(1);
+        return false;
+      }
+      if(formData.heating_levels_mieszkanie.length == 0){
+        valid = false;
+        setErrors({...errors, 'heating_levels_mieszkanie' : true});
         setAndScroll(1);
         return false;
       }
@@ -268,7 +289,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
       }
     }
 
-    if(step == 3 || checkAll){
+    if((step == 3 || checkAll) && formData.building_type != 'Mieszkanie'){
       if(!formData.is_roof_isolation){
         valid = false;
         setErrors({...errors, 'is_roof_isolation' : true});
@@ -411,7 +432,7 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         <div className='flex cursor-default flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 text-[13px] lg:text-[15px] items-center mt-[62px] justify-center'>
         {
           Object.keys(steps).map((item: any, idx) => {
-            return (
+            if((idx == 3 && formData.building_type != 'Mieszkanie') || idx != 3) return (
               <div onClick={() => {transferToStep(item);}} key={idx} className={`flex flex-row gap-1.5 md:gap-2.5 lg:gap-4 xl:gap-5 items-center justify-center ${item == 5 ? '' : 'cursor-pointer'}`}>
                 <span className={`${item == step ? 'font-bold text-[#FF4510] text-center' : 'hidden md:block'}`}>{steps[item].breadcrumbTitle}</span>
                 {item != step && <span className={`rounded-full border ${parseInt(item) < step ? 'bg-[#FF4510] border-[#FF4510] text-white' : 'border-[#CACACA] text-gray-600'} font-[600] w-[28px] h-[28px] flex items-center justify-center md:hidden`}>{parseInt(item)+1}</span>}
@@ -436,14 +457,14 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         {/* step 2 */}
         {step == 2 && <SecondStepView2 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
         {/* step 3 */}
-        {step == 3 && <SecondStepView3 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
+        {step == 3 && <SecondStepView3 step={step} setStep={setStep} errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
         {/* step 4 */}
         {step == 4 && <SecondStepView4 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} />}
         {/* step 5 */}
         {step == 5 && <SecondStepView5 errors={errors} setErrors={setErrors} formData={formData} setFormData={setFormData} products={products} />}
       </div>
       {step < 5 && <div className={`max-w-[1172px] px-5 mt-10 w-full flex mb-5 ${step < 1 ? 'justify-end ': 'justify-between'} mx-auto`}>
-        {step >= 1 && <PrevButton onClick={() => setStep(step-1)} />}
+        {step >= 1 && <PrevButton onClick={() => setStep(step == 4 && formData.building_type == 'Mieszkanie' ? 2 : step-1)} />}
         <NextButton onClick={() => validation(step == 4 ? true : false)} />
       </div>}
     </div>

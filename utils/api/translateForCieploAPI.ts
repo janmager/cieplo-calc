@@ -1,3 +1,4 @@
+import { mieszkanie_size } from './../../app/consts/mieszkanie_size';
 import { whats_over } from '@/app/consts/whats_over';
 import { apiDictionary } from "./apiDictionary";
 
@@ -21,6 +22,9 @@ const translateHeatedFloors = (arr: string[], house_floor_plan: string) => {
         '2. piętro' : 3,
         '3. piętro' : 4,
         '4. piętro' : 5,
+        'I poziom' : 1,
+        'II poziom' : 2,
+        'III poziom' : 3,
         'Poddasze' : house_floor_plan == 'Parterowy' ? 2 : house_floor_plan == 'Jednopiętrowy' ? 3 : house_floor_plan == 'Dwupiętrowy' ? 4 : house_floor_plan == 'Trzypiętrowy' ? 5 : 6,
     }
 
@@ -40,7 +44,8 @@ export const translateForCieploAPI = (data: any) => {
         "construction_type": translate(data.building_construction_type),
         "latitude": parseFloat(data.house_location.lat),
         "longitude": parseFloat(data.house_location.lng),
-        "building_shape" : translate(data.building_outline),
+        ...data.building_type == 'Mieszkanie' && { "floor_area" : parseFloat(data.building_area)},
+        "building_shape" : data.building_outline ? translate(data.building_outline) : 'regular',
         ...translate(data.building_outline) == 'regular' && data.building_area ? {
             "floor_area" : parseFloat(data.building_area),
         } : (data.building_outline_length_m && data.building_outline_width_m) ? {
@@ -51,13 +56,13 @@ export const translateForCieploAPI = (data: any) => {
             "floor_area" : parseFloat(data.building_area),
             "floor_perimeter" : parseFloat(data.building_outline_m),
         } : null,
-        "building_floors": parseInt(translate(data.house_floor_plan)),
-        "building_heated_floors": translateHeatedFloors(data.heating_levels, data.house_floor_plan),
+        "building_floors": data.building_type == 'Mieszkanie' ? parseInt(translate(data.mieszkanie_size)) : parseInt(translate(data.house_floor_plan)),
+        "building_heated_floors": data.building_type == 'Mieszkanie' ? translateHeatedFloors(data.heating_levels_mieszkanie, data.mieszkanie_size) : translateHeatedFloors(data.heating_levels, data.house_floor_plan),
         "floor_height": parseFloat(translate(data.house_levels_height)),
         "building_roof": translate(data.house_roof_plan),
         "has_basement": data.building_has_basement,
         "has_balcony": data.building_has_taras,
-        "garage_type": translate(data.house_garage),
+        "garage_type": data.house_garage ? translate(data.house_garage) : 'none',
         "wall_size": parseInt(data.total_wall_thickness),
         ...translate(data.building_construction_type) == 'traditional' && {
             "primary_wall_material": parseInt(translate(data.basic_construction_material)),
@@ -119,6 +124,8 @@ export const translateForCieploAPI = (data: any) => {
             "number_elevators" : parseInt(data.number_elevators),
         },
     }
+
+    console.log(output);
 
     return output;
 }

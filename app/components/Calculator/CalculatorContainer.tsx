@@ -5,6 +5,7 @@ import FirstCalcView from './1-screen/FirstCalcView'
 import SecondCalcView from './2-screen/SecondCalcView'
 import { send_raport_accept_24h } from '@/app/consts/send_raport_accept_24h'
 import { useRouter } from 'next/navigation'
+import { mieszkanie_size } from '@/app/consts/mieszkanie_size'
 
 function CalculatorContainer() {
     const router = useRouter();
@@ -36,8 +37,10 @@ function CalculatorContainer() {
         building_outline_length_m: '',
         building_outline_width_m: '',
         house_floor_plan: 'Parterowy',
+        mieszkanie_size: 'Jednopoziomowe',
         house_roof_plan: 'Skośny z poddaszem',
         heating_levels: ['Parter'],
+        heating_levels_mieszkanie: ['I poziom'],
         building_has_basement: false,
         house_levels_height: '',
         building_has_taras: false,

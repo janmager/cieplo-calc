@@ -17,7 +17,6 @@ function Admin() {
 
     const checkAdminPassLocal = async (pass: any) => {
         let checkSecure = await checkAdminPass(pass)
-        console.log('checkSecure', checkSecure)
         if(checkSecure.response){
             setAdmin(true)
             setLoading(false)

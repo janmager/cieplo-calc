@@ -22,6 +22,8 @@ import ChooseHeatingLeveles from './ChooseHeatingLeveles'
 import DynamicHouseSketch from './DynamicHouseSketch'
 import { house_levels_height } from '@/app/consts/house_levels_height'
 import { house_garage } from '@/app/consts/house_garage'
+import { mieszkanie_size } from '@/app/consts/mieszkanie_size'
+import ChooseHeatingLevelesMieszkanie from './ChooseHeatingLevelesMiekszanie'
 
 function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
     const [ showSidebarPowierzchniaZabudowy, setShowSidebarPowierzchniaZabudowy ] = useState(false)
@@ -38,7 +40,7 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
         }
     }, [formData.building_outline, formData.building_outline_sizes])
     
-    return (
+    if(formData.building_type != 'Mieszkanie') return (
         <div className='flex flex-col gap-14 w-full'>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
                 <div>
@@ -228,6 +230,32 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
             </div>
         </div>
     )
+    else{
+        return (
+            <div className='flex flex-col gap-14 w-full'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
+                    <div>
+                        <div className='flex w-full flex-col mt-0 gap-2'>
+                            <span>Mieszkanie jest</span>
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'mieszkanie_size'} options={mieszkanie_size} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        </div>
+                        <div className='flex w-full flex-col mt-5 gap-2'>
+                            <span>Które piętra są ogrzewane? <span className='text-xs opacity-50 font-light'>{formData.heating_levels.length == 0 ? '(wybierz minimun jedną opcję)' : ''}</span></span>
+                            <ChooseHeatingLevelesMieszkanie formData={formData} setFormData={setFormData} /> 
+                        </div>
+                        <div className='mt-5 flex flex-col gap-2'>
+                            <label>Powierzchnia mieszkania</label>
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'building_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        </div>
+                        <div className='flex w-full flex-col mt-5 gap-2'>
+                            <span>Wysokość pięter</span>
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_levels_height'} options={house_levels_height} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default SecondStepView1
