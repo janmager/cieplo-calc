@@ -15,11 +15,12 @@ export async function POST(request) {
             body: JSON.stringify(formatedData),
         })
         const res = await result.json();
+        console.log(res)
         if(!res?.errors) return NextResponse.json({ response: true, data: res, base: formatedData })
         else return NextResponse.json({ response: false, data: res })
 
     } catch (e) {
-        console.log(e);
+        console.log('error', e);
         NextResponse.status(500).json({ response: false })
 
     }

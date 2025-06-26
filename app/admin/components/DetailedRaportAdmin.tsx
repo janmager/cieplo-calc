@@ -93,8 +93,8 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
             
             {/* <CustomAdminDetailsDivider text='Informacje wstępne' /> */}
             {/* <CustomAdminDetailsInputData checkBox={true} label='Znam zapotrzebowanie cieplne' data={data.heat_demand_know ? 'yes' : 'no'} /> */}
-            <CustomAdminDetailsInputData checkBox={true} label={`Zapotrzebowanie cieplne (C.O. + CWU)`} data={data.heat_demand_kW ? `${data.heat_demand_kW} kWh` : `${(Number(data.api_max_heating_power) + (data.api_hot_water_power ? Number(data.api_hot_water_power) : 0)).toFixed(2)} kWh`} /> 
-            {data.api_max_heating_power && <CustomAdminDetailsInputData checkBox={true} label={`Maksymalna moc instalacji (C.O.)`} data={`${data.api_max_heating_power ? (Number(data.api_max_heating_power)).toFixed(2) : '?'} kWh`} /> }
+            <CustomAdminDetailsInputData checkBox={true} label={`Zapotrzebowanie cieplne (C.O. + CWU)`} data={data.heat_demand_kW ? `${data.heat_demand_kW} kW` : `${(Number(data.api_max_heating_power) + (data.api_hot_water_power ? Number(data.api_hot_water_power) : 0)).toFixed(2)} kW`} /> 
+            {data.api_max_heating_power && <CustomAdminDetailsInputData checkBox={true} label={`Maksymalna moc instalacji (C.O.)`} data={`${data.api_max_heating_power ? (Number(data.api_max_heating_power)).toFixed(2) : '?'} kW`} /> }
             {data.temp_in_heat_rooms && <CustomAdminDetailsInputData checkBox={true} label='Projektowa temperatura pomieszczenia' data={data.temp_in_heat_rooms ? `${data.temp_in_heat_rooms} °C` : ''} />}
             {data.api_heating_power_factor && <CustomAdminDetailsInputData checkBox={true} label='Współczynnik zapotrzebowania na moc grzewczą' data={data.api_heating_power_factor ? `${Number(data.api_heating_power_factor).toFixed(2)} W/m²` : '-'} />}
 

@@ -34,6 +34,9 @@ export const apiDictionary: any = {
     'Dwupiętrowy' : '3',
     'Trzypiętrowy' : '4',
     'Czteropiętrowy' : '5',
+    'Jednopoziomowe' : '1',
+    'Dwupoziomowe' : '2',
+    'Trzypoziomowe' : '3',
 
     // floor_height
     'Niskie (poniżej 2,5m)' : '2.3',
