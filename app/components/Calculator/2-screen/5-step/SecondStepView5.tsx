@@ -84,8 +84,8 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
             setLoading(false)
         }
         finally{
-            // window.parent.postMessage({ type: 'redirectToResult', id: formData.id }, '*');
-            // router.push(`/wynik/${formData.id}`)
+            window.parent.postMessage({ type: 'redirectToResult', id: formData.id }, '*');
+            router.push(`/wynik/${formData.id}`)
         }
     }
 
