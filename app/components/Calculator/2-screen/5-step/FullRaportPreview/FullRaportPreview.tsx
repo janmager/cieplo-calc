@@ -353,7 +353,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
                         <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
-                        <InfoBox title='Czy jest jakakolwiek izolacja dachu?' value={formData.is_roof_isolation ? formData.is_roof_isolation : ''} />
+                        <InfoBox title='Czy jest jakakolwiek izolacja stropu między poddaszem, a piętrem niżej?' value={formData.is_roof_isolation ? formData.is_roof_isolation : ''} />
                         {
                             formData.is_roof_isolation && formData.is_roof_isolation.indexOf('Tak') >= 0 && 
                             <>

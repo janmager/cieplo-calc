@@ -25,7 +25,7 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
                     <div>
                         <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
                         <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                            <label>Czy jest jakakolwiek izolacja dachu?</label>
+                            <label>Czy jest jakakolwiek izolacja stropu między poddaszem, a piętrem niżej?</label>
                             {
                                 is_roof_isolation.map((item: any, idx: number) => {
                                     return (
