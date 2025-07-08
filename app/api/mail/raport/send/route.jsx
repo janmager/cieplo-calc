@@ -7,6 +7,7 @@ export async function POST(request) {
     const formData = await request.json()
     const email = formData.email
     const raportId = formData.raportId
+    const emailType = formData.type
 
     let getRaportData = await fetchRaportData(raportId);
 
@@ -22,21 +23,35 @@ export async function POST(request) {
             port: 465,
             secure: true,
             auth: {
-            user: myEmail,
-            pass: "anst jhzh pdak pyhv",
+                user: myEmail,
+                pass: "anst jhzh pdak pyhv",
             },
         });
 
         const d = new Date()
 
-        let printDate = `${d.getHours() >= 10 ? '' : '0'}${d.getHours()}:${d.getMinutes() >= 10 ? '' : '0'}${d.getMinutes()} ${d.getDate() >= 10 ? '' : '0'}${d.getDate()}.${d.getMonth()+1 >= 10 ? '' : '0'}${d.getMonth()+1}.${d.getFullYear()}`
-
+        let printTitle = 'Raport doboru mocy pompy ciepła GREE';
+        
+        switch(emailType){
+            case 'oferta':
+                printDate = `Prośba o ofertę na pompy ciepła`
+                break;
+            case 'kontakt':
+                printDate = `Prośba o kontakt doradcy`
+                break;
+            case 'raport':
+                printDate = `Raport doboru mocy pompy ciepła GREE`
+                break;
+            default:
+                printDate = `Raport doboru mocy pompy ciepła GREE`
+                break;
+        }
         try {
             const mail = await transporter.sendMail({
                 from: username,
                 to: [email, myEmail],
-                subject: `Twój raport doboru mocy pompy ciepła GREE | ${printDate}`,
-                html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url, raportId: getRaportData.data.id})
+                subject: `${printTitle}`,
+                html: raportEmailTemplate({email: email, raport_url: getRaportData.data.raport_url, raportId: getRaportData.data.id, type: emailType}),
             })
             
             return NextResponse.json({ message: "Success: email was sent" })
