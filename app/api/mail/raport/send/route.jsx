@@ -34,16 +34,16 @@ export async function POST(request) {
         
         switch(emailType){
             case 'oferta':
-                printDate = `Prośba o ofertę na pompy ciepła`
+                printTitle = `Prośba o ofertę na pompy ciepła`
                 break;
             case 'kontakt':
-                printDate = `Prośba o kontakt doradcy`
+                printTitle = `Prośba o kontakt doradcy`
                 break;
             case 'raport':
-                printDate = `Raport doboru mocy pompy ciepła GREE`
+                printTitle = `Raport doboru mocy pompy ciepła GREE`
                 break;
             default:
-                printDate = `Raport doboru mocy pompy ciepła GREE`
+                printTitle = `Raport doboru mocy pompy ciepła GREE`
                 break;
         }
         try {
