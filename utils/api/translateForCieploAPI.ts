@@ -1,6 +1,7 @@
 import { mieszkanie_size } from './../../app/consts/mieszkanie_size';
 import { whats_over } from '@/app/consts/whats_over';
 import { apiDictionary } from "./apiDictionary";
+import { levels } from '@/app/components/Calculator/2-screen/1-step/DynamicHouseSketch';
 
 const translate = (value: any) => {
     let find: any = '';
@@ -10,6 +11,17 @@ const translate = (value: any) => {
         }
     })
     return find;
+}
+
+const isLastFloorHeated = (heating_levels: any, data: any) => {
+    if(heating_levels.length){
+        let is = false;
+        heating_levels.map((lev: any) => {
+            if(lev.indexOf(levels[data.house_floor_plan].counter) >= 0) is = true;
+        })
+        return is;
+    }
+    return true;
 }
 
 const translateHeatedFloors = (arr: string[], house_floor_plan: string) => {
@@ -22,10 +34,18 @@ const translateHeatedFloors = (arr: string[], house_floor_plan: string) => {
         '2. piętro' : 3,
         '3. piętro' : 4,
         '4. piętro' : 5,
+        '5. piętro' : 6,
+        '6. piętro' : 7,
+        '7. piętro' : 8,
+        '8. piętro' : 9,
+        '9. piętro' : 10,
+        '10. piętro' : 11,
+        '11. piętro' : 12,
+        '12. piętro' : 13,
         'I poziom' : 1,
         'II poziom' : 2,
         'III poziom' : 3,
-        'Poddasze' : house_floor_plan == 'Parterowy' ? 2 : house_floor_plan == 'Jednopiętrowy' ? 3 : house_floor_plan == 'Dwupiętrowy' ? 4 : house_floor_plan == 'Trzypiętrowy' ? 5 : 6,
+        'Poddasze' : house_floor_plan == 'Parterowy' ? 2 : house_floor_plan == 'Jednopiętrowy' ? 3 : house_floor_plan == 'Dwupiętrowy' ? 4 : house_floor_plan == 'Trzypiętrowy' ? 5 : house_floor_plan == 'Czteropiętrowy' ? 6 : house_floor_plan == 'Pięciopiętrowy' ? 7 : house_floor_plan == 'Sześciopiętrowy' ? 8 : house_floor_plan == 'Siedmiopiętrowy' ? 9 : house_floor_plan == 'Ośmiopiętrowy' ? 10 : house_floor_plan == 'Dziewięciopiętrowy' ? 11 : house_floor_plan == 'Dziesiąciopiętrowy' ? 12 : house_floor_plan == 'Jedenasopiętrowy' ? 13 : 14,
     }
 
     arr.map((i: string) => {
@@ -92,8 +112,11 @@ export const translateForCieploAPI = (data: any) => {
                 "size": parseInt(data.isolation_parter_floor_thickness)
             },
         },
-        ...(data.heating_levels.indexOf('Poddasze') == -1 && data.house_roof_plan.toLowerCase() == 'skośny z poddaszem') && {
+        ...((data.heating_levels.indexOf('Poddasze') == -1 && data.house_roof_plan.toLowerCase() == 'skośny z poddaszem') || (data.house_roof_plan.toLowerCase() != 'skośny z poddaszem' && !isLastFloorHeated(data.heating_levels, data))) && {
             "unheated_space_over_type": translate(data.unheated_space_type)
+        },
+        ...(data.heating_levels.indexOf('Piwnica') == -1 && data.building_has_basement) && {
+            "unheated_space_under_type": translate(data.unheated_basement)
         },
         "number_doors": parseInt(data.outside_doors_number),
         "number_balcony_doors": parseInt(data.taras_doors_number),

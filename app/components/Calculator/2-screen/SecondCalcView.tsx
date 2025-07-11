@@ -8,6 +8,18 @@ import SecondStepView4 from './4-step/SecondStepView4'
 import SecondStepView5 from './5-step/SecondStepView5'
 import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import PrevButton from '../../Customs/PrevButton'
+import { levels } from './1-step/DynamicHouseSketch'
+
+const isLastFloorHeated = (heating_levels: any, data: any) => {
+    if(heating_levels.length){
+        let is = false;
+        heating_levels.map((lev: any) => {
+            if(lev.indexOf(levels[data.house_floor_plan].counter) >= 0) is = true;
+        })
+        return is;
+    }
+    return true;
+}
 
 const steps: any = {
   0: {

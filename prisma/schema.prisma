@@ -110,6 +110,7 @@ model Raport {
   whats_under_is_floor_heated           Boolean?
   whats_under_situation                 String?
   whats_under_floor_isolation_material  String?
+  unheated_basement                     String?
   whats_under_floor_isolation_thickness String?
 }
 
