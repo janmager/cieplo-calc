@@ -28,6 +28,7 @@ import { findBestFitProduct } from '@/utils/api/findBestFitProduct';
 import { saveSuggestedUpdate } from '@/utils/supabase/saveSuggestedUpdate';
 import { selectHeatPumps } from '@/utils/api/selectHeatPumps';
 import TooMuchkWInfo from '@/app/admin/components/TooMuchkWInfo';
+import TooLesskWInfo from '@/app/admin/components/TooLesskWInfo';
 
 function FullRaportPreview({formData, setFormData, step, setStep, singleView, autoDownload = false}: {formData: any, setFormData: any, step?: any, setStep?: any, singleView?: boolean, autoDownload?: boolean}) {
     const [ instalators, setInstalators ] = useState<any>(null) 
@@ -205,7 +206,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                         return (
                             <SuggestedProductThumbnail key={p.product.id} suggestedProduct={p.product} />
                         )}) : 
-                        <TooMuchkWInfo />
+                        (formData.heat_demand.kW && Number(formData.heat_demand.kW) < 5) || (formData.api_max_heating_power && ((Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)) < 5)) ? <TooLesskWInfo /> : <TooMuchkWInfo />
                     }
                     </div>
                 </div>

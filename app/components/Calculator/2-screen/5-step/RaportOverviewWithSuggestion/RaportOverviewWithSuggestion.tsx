@@ -7,6 +7,7 @@ import { getAllProducts } from '@/utils/supabase/getAllProducts'
 import Image from 'next/image'
 import loadingIco from '@/assets/svg/loader.svg'
 import TooMuchkWInfo from '@/app/admin/components/TooMuchkWInfo'
+import TooLesskWInfo from '@/app/admin/components/TooLesskWInfo'
 
 function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, setStep, setFormData, handleCountCieploAPI, suggestedProducts}: {formData: any, loadingUpper: boolean, step: any, products: any, setStep: any, setFormData: any, handleCountCieploAPI: any, suggestedProducts: any}) {
 
@@ -15,7 +16,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
             handleCountCieploAPI()
         } 
     }, [products])
-  
+    
     return (
         <div className='flex flex-col gap-10 pb-10'>
             <div className="max-w-[1172px] w-full mx-auto mb-3">
@@ -59,7 +60,7 @@ function RaportOverviewWithSuggestion({formData, step, products, loadingUpper, s
                                     </a>}
                                 </div>
                             )
-                        }) : <TooMuchkWInfo />
+                        }) : (formData.heat_demand.kW && Number(formData.heat_demand.kW) < 5) || (formData.api_max_heating_power && ((Number(formData.api_max_heating_power) + (formData.api_hot_water_power ? Number(formData.api_hot_water_power) : 0)) < 5)) ? <TooLesskWInfo /> : <TooMuchkWInfo />
                     }
                 </div>
             </div> : 
