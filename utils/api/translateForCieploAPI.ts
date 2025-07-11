@@ -116,6 +116,24 @@ export const translateForCieploAPI = (data: any) => {
             "whats_east": translate(data.whats_east),
             "whats_west": translate(data.whats_west),
         },
+        ...(translate(data.building_type) == 'apartment' && translate(data.whats_over) == 'unheated_room') && {
+            "unheated_space_over_type" : translate(data.whats_over_situation)
+        },
+        ...(data.whats_over_is_strop_heated && translate(data.whats_over) != 'heated_room') && {
+            "top_isolation": {
+                "material": parseInt(translate(data.whats_over_strop_isolation_material)),
+                "size": parseInt(data.whats_over_strop_isolation_thickness)
+            },
+        },
+        ...(translate(data.building_type) == 'apartment' && translate(data.whats_under) == 'unheated_room') && {
+            "unheated_space_under_type" : translate(data.whats_under_situation)
+        },
+        ...(data.whats_under_is_strop_heated && translate(data.whats_under) != 'heated_room') && {
+            "bottom_isolation": {
+                "material": parseInt(translate(data.whats_under_floor_isolation_material)),
+                "size": parseInt(data.whats_under_floor_isolation_thickness)
+            },
+        },
         ...translate(data.building_type) == 'row_house' && {
             "on_corner": data.on_corner,
         },

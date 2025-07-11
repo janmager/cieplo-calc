@@ -110,6 +110,17 @@ function CalculatorContainer() {
         number_stairways: '',
         number_elevators: '',
 
+        whats_over_is_strop_heated: false,
+        whats_over_situation: '',
+        whats_over_strop_isolation_material: '',
+        whats_over_strop_isolation_thickness: '',
+
+        whats_under_is_floor_heated: false,
+        whats_under_situation: '',
+        whats_under_floor_isolation_material: '',
+        whats_under_floor_isolation_thickness: '',
+
+
         // from api
         api_total_area: null,
         api_heated_area: null,

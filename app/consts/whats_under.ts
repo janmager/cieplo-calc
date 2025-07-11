@@ -4,8 +4,8 @@ export const whats_under: any = [
         value: 'Ogrzewany lokal', 
     },
     {
-        name: 'Nieogrzewany lokal',
-        value: 'Nieogrzewany lokal',
+        name: 'Nieogrzewany lokal lub piwnica',
+        value: 'Nieogrzewany lokal lub piwnica',
     },
     {
         name: 'Świat zewnętrzny',
