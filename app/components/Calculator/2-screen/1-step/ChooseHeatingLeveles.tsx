@@ -23,6 +23,38 @@ function ChooseHeatingLeveles({formData, setFormData}: {formData: any, setFormDa
         'Czteropiętrowy': {
             counter: 4,
             name: '4. piętro',
+        },
+        'Pięciopiętrowy' : {
+            counter: 5,
+            name: '5. piętro',
+        },
+        'Sześciopiętrowy': {
+            counter: 6,
+            name: '6. piętro',
+        },
+        'Siedmiopiętrowy': {
+            counter: 7,
+            name: '7. piętro',
+        },
+        'Ośmiopiętrowy': {
+            counter: 8,
+            name: '8. piętro',
+        },
+        'Dziewięciopiętrowy': {
+            counter: 9,
+            name: '9. piętro',
+        },
+        'Dziesięciopiętrowy': {
+            counter: 10,
+            name: '10. piętro'
+        },
+        'Jedenastopiętrowy': {
+            counter: 11,
+            name: '11. piętro'
+        },
+        'Dwunastopiętrowy': {
+            counter: 12,
+            name: '12. piętro'
         }
     }
 
@@ -62,18 +94,102 @@ function ChooseHeatingLeveles({formData, setFormData}: {formData: any, setFormDa
                 if(old.indexOf('2. piętro') >= 0) old.splice(old.indexOf('2. piętro'), 1)
                 if(old.indexOf('3. piętro') >= 0) old.splice(old.indexOf('3. piętro'), 1)
                 if(old.indexOf('4. piętro') >= 0) old.splice(old.indexOf('4. piętro'), 1)
+                if(old.indexOf('5. piętro') >= 0) old.splice(old.indexOf('5. piętro'), 1)
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
             }
             if(formData['house_floor_plan'] == 'Jednopiętrowy'){
                 if(old.indexOf('2. piętro') >= 0) old.splice(old.indexOf('2. piętro'), 1)
                 if(old.indexOf('3. piętro') >= 0) old.splice(old.indexOf('3. piętro'), 1)
                 if(old.indexOf('4. piętro') >= 0) old.splice(old.indexOf('4. piętro'), 1)
+                if(old.indexOf('5. piętro') >= 0) old.splice(old.indexOf('5. piętro'), 1)
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
             }
             if(formData['house_floor_plan'] == 'Dwupiętrowy'){
                 if(old.indexOf('3. piętro') >= 0) old.splice(old.indexOf('3. piętro'), 1)
                 if(old.indexOf('4. piętro') >= 0) old.splice(old.indexOf('4. piętro'), 1)
+                if(old.indexOf('5. piętro') >= 0) old.splice(old.indexOf('5. piętro'), 1)
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
             }
             if(formData['house_floor_plan'] == 'Trzypiętrowy'){
                 if(old.indexOf('4. piętro') >= 0) old.splice(old.indexOf('4. piętro'), 1)
+                if(old.indexOf('5. piętro') >= 0) old.splice(old.indexOf('5. piętro'), 1)
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Czteropiętrowy'){
+                if(old.indexOf('5. piętro') >= 0) old.splice(old.indexOf('5. piętro'), 1)
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Pięciopiętrowy'){
+                if(old.indexOf('6. piętro') >= 0) old.splice(old.indexOf('6. piętro'), 1)
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Sześciopiętrowy'){
+                if(old.indexOf('7. piętro') >= 0) old.splice(old.indexOf('7. piętro'), 1)
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Siedmiopiętrowy'){
+                if(old.indexOf('8. piętro') >= 0) old.splice(old.indexOf('8. piętro'), 1)
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Ośmiopiętrowy'){
+                if(old.indexOf('9. piętro') >= 0) old.splice(old.indexOf('9. piętro'), 1)
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Dziewięciopiętrowy'){
+                if(old.indexOf('10. piętro') >= 0) old.splice(old.indexOf('10. piętro'), 1)
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Dziesięciopiętrowy'){
+                if(old.indexOf('11. piętro') >= 0) old.splice(old.indexOf('11. piętro'), 1)
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
+            }
+            if(formData['house_floor_plan'] == 'Jedenastopiętrowy'){
+                if(old.indexOf('12. piętro') >= 0) old.splice(old.indexOf('12. piętro'), 1)
             }
         }
     }, [formData['house_floor_plan'], formData['house_roof_plan'], formData['building_has_basement']])

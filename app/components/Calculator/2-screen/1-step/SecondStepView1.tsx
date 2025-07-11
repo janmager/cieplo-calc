@@ -14,7 +14,7 @@ import regularOutsideOutline from '@/assets/outlines/regular-outline.svg'
 import regularMoreOutline from '@/assets/outlines/regular-more.svg'
 import inregularOutline from '@/assets/outlines/inregular-outline.svg'
 import CustomDropdownSelect from '@/app/components/Customs/CustomDropdownSelect'
-import { building_floor_plan } from '@/app/consts/building_floor_plan'
+import { building_floor_plan, building_floor_plan_wielorodzinny } from '@/app/consts/building_floor_plan'
 import { building_roof_plan } from '@/app/consts/building_roof_plan'
 import { building_outline_sizes } from '@/app/consts/building_outline_sizes'
 import building_outline_img from '@/assets/jpg/powierzchnia-zabudowy.jpg'
@@ -39,6 +39,12 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
             setShowSidebarPowierzchniaZabudowy(false)
         }
     }, [formData.building_outline, formData.building_outline_sizes])
+
+    useEffect(() => {
+        if(formData.building_type == 'Budynek wielorodzinny'){
+            setFormData({...formData, house_floor_plan: 'Jednopiętrowy'})
+        }
+    }, [])
     
     if(formData.building_type != 'Mieszkanie') return (
         <div className='flex flex-col gap-14 w-full'>
@@ -183,7 +189,7 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                     <CustomLabel label='Układ pięter' />
                     <div className='flex w-full flex-col mt-5 gap-2'>
                         <span>Dom jest</span>
-                        <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_floor_plan'} options={building_floor_plan} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_floor_plan'} options={formData.building_type == 'Budynek wielorodzinny' ? building_floor_plan_wielorodzinny : building_floor_plan} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>
                     <div className='flex w-full flex-col mt-5 gap-2'>
                         <span>Dach jest</span>
@@ -215,6 +221,39 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                         <span>Garaż w bryle budynku</span>
                         <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_garage'} options={house_garage} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                     </div>
+                    {
+                        formData.building_type == 'Segment w zabudowanie szeregowej' &&
+                        <div className='mt-5'>
+                            <CustomLabel label='Lokalizacja budynku' />
+                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                <span>Czy segment w zabudowie szeregowej znajduje się na końcu/początku szeregu?</span>
+                                <div onClick={() => setFormData({...formData, on_corner: true})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
+                                    <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
+                                        {formData.on_corner && <Image src={check.src} height={15} width={15} alt="check" />}
+                                    </div>
+                                    <span>Tak</span>
+                                </div>
+                                <div onClick={() => setFormData({...formData, on_corner: false})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
+                                    <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
+                                        {!formData.on_corner && <Image src={check.src} height={15} width={15} alt="check" />}
+                                    </div>
+                                    <span>Nie</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    {formData.building_type == 'Budynek wielorodzinny' && <div className='mt-5'>
+                        <CustomLabel label='Budynek' />
+                        <div className='flex w-full flex-col mt-5 gap-2'>
+                            <span>Liczba klatek schodowych w budynku</span>
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_stairways'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        </div>
+                        <div className='mt-5 flex flex-col gap-2'>
+                            <label>Liczba wind w budynku</label>
+                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_elevators'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                        </div>
+                    </div>}
                 </div>
                 <div className='h-full flex flex-col gap-5 items-start w-full'>
                     <div className='flex w-full flex-row gap-5 items-start bg-[#F8F8F8] p-[20px]'>
@@ -244,7 +283,7 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                             <ChooseHeatingLevelesMieszkanie formData={formData} setFormData={setFormData} /> 
                         </div>
                         <div className='mt-5 flex flex-col gap-2'>
-                            <label>Powierzchnia mieszkania</label>
+                            <label>{formData['mieszkanie_size'] == 'Jednopoziomowe' ? 'Powierzchnia mieszkania' : 'Powierzchnia jednego poziomu'}</label>
                             <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'m²'} formDataValue1={'building_area'} formDataValue2={false} setFormData={setFormData} formData={formData} />
                         </div>
                         <div className='flex w-full flex-col mt-5 gap-2'>

@@ -1,22 +1,30 @@
 export const windows_type: any = [
     {
-        name: 'Stare z pojedynczą szybą',
-        value: 'Stare z pojedynczą szybą'
+        name: 'Starsze z pojedynczą zwykłą szybą',
+        value: 'Starsze z pojedynczą zwykłą szybą'
     },
     {
-        name: 'Stare z min. dwiema szybami',
-        value: 'Stare z min. dwiema szybami',
+        name: 'Starsze z min. dwiema zwykłymi szybami',
+        value: 'Starsze z min. dwiema zwykłymi szybami',
     },
     {
-        name: 'Starsze (10+ lat) ale z szybami zespolonymi',
-        value: 'Starsze (10+ lat) ale z szybami zespolonymi',
+        name: 'Starsze z szybami zespolonymi',
+        value: 'Starsze z szybami zespolonymi',
     },
     {
-        name: 'Współczesne dwuszybowe',
-        value: 'Współczesne dwuszybowe',
+        name: '2011-2020 dwuszybowe',
+        value: '2011-2020 dwuszybowe',
     },
     {
-        name: 'Współczesne trójszybowe',
-        value: 'Współczesne trójszybowe',
+        name: '2011-2020 trójszybowe',
+        value: '2011-2020 trójszybowe',
+    },
+    {
+        name: '2021+ dwuszybowe',
+        value: '2021+ dwuszybowe',
+    },
+    {
+        name: '2021+ trójszybowe',
+        value: '2021+ trójszybowe',
     },
 ]

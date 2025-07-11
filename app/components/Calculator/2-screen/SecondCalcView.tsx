@@ -168,6 +168,18 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setAndScroll(1);
         return false;
       }
+      if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_stairways == '' || Number(formData.number_stairways) < 0)){
+        valid = false;
+        setErrors({...errors, 'number_stairways' : {msg: 'Podaj prawidłową ilość klatek schodowych'}});
+        setAndScroll(1);
+        return false;
+      }
+      if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_elevators == '' || Number(formData.number_elevators) < 0)){
+        valid = false;
+        setErrors({...errors, 'number_elevators' : {msg: 'Podaj prawidłową ilość wind w budynku'}});
+        setAndScroll(1);
+        return false;
+      }
     }
 
     if((step == 1 || checkAll) && formData.building_type == 'Mieszkanie'){
@@ -275,18 +287,6 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
         setAndScroll(2);
         return false;
       }
-      if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_stairways == '' || Number(formData.number_stairways) < 0)){
-        valid = false;
-        setErrors({...errors, 'number_stairways' : {msg: 'Podaj prawidłową ilość klatek schodowych'}});
-        setAndScroll(2);
-        return false;
-      }
-      if(formData.building_type == 'Budynek wielorodzinny' && (formData.number_elevators == '' || Number(formData.number_elevators) < 0)){
-        valid = false;
-        setErrors({...errors, 'number_elevators' : {msg: 'Podaj prawidłową ilość wind w budynku'}});
-        setAndScroll(2);
-        return false;
-      }
     }
 
     if((step == 3 || checkAll) && formData.building_type != 'Mieszkanie'){
@@ -362,6 +362,42 @@ function SecondCalcView({formData, setFormData, errors, setErrors}: {formData: a
       if(formData.building_type == 'Mieszkanie' && !formData.whats_over){
         valid = false;
         setErrors({...errors, 'whats_over' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_over == 'Nieogrzewany lokal' && !formData.whats_over_situation){
+        valid = false;
+        setErrors({...errors, 'whats_over_situation' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_over_is_strop_heated && !formData.whats_over_strop_isolation_material){
+        valid = false;
+        setErrors({...errors, 'whats_over_strop_isolation_material' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_over_is_strop_heated && Number(formData.whats_over_strop_isolation_thickness) <= 0){
+        valid = false;
+        setErrors({...errors, 'whats_over_strop_isolation_thickness' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_under == 'Nieogrzewany lokal lub piwnica' && !formData.whats_under_situation){
+        valid = false;
+        setErrors({...errors, 'whats_under_situation' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_under_is_floor_heated && !formData.whats_under_floor_isolation_material){
+        valid = false;
+        setErrors({...errors, 'whats_under_floor_isolation_material' : true});
+        setAndScroll(4);
+        return false;
+      }
+      if(formData.building_type == 'Mieszkanie' && formData.whats_under_is_floor_heated && Number(formData.whats_under_floor_isolation_thickness) <= 0){
+        valid = false;
+        setErrors({...errors, 'whats_under_floor_isolation_thickness' : true});
         setAndScroll(4);
         return false;
       }

@@ -1,3 +1,4 @@
+import { whats_over_situation } from './../../app/consts/whats_over_situation';
 'use server'
 
 import prisma from '@/app/libs/db';
@@ -93,6 +94,14 @@ export const addNewRaport = async (raport: any) => {
                 on_corner: raport.on_corner,
                 number_stairways: raport.number_stairways,
                 number_elevators: raport.number_elevators,
+                whats_over_is_strop_heated: raport.whats_over_is_strop_heated,
+                whats_over_situation: raport.whats_over_situation,
+                whats_over_strop_isolation_material: raport.whats_over_strop_isolation_material,
+                whats_over_strop_isolation_thickness: raport.whats_over_strop_isolation_thickness,
+                whats_under_is_floor_heated: raport.whats_under_is_floor_heated,
+                whats_under_situation: raport.whats_under_situation,
+                whats_under_floor_isolation_material: raport.whats_under_floor_isolation_material,
+                whats_under_floor_isolation_thickness: raport.whats_under_floor_isolation_thickness,
 
                 api_total_area: raport.api_total_area,
                 api_heated_area: raport.api_heated_area,

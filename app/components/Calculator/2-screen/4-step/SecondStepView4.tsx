@@ -15,6 +15,8 @@ import { max_temp_of_power_instalation } from '@/app/consts/max_temp_of_power_in
 import { whats_over } from '@/app/consts/whats_over'
 import { whats_under } from '@/app/consts/whats_under'
 import { whats_near } from '@/app/consts/whats_near'
+import { unheated_over_type } from '@/app/consts/unheated_over_type'
+import { whats_over_situation } from '@/app/consts/whats_over_situation'
 
 function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: any, setFormData: any, errors: any, setErrors: any}) {
     useEffect(() => {
@@ -59,27 +61,6 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                     </div>
                 </div>
             </div>
-            {
-                formData.building_type == 'Segment w zabudowanie szeregowej' &&
-                <div>
-                    <CustomLabel label='Lokalizacja budynku' />
-                    <div className='flex w-full flex-col mt-5 gap-2'>
-                        <span>Czy segment w zabudowie szeregowej znajduje się na końcu/początku szeregu?</span>
-                        <div onClick={() => setFormData({...formData, on_corner: true})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
-                            <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
-                                {formData.on_corner && <Image src={check.src} height={15} width={15} alt="check" />}
-                            </div>
-                            <span>Tak</span>
-                        </div>
-                        <div onClick={() => setFormData({...formData, on_corner: false})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2'>
-                            <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
-                                {!formData.on_corner && <Image src={check.src} height={15} width={15} alt="check" />}
-                            </div>
-                            <span>Nie</span>
-                        </div>
-                    </div>
-                </div>
-            }
             {formData.building_type == 'Mieszkanie' && <div className='grid grid-cols-1 md:grid-cols-2 gap-10'>
                 <div className='flex flex-col gap-5'>
                     <CustomLabel label='Lokalizacja mieszkania' />
@@ -87,12 +68,78 @@ function SecondStepView4({formData, setFormData, errors, setErrors}: {formData: 
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się powyżej mieszkania?</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_over'} options={whats_over} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            {
+                                formData['whats_over'] == 'Nieogrzewany lokal' &&
+                                <div className='flex w-full flex-col mt-2.5 gap-4'>
+                                    <span>Jak wygląda sytuacja w pomieszczeniu powyżej mieszkania?</span>
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_over_situation'} options={whats_over_situation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                </div>
+                            }
+                            {
+                                (formData['whats_over'] == 'Świat zewnętrzny' || formData['whats_over'] == 'Nieogrzewany lokal') &&
+                                <div>
+                                    <div onClick={() => setFormData({...formData, whats_over_is_strop_heated: !formData.whats_over_is_strop_heated})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2.5'>
+                                        <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
+                                            {formData.whats_over_is_strop_heated && <Image src={check.src} height={15} width={15} alt="check" />}
+                                        </div>
+                                        <span>Strop jest docieplony</span>
+                                    </div>
+                                    {
+                                        formData.whats_over_is_strop_heated &&
+                                        <div className='flex flex-col gap-0'>
+                                            <label className='mt-5 font-[600]'>Izolacja stropu mieszkania</label>
+
+                                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                                <span>Materiał</span>
+                                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_over_strop_isolation_material'} options={isolation_parter_floor_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                            </div>
+                                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                                <span>Grubość</span>
+                                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'whats_over_strop_isolation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>
                         <div className='flex w-full flex-col mt-0 gap-2'>
                             <span>Co znajduje się poniżej mieszkania?</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_under'} options={whats_under} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                            {
+                                formData['whats_under'] == 'Nieogrzewany lokal lub piwnica' &&
+                                <div className='flex w-full flex-col mt-2.5 gap-4'>
+                                    <span>Jak wygląda sytuacja w pomieszczeniu poniżej mieszkania?</span>
+                                    <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_under_situation'} options={whats_over_situation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                </div>
+                            }
+                            {
+                                (formData['whats_under'] == 'Świat zewnętrzny' || formData['whats_under'] == 'Nieogrzewany lokal lub piwnica' || formData['whats_under'] == 'Grunt') &&
+                                <div>
+                                    <div onClick={() => setFormData({...formData, whats_under_is_floor_heated: !formData.whats_under_is_floor_heated})} className='flex items-center cursor-pointer justify-start flex-row gap-5 mt-2.5'>
+                                        <div className='min-h-[20px] max-h-[20px] rounded max-w-[20px] min-w-[20px] flex items-center border justify-center border-[#8296AC]'>
+                                            {formData.whats_under_is_floor_heated && <Image src={check.src} height={15} width={15} alt="check" />}
+                                        </div>
+                                        <span>Podłoga mieszkania jest docieplona</span>
+                                    </div>
+                                    {
+                                        formData.whats_under_is_floor_heated &&
+                                        <div className='flex flex-col gap-0'>
+                                            <label className='mt-5 font-[600]'>Izolacja podłogi mieszkania</label>
+
+                                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                                <span>Materiał</span>
+                                                <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'whats_under_floor_isolation_material'} options={isolation_parter_floor_materials} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                                            </div>
+                                            <div className='flex w-full flex-col mt-5 gap-2'>
+                                                <span>Grubość</span>
+                                                <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'cm'} formDataValue1={'whats_under_floor_isolation_thickness'} formDataValue2={false} setFormData={setFormData} formData={formData} />
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
                         </div>
                     </div>
                     <div className='flex flex-col w-full'>

@@ -34,6 +34,14 @@ export const apiDictionary: any = {
     'Dwupiętrowy' : '3',
     'Trzypiętrowy' : '4',
     'Czteropiętrowy' : '5',
+    'Pięciopiętrowy' : '6',
+    'Sześciopiętrowy' : '7',
+    'Siedmiopiętrowy' : '8',
+    'Ośmiopiętrowy' : '9',
+    'Dziewięciopiętrowy' : '10',
+    'Dziesięciopiętrowy' : '11',
+    'Jedenastopiętrowy' : '12',
+    'Dwunastopiętrowy' : '13',
     'Jednopoziomowe' : '1',
     'Dwupoziomowe' : '2',
     'Trzypoziomowe' : '3',
@@ -125,6 +133,16 @@ export const apiDictionary: any = {
     'Współczesne dwuszybowe' : 'new_double_glass',
     'Współczesne trójszybowe' : 'new_triple_glass',
 
+    // windows_type_docs_api_updated
+    'Starsze z pojedynczą zwykłą szybą' : 'old_single_glass',
+    'Starsze z min. dwiema zwykłymi szybami' : 'old_double_glass',
+    'Starsze z szybami zespolonymi' : 'semi_new_double_glass',
+    '2011-2020 dwuszybowe' : 'new_double_glass',
+    '2011-2020 trójszybowe' : 'new_triple_glass',
+    '2021+ dwuszybowe' : '2021_double_glass',
+    '2021+ trójszybowe' : '2021_triple_glass',
+
+
     // ventilation_type
     'Mechaniczna' : 'mechanical',
     'Naturalna lub grawitacyjna' : 'natural',
@@ -138,6 +156,7 @@ export const apiDictionary: any = {
     // whats_over, whats_under, whats_north etc.
     'Ogrzewany lokal' : 'heated_room',
     'Nieogrzewany lokal' : 'unheated_room',
+    'Nieogrzewany lokal lub piwnica' : 'unheated_room',
     'Świat zewnętrzny' : 'outdoor',
     'Grunt' : 'ground',
     'Nieogrzewany lokal / korytarz / klatka schodowa' : 'unheated_room',
@@ -146,6 +165,10 @@ export const apiDictionary: any = {
     "Brak izolacji, ale bez przeciągów, odczuwalna jest niska temperatura" : "poor",
     "Ocieplenie dachu jest, ale słabej jakości" : "medium",
     "Dach jest dobrze ocieplony" : "great",
+
+    "Pomieszczenie jest dość szczelne, ale ocieplone słabiej niż mieszkanie" : "medium",
+    "To pomieszczenie mieszkalne ocieplone nie gorzej jak nasze, tylko chwilowo nikt tam nie mieszka" : "great",
+
 
     '' : null,
     '-' : null

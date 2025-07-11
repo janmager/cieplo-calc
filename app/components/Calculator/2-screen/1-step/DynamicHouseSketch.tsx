@@ -21,6 +21,38 @@ function DynamicHouseSketch({formData, setFormData, noMarginTop = false, padding
         'Czteropiętrowy': {
             counter: 4,
             name: '4. piętro',
+        },
+        'Pięciopiętrowy' : {
+            counter: 5,
+            name: '5. piętro',
+        },
+        'Sześciopiętrowy': {
+            counter: 6,
+            name: '6. piętro',
+        },
+        'Siedmiopiętrowy': {
+            counter: 7,
+            name: '7. piętro',
+        },
+        'Ośmiopiętrowy': {
+            counter: 8,
+            name: '8. piętro',
+        },
+        'Dziewięciopiętrowy': {
+            counter: 9,
+            name: '9. piętro',
+        },
+        'Dziesięciopiętrowy': {
+            counter: 10,
+            name: '10. piętro'
+        },
+        'Jedenastopiętrowy': {
+            counter: 11,
+            name: '11. piętro'
+        },
+        'Dwunastopiętrowy': {
+            counter: 12,
+            name: '12. piętro'
         }
     }
 
@@ -42,6 +74,62 @@ function DynamicHouseSketch({formData, setFormData, noMarginTop = false, padding
                 <div className='h-[5px] bg-slate-950 w-[210px] lg:w-[250px]'></div>
             }
             {/* start pietra */}
+            {
+                currentCounter >= 12 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('12. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">12. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('12. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 11 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('11. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">11. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('11. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 10 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('10. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">10. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('10. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 9 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('9. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">9. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('9. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 8 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('8. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">8. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('8. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 7 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('7. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">7. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('7. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 6 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('6. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">6. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('6. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
+            {
+                currentCounter >= 5 && 
+                <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('5. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>
+                    <span className="font-bold">5. piętro</span>
+                    <span className='font-light'>{formData['heating_levels'].indexOf('5. piętro') >= 0 ? 'ogrzewane' : 'nieogrzewane'}</span>
+                </div>
+            }
             {
                 currentCounter >= 4 && 
                 <div className={`h-[80px] w-[160px] lg:w-[220px] flex flex-col items-center justify-center gap-0 ${formData['heating_levels'].indexOf('4. piętro') >= 0 ? 'bg-[rgb(254,174,174)]' : 'bg-[rgb(200,245,255)]'}`}>

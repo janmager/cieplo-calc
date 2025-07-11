@@ -199,17 +199,6 @@ function SecondStepView2({formData, setFormData, errors, setErrors}: {formData: 
                             <p className='w-full flex-1'>W części ogrzewanej</p>
                         </div>
                     </div>
-                    {formData.building_type == 'Budynek wielorodzinny' && <div>
-                        <CustomLabel label='Budynek' />
-                        <div className='flex w-full flex-col mt-5 gap-2'>
-                            <span>Liczba klatek schodowych w budynku</span>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_stairways'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                        </div>
-                        <div className='mt-5 flex flex-col gap-2'>
-                            <label>Liczba wind w budynku</label>
-                            <InputWithPlaceholder errors={errors} setErrors={setErrors} type={'number'} placeholder={'szt.'} formDataValue1={'number_elevators'} formDataValue2={false} setFormData={setFormData} formData={formData} />
-                        </div>
-                    </div>}
                 </div>
                 <div className='flex flex-col pb-[30px] gap-5 items-start bg-[#F8F8F8] w-full h-fit'>
                     <div className='flex w-full flex-row gap-5 items-start px-[20px] pt-[30px]'>
