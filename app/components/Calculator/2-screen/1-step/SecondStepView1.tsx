@@ -41,7 +41,7 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
     }, [formData.building_outline, formData.building_outline_sizes])
 
     useEffect(() => {
-        if(formData.building_type == 'Budynek wielorodzinny'){
+        if(formData.building_type == 'Budynek wielorodzinny' && formData.house_floor_plan == 'Parterowy'){
             setFormData({...formData, house_floor_plan: 'Jednopiętrowy'})
         }
     }, [])
@@ -217,10 +217,10 @@ function SecondStepView1({formData, setFormData, errors, setErrors}: {formData: 
                         </div>
                         <span>Dom ma balkon(y)</span>
                     </div>
-                    <div className='flex w-full flex-col mt-5 gap-2'>
+                    {formData.building_type != 'Budynek wielorodzinny' && <div className='flex w-full flex-col mt-5 gap-2'>
                         <span>Garaż w bryle budynku</span>
                         <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'house_garage'} options={house_garage} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
-                    </div>
+                    </div>}
                     {
                         formData.building_type == 'Segment w zabudowanie szeregowej' &&
                         <div className='mt-5'>

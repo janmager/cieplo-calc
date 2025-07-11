@@ -1,7 +1,6 @@
 import React from 'react'
 
-function DynamicHouseSketch({formData, setFormData, noMarginTop = false, paddingLeft = true}: {formData: any, noMarginTop?: boolean, setFormData: any, paddingLeft?: boolean}) {
-    const levels: any = {
+export const levels: any = {
         'Parterowy': {
             counter: 0,
             name: 'Parter',
@@ -56,6 +55,7 @@ function DynamicHouseSketch({formData, setFormData, noMarginTop = false, padding
         }
     }
 
+function DynamicHouseSketch({formData, setFormData, noMarginTop = false, paddingLeft = true}: {formData: any, noMarginTop?: boolean, setFormData: any, paddingLeft?: boolean}) {
     // @ts-ignore
     const currentCounter: any = formData['house_floor_plan'] ? levels[formData['house_floor_plan']].counter : 0
 

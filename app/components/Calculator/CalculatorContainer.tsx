@@ -44,7 +44,7 @@ function CalculatorContainer() {
         building_has_basement: false,
         house_levels_height: '',
         building_has_taras: false,
-        house_garage: '',
+        house_garage: 'Brak',
 
         // third step
         building_construction_type: '',
@@ -71,6 +71,7 @@ function CalculatorContainer() {
         is_parter_floor_isolation: '',
         isolation_parter_floor_material: '',
         isolation_parter_floor_thickness: '',
+        unheated_basement: 'Brak izolacji i odczuwalne są silne przeciągi',
         unheated_space_type: 'Brak izolacji i odczuwalne są silne przeciągi',
 
         // fifth step

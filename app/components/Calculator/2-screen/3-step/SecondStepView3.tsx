@@ -10,13 +10,27 @@ import { is_roof_isolation } from '@/app/consts/is_roof_isolation'
 import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
 import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'
 import { unheated_over_type } from '@/app/consts/unheated_over_type'
+import { whats_over_situation } from '@/app/consts/whats_over_situation'
+import { levels } from '../1-step/DynamicHouseSketch'
 
 function SecondStepView3({formData, step, setStep, setFormData, errors, setErrors}: {formData: any, step: any, setStep: any, setFormData: any, errors: any, setErrors: any}) {
     useEffect(() => {
         if(formData.building_type == 'Mieszkanie'){
             setStep(4);
         }
+        console.log(formData)
     }, [])
+
+    const isLastFloorHeated = (heating_levels: any) => {
+        if(heating_levels.length){
+            let is = false;
+            heating_levels.map((lev: any) => {
+                if(lev.indexOf(levels[formData.house_floor_plan].counter) >= 0) is = true;
+            })
+            return is;
+        }
+        return true;
+    }
     
     return (
         <div className='flex flex-col gap-14 w-full'>
@@ -74,11 +88,18 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
                             </div>
                         }
                     </div>
-                    {(formData.heating_levels.indexOf('Poddasze') == -1 && formData.house_roof_plan.toLowerCase() == 'skośny z poddaszem') && <div>
-                        <CustomLabel label='Nieogrzewane poddasze' />
+                    {((formData.heating_levels.indexOf('Poddasze') == -1 && formData.house_roof_plan.toLowerCase() == 'skośny z poddaszem') || (formData.house_roof_plan.toLowerCase() != 'skośny z poddaszem' && !isLastFloorHeated(formData.heating_levels))) && <div>
+                        <CustomLabel label={!isLastFloorHeated(formData.heating_levels) ? 'Nieogrzewane piętro powyżej' : 'Nieogrzewane poddasze'}/>
                         <div className='flex w-full flex-col mt-2.5 gap-4'>
-                            <span>Jak wygląda sytuacja na nieogrzewanym poddaszu?</span>
+                            <span>Jak wygląda sytuacja na nieogrzewanym {!isLastFloorHeated(formData.heating_levels) ? 'piętrze powyżej' : 'poddaszu'}?</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'unheated_space_type'} options={unheated_over_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
+                        </div>
+                    </div>}
+                    {(formData.heating_levels.indexOf('Piwnica') == -1 && formData.building_has_basement) && <div>
+                        <CustomLabel label='Nieogrzewana piwnica' />
+                        <div className='flex w-full flex-col mt-2.5 gap-4'>
+                            <span>Jak wygląda sytuacja w nieogrzewanej piwnicy?</span>
+                            <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'unheated_basement'} options={whats_over_situation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>}
                 </div>
