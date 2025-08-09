@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "postinstall": "prisma generate"
+    "build": "prisma generate && next build",
+    "start": "NODE_ENV=production node server.js",
+    "lint": "next lint"
   },
   "dependencies": {
     "@next/env": "^15.1.4",
@@ -15,10 +14,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.47.10",
     "cookies-next": "^5.0.2",
-    "dns": "^0.1.2",
-    "fs": "^0.0.1-security",
     "html2canvas": "^1.4.1",
-    "i": "^0.3.7",
     "jspdf": "^3.0.1",
     "net": "^1.0.2",
     "next": "^15.3.1",
@@ -27,12 +23,13 @@
     "ol": "^6.15.1",
     "prisma": "^6.1.0",
     "proj4": "^2.15.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-drag-drop-files": "^2.4.0",
     "react-hot-toast": "^2.5.1",
     "react-to-print": "^3.0.4",
     "recharts": "^2.15.2",
+    "sharp": "^0.34.3",
     "uuidv4": "^6.2.13",
     "xlsx": "^0.18.5"
   },
