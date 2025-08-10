@@ -16,21 +16,22 @@ export async function POST(request) {
       const username = "Kalkulator GREE";
       const myEmail = process.env.ENV_PUBLIC_EMAIL;
 
-      const email = getRaportData.data.contact_email_address;
+      const recipientEmail = getRaportData.data.contact_email_address;
+
+      const port = Number(process.env.ENV_EMAIL_PORT);
+      const isSecure = port === 465;
 
       const transporter = nodemailer.createTransport({
         host: process.env.ENV_EMAIL_HOST,
-        port: process.env.ENV_EMAIL_PORT,
-        secure: true,
+        port: port,
+        secure: isSecure,
         auth: {
           user: myEmail,
           pass: process.env.ENV_EMAIL_PASSWORD,
         },
       });
 
-      const d = new Date();
-
-      let printTitle = "Raport doboru mocy pompy ciepła GREE";
+      let printTitle;
 
       switch (emailType) {
         case "oferta":
@@ -39,20 +40,17 @@ export async function POST(request) {
         case "kontakt":
           printTitle = `Prośba o kontakt doradcy`;
           break;
-        case "raport":
-          printTitle = `Raport doboru mocy pompy ciepła GREE`;
-          break;
         default:
           printTitle = `Raport doboru mocy pompy ciepła GREE`;
           break;
       }
       try {
         const mail = await transporter.sendMail({
-          from: username,
-          to: [email, myEmail],
-          subject: `${printTitle}`,
+          from: `${username} <${myEmail}>`,
+          to: [recipientEmail, myEmail],
+          subject: printTitle,
           html: raportEmailTemplate({
-            email: email,
+            email: recipientEmail,
             raport_url: getRaportData.data.raport_url,
             raportId: getRaportData.data.id,
             type: emailType,
@@ -61,15 +59,15 @@ export async function POST(request) {
 
         return NextResponse.json({ message: "Success: email was sent" });
       } catch (error) {
-        console.log(error);
-        NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" });
+        console.error(error);
+        return NextResponse.json({ message: "COULD NOT SEND MESSAGE" }, { status: 500 });
       }
     } else {
-      NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" });
+      return NextResponse.json({ message: "COULD NOT SEND MESSAGE" }, { status: 500 });
     }
   } catch (error) {
-    console.log(error);
-    return NextResponse.status(500).json({ message: "COULD NOT SEND MESSAGE" });
+    console.error(error);
+    return NextResponse.json({ message: "COULD NOT SEND MESSAGE" }, { status: 500 });
   }
 }
 
@@ -80,11 +78,9 @@ export async function OPTIONS(request) {
     headers: {
       "Access-Control-Allow-Origin": allowedOrigin || "*",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-      "Access-Control-Allow-Headers":
-        "Content-Type, Authorization, X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version",
+      "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Max-Age": "86400",
     },
   });
-
   return response;
 }
