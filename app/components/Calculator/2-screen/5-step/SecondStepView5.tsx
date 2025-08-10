@@ -42,6 +42,7 @@ function SecondStepView5({formData, setFormData, errors, setErrors, products}: {
                                 body: JSON.stringify({email: formData.contact_email_address, raportId: formData.id, type: 'raport'})
                             });
                     
+                            console.log(response)
                             if (!response.ok) {
                                 throw new Error(`response status: ${response.status}`);
                             }
