@@ -13,14 +13,14 @@ export async function POST(request) {
     let getRaportData = await fetchRaportData(raportId);
 
     if (getRaportData.response && getRaportData.data) {
-      const username = "Kalculator GREE";
+      const username = "Kalkulator GREE";
       const myEmail = process.env.NEXT_PUBLIC_EMAIL;
 
       const email = getRaportData.data.contact_email_address;
 
       const transporter = nodemailer.createTransport({
-        host: "s128.cyber-folks.pl",
-        port: 465,
+        host: process.env.NEXT_PUBLIC_EMAIL_HOST,
+        port: process.env.NEXT_PUBLIC_EMAIL_PORT,
         auth: {
           user: myEmail,
           pass: process.env.NEXT_PUBLIC_EMAIL_PASSWORD,
