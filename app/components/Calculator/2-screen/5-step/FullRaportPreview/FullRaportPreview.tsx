@@ -353,8 +353,8 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                 <p className='text-[36px] md:text-[50px] font-[600] max-w-[800px] leading-[110%]'>Poddasze i parter</p>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-10 mt-10'>
                     <div>
-                        <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
-                        <InfoBox title='Czy jest jakakolwiek izolacja stropu między poddaszem, a piętrem niżej?' value={formData.is_roof_isolation ? formData.is_roof_isolation : ''} />
+                        <CustomLabel label='Izolacja stropu' />
+                        <InfoBox title='Czy jest jakakolwiek izolacja stropu?' value={formData.is_roof_isolation ? formData.is_roof_isolation : ''} />
                         {
                             formData.is_roof_isolation && formData.is_roof_isolation.indexOf('Tak') >= 0 && 
                             <>
@@ -365,7 +365,7 @@ function FullRaportPreview({formData, setFormData, step, setStep, singleView, au
                     </div>
                     <div>
                         <CustomLabel label='Izolacja wewnątrz ściany' />
-                        <InfoBox title='Czy jest jakakolwiek izolacja podłogi parteru?' value={formData.is_parter_floor_isolation ? formData.is_parter_floor_isolation : ''} />
+                        <InfoBox title={formData.building_has_basement ? 'Izolacja podłogi piwnicy' : 'Izolacja podłogi parteru'} value={formData.is_parter_floor_isolation ? formData.is_parter_floor_isolation : ''} />
                         {
                             formData.is_parter_floor_isolation && formData.is_parter_floor_isolation.indexOf('Tak') >= 0 && 
                             <>

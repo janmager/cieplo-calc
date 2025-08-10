@@ -168,7 +168,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
 
             {data.building_type && <>
             <CustomAdminDetailsDivider text='Poddasze i parter' />
-            <CustomAdminDetailsInputData checkBox={true} label='Izolacja stropu między poddaszem, a piętrem poniżej' data={data.is_roof_isolation} />
+            <CustomAdminDetailsInputData checkBox={true} label='Izolacja stropu' data={data.is_roof_isolation} />
             </>}
             {
                 data.is_roof_isolation && data.is_roof_isolation.indexOf('Tak') >=0 &&
@@ -177,7 +177,7 @@ function DetailedRaportAdmin({data, print = false, printAuto = false}:{data: Rap
                     <CustomAdminDetailsInputData checkBox={true} label='Grubość' data={data.isolation_roof_thickness ? `${data.isolation_roof_thickness} cm` : ''} />
                 </>
             }
-            {data.building_type && <CustomAdminDetailsInputData checkBox={true} label='Izolacja podłogi parteru' data={data.is_parter_floor_isolation} />}
+            {data.building_type && <CustomAdminDetailsInputData checkBox={true} label={data.building_has_basement ? 'Izolacja podłogi piwnicy' : 'Izolacja podłogi parteru'} data={data.is_parter_floor_isolation} />}
             {
                 data.is_parter_floor_isolation && data.is_parter_floor_isolation.indexOf('Tak') >=0 &&
                 <>
