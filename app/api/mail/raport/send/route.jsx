@@ -12,19 +12,18 @@ export async function POST(request) {
     let getRaportData = await fetchRaportData(raportId);
 
     if(getRaportData.response && getRaportData.data){
-        const username = 'GreeCalc';
-        const myEmail = 'greekalkulator@gmail.com';
+        const username = 'Kalculator GREE';
+        const myEmail = 'raport@kalkulator.gree.pl';
 
         const email = getRaportData.data.contact_email_address
 
         const transporter = nodemailer.createTransport({
-            service: "Gmail",
-            host: "smtp.gmail.com",
+            host: "s128.cyber-folks.pl",
             port: 465,
             secure: true,
             auth: {
                 user: myEmail,
-                pass: "anst jhzh pdak pyhv",
+                pass: "Admin123!@#",
             },
         });
 

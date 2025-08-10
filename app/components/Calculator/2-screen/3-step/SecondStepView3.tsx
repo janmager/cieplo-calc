@@ -37,9 +37,9 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
             <div className='grid grid-cols-1 md:grid-cols-12 gap-10'>
                 <div className='flex flex-col gap-10 md:col-span-7'>
                     <div>
-                        <CustomLabel label='Izolacja stropu między poddaszem, a piętrem poniżej' />
+                        <CustomLabel label='Izolacja stropu' />
                         <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                            <label>Czy jest jakakolwiek izolacja stropu między poddaszem, a piętrem niżej?</label>
+                            <label>Czy jest jakakolwiek izolacja stropu?</label>
                             {
                                 is_roof_isolation.map((item: any, idx: number) => {
                                     return (
@@ -63,9 +63,9 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
                         }
                     </div>
                     <div>
-                        <CustomLabel label='Izolacja podłogi parteru' />
+                        <CustomLabel label={formData.building_has_basement ? 'Izolacja podłogi piwnicy' : 'Izolacja podłogi parteru'} />
                         <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                            <label>Czy jest jakakolwiek izolacja podłogi parteru?</label>
+                            <label>Czy jest jakakolwiek izolacja {formData.building_has_basement ? 'podłogi piwnicy' : 'podłogi parteru'}?</label>
                             {
                                 is_roof_isolation.map((item: any, idx: number) => {
                                     return (

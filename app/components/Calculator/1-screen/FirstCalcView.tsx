@@ -203,7 +203,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
     <div className='flex flex-col items-center w-full'>
         <div style={{backgroundImage: `url(${bg.src})`, backgroundAttachment: 'fixed', backgroundSize: 'cover', backgroundPosition: 'center -100px'}} className={`w-full relative flex items-end justify-center ${pathname != '/clean' ? 'h-[480px] md:h-[450px]' : 'h-[450px] md:h-[420px]'}`}>
             <div className='max-w-[1172px] px-5 xl:px-0 text-white flex flex-col gap-8 pb-8 z-20'>
-                <h1 className={`text-[32px] ${pathname != '/clean' ? 'lg:text-[80px]' : 'lg:text-[70px]'} sm:text-[60px]  font-bold leading-[110%]`}>Kalkulator doboru pompy ciepła!</h1>
+                <h1 className={`text-[32px] ${pathname != '/clean' ? 'lg:text-[80px]' : 'lg:text-[70px]'} sm:text-[60px]  font-bold leading-[110%]`}>Kalkulator doboru pompy ciepła</h1>
                 <h2 className='text-[13px] md:text-[15px] font-light opacity-75'>Poprawnie dobrana pompa ciepła to długa żywotność urządzenia i optymalne zużycie energii elektrycznej. Dokładność doboru zależy od informacji, jakie wprowadzisz do obliczeń. Zadbaj o to, by podane przez Ciebie dane, były zgodne z rzeczywistością – tylko wtedy będziesz mógł się posiłkować wynikiem, który otrzymasz.</h2>
                 <h2 className='text-[13px] md:text-[15px] font-light opacity-75'>Przed przystąpieniem do wypełniania kalkulatora, przygotuj projekt swojego budynku. (ewentualnie: Jeśli dysponujesz projektem budowlanym swojego budynku, przygotuj go przed przystąpieniem do wypełniania kalkulatora.)</h2>
             </div>
