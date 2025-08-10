@@ -14,17 +14,17 @@ export async function POST(request) {
 
     if (getRaportData.response && getRaportData.data) {
       const username = "Kalkulator GREE";
-      const myEmail = 'greekalkulator@gmail.com';
+      const myEmail = process.env.ENV_PUBLIC_EMAIL;
 
       const email = getRaportData.data.contact_email_address;
 
       const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
+        host: process.env.ENV_EMAIL_HOST,
+        port: process.env.ENV_EMAIL_PORT,
         secure: true,
         auth: {
           user: myEmail,
-          pass: "anst jhzh pdak pyhv",
+          pass: process.env.ENV_EMAIL_PASSWORD,
         },
       });
 
