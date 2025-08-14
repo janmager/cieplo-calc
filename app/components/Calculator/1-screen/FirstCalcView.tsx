@@ -29,6 +29,7 @@ import { getClimateZone } from '@/utils/api/getClimateZone'
 import { getProjectOutsideTemp } from '@/utils/api/getProjectOutsideTemp'
 import { max_temp_of_power_instalation } from '@/app/consts/max_temp_of_power_instalation'
 import { usePathname } from 'next/navigation'
+import { getDynamicTopIsolation } from '../2-screen/1-step/DynamicHouseSketch'
 
 function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {formData: any, setFormData: any, setViewId: any, errors: any, setErrors: any}) {  
     const [ clickedMap, setClickedMap ] = useState<any>({})  
@@ -42,6 +43,7 @@ function FirstCalcView({formData, setFormData, setViewId, errors, setErrors}: {f
     }
 
     useEffect(() => {
+        getDynamicTopIsolation(formData)
         const map = new Map({
           target: "map",
           layers: [

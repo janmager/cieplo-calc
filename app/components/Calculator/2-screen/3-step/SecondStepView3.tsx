@@ -11,7 +11,7 @@ import { isolation_roof_materials } from '@/app/consts/isolation_roof_materials'
 import { isolation_parter_floor_materials } from '@/app/consts/isolation_parter_floor_materials'
 import { unheated_over_type } from '@/app/consts/unheated_over_type'
 import { whats_over_situation } from '@/app/consts/whats_over_situation'
-import { levels } from '../1-step/DynamicHouseSketch'
+import { getDynamicBottomIsolation, getDynamicTopIsolation, levels } from '../1-step/DynamicHouseSketch'
 
 function SecondStepView3({formData, step, setStep, setFormData, errors, setErrors}: {formData: any, step: any, setStep: any, setFormData: any, errors: any, setErrors: any}) {
     useEffect(() => {
@@ -19,6 +19,9 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
             setStep(4);
         }
         console.log(formData)
+
+        console.log(getDynamicBottomIsolation(formData))
+        console.log(getDynamicTopIsolation(formData))
     }, [])
 
     const isLastFloorHeated = (heating_levels: any) => {
@@ -37,9 +40,9 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
             <div className='grid grid-cols-1 md:grid-cols-12 gap-10'>
                 <div className='flex flex-col gap-10 md:col-span-7'>
                     <div>
-                        <CustomLabel label='Izolacja stropu' />
+                        <CustomLabel label={getDynamicTopIsolation(formData).title} />
                         <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                            <label>Czy jest jakakolwiek izolacja stropu?</label>
+                            <label>{getDynamicTopIsolation(formData).description}</label>
                             {
                                 is_roof_isolation.map((item: any, idx: number) => {
                                     return (
@@ -63,9 +66,9 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
                         }
                     </div>
                     <div>
-                        <CustomLabel label={formData.building_has_basement ? 'Izolacja podłogi piwnicy' : 'Izolacja podłogi parteru'} />
+                        <CustomLabel label={getDynamicBottomIsolation(formData).title} />
                         <div className='flex flex-col gap-[14px] mt-[15px] mb-[20px]'>
-                            <label>Czy jest jakakolwiek izolacja {formData.building_has_basement ? 'podłogi piwnicy' : 'podłogi parteru'}?</label>
+                            <label>{getDynamicBottomIsolation(formData).description}</label>
                             {
                                 is_roof_isolation.map((item: any, idx: number) => {
                                     return (
@@ -89,16 +92,16 @@ function SecondStepView3({formData, step, setStep, setFormData, errors, setError
                         }
                     </div>
                     {((formData.heating_levels.indexOf('Poddasze') == -1 && formData.house_roof_plan.toLowerCase() == 'skośny z poddaszem') || (formData.house_roof_plan.toLowerCase() != 'skośny z poddaszem' && !isLastFloorHeated(formData.heating_levels))) && <div>
-                        <CustomLabel label={!isLastFloorHeated(formData.heating_levels) ? 'Nieogrzewane piętro powyżej' : 'Nieogrzewane poddasze'}/>
+                        <CustomLabel label={getDynamicTopIsolation(formData).selectTitle} />
                         <div className='flex w-full flex-col mt-2.5 gap-4'>
-                            <span>Jak wygląda sytuacja na nieogrzewanym {!isLastFloorHeated(formData.heating_levels) ? 'piętrze powyżej' : 'poddaszu'}?</span>
+                            <span>{getDynamicTopIsolation(formData).selectDescription}</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'unheated_space_type'} options={unheated_over_type} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>}
-                    {(formData.heating_levels.indexOf('Piwnica') == -1 && formData.building_has_basement) && <div>
-                        <CustomLabel label='Nieogrzewana piwnica' />
+                    {(getDynamicBottomIsolation(formData).selectTitle != '') && <div>
+                        <CustomLabel label={getDynamicBottomIsolation(formData).selectTitle} />
                         <div className='flex w-full flex-col mt-2.5 gap-4'>
-                            <span>Jak wygląda sytuacja w nieogrzewanej piwnicy?</span>
+                            <span>{getDynamicBottomIsolation(formData).selectDescription}</span>
                             <CustomDropdownSelect errors={errors} setErrors={setErrors} formDataValue={'unheated_basement'} options={whats_over_situation} setFormData={setFormData} formData={formData} placeholder={'wybierz z listy'} />
                         </div>
                     </div>}
