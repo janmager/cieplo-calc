@@ -55,6 +55,126 @@ export const levels: any = {
         }
     }
 
+export const getDynamicTopIsolation = (formData: any) => {
+    if(formData.building_type == 'Mieszkanie'){
+        return {
+            title: 'mieszkanie todo title',
+            description: 'mieszkanie todo desc',
+            selectTitle: '',
+            selectDescription: '',
+            selectUnderTitle: '',
+            selectUnderDescription: ''
+        }
+    }
+
+    let hasChoosablePoddasze = formData.house_roof_plan == 'Skośny z poddaszem';
+    let isPoddaszeHeated = formData.heating_levels.indexOf('Poddasze') >= 0;
+    let isLastLevelBeforeRoofIsHeated = formData.heating_levels.indexOf(levels[formData.house_floor_plan].name) >= 0;
+
+    // jesli jest poddasze i jest ogrzewane
+    if(hasChoosablePoddasze && isPoddaszeHeated){
+        return {
+            title: 'Izolacja dachu',
+            description: 'Czy jest jakakolwiek izolacja dachu?',
+            selectTitle: '',
+            selectDescription: '',
+        }
+    }
+    // jesli jest poddasze i nie jest ogrzewane
+    else if(hasChoosablePoddasze && !isPoddaszeHeated && !isLastLevelBeforeRoofIsHeated){
+        return {
+            title: 'Izolacja stropu',
+            description: 'Czy jest jakakolwiek izolacja stropu?',
+            selectTitle: 'Nieogrzewane piętro powyżej',
+            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze powyżej?',
+        }
+    }
+    else if(!hasChoosablePoddasze && isLastLevelBeforeRoofIsHeated){
+        return {
+            title: 'Izolacja dachu',
+            description: 'Czy jest jakakolwiek izolacja dachu?',
+            selectTitle: '',
+            selectDescription: '',
+        }
+    }
+    else if(!hasChoosablePoddasze && formData.heating_levels.indexOf('Parter') >= 0){
+        return {
+            title: 'Izolacja stropu',
+            description: 'Czy jest jakakolwiek izolacja stropu?',
+            selectTitle: 'Nieogrzewane piętro powyżej',
+            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze powyżej?',
+        }
+    }else{
+        return {
+            title: 'Izolacja stropu między poddaszem, a piętrem poniżej',
+            description: 'Czy jest jakakolwiek izolacja stropu między poddaszem, a piętrem poniżej?',
+            selectTitle: 'Nieogrzewane poddasze',
+            selectDescription: 'Jak wygląda sytuacja w nieogrzewanym poddaszu?',
+        }
+    }
+}
+
+export const getDynamicBottomIsolation = (formData: any) => {
+    let isPiwnica = formData.building_has_basement;
+    let isPiwnicaHeated = formData.heating_levels.indexOf('Piwnica') >= 0;
+    let isParterHeated = formData.heating_levels.indexOf('Parter') >= 0;
+    let isAllLevelsIsHeated = formData.heating_levels.filter((level: string) => level !== 'Piwnica' && level !== 'Poddasze').length == levels[formData.house_floor_plan].counter+1;
+    if(isPiwnica && isPiwnicaHeated){
+        return {
+            title: 'Izolacja podłogi piwnicy',
+            description: 'Czy jest jakakolwiek izolacja podłogi piwnicy?',
+            selectTitle: '',
+            selectDescription: '',
+        }
+    }
+    else if(isPiwnica && !isPiwnicaHeated && isAllLevelsIsHeated){
+        return {
+            title: 'Izolacja podłogi parteru',
+            description: 'Czy jest jakakolwiek izolacja podłogi parteru?',
+            selectTitle: 'Nieogrzewana piwnica',
+            selectDescription: 'Jak wygląda sytuacja w nieogrzewanej piwnicy?',
+        }
+    }
+    else if(!isPiwnica && isParterHeated){
+        return {
+            title: 'Izolacja podłogi parteru',
+            description: 'Czy jest jakakolwiek izolacja podłogi parteru?',
+            selectTitle: '',
+            selectDescription: '',
+        }
+    }
+    else if(isPiwnica && isParterHeated && !isAllLevelsIsHeated){
+        return {
+            title: 'Izolacja podłogi piwnicy',
+            description: 'Czy jest jakakolwiek izolacja podłogi piwnicy?',
+            selectTitle: 'Nieogrzewane piętro poniżej',
+            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze poniżej? ',
+        }
+    }
+    else if(isPiwnica && isParterHeated && !isAllLevelsIsHeated){
+        return {
+            title: 'Izolacja podłogi piwnicy',
+            description: 'Czy jest jakakolwiek izolacja podłogi piwnicy?',
+            selectTitle: 'Nieogrzewane piętro poniżej',
+            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze poniżej? ',
+        }
+    }
+    else if(!isAllLevelsIsHeated && formData.heating_levels.indexOf('Parter') == -1){
+        return {
+            title: 'Izolacja stropu nad nieogrzewanym parterem',
+            description: 'Czy jest jakakolwiek izolacja stropu nad nieogrzewanym parterem? ',
+            selectTitle: 'Nieogrzewany parter',
+            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym parterze? ',
+        }
+    }
+    return {
+        title: 'Izolacja podłogi',
+        description: 'Czy jest jakakolwiek izolacja podłogi?',
+        selectTitle: 'Nieogrzewane piętro poniżej',
+        selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze poniżej?',
+    }
+}
+
 function DynamicHouseSketch({formData, setFormData, noMarginTop = false, paddingLeft = true}: {formData: any, noMarginTop?: boolean, setFormData: any, paddingLeft?: boolean}) {
     // @ts-ignore
     const currentCounter: any = formData['house_floor_plan'] ? levels[formData['house_floor_plan']].counter : 0
