@@ -143,7 +143,7 @@ export const getDynamicBottomIsolation = (formData: any) => {
             selectDescription: '',
         }
     }
-    else if(isPiwnica && isParterHeated && !isAllLevelsIsHeated){
+    else if(isPiwnica && isParterHeated && formData.heating_levels.indexOf('Piwnica') != -1 && !isAllLevelsIsHeated){
         return {
             title: 'Izolacja podłogi piwnicy',
             description: 'Czy jest jakakolwiek izolacja podłogi piwnicy?',
@@ -151,12 +151,12 @@ export const getDynamicBottomIsolation = (formData: any) => {
             selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze poniżej? ',
         }
     }
-    else if(isPiwnica && isParterHeated && !isAllLevelsIsHeated){
+    else if(isPiwnica && isParterHeated && formData.heating_levels.indexOf('Piwnica') == -1 && !isAllLevelsIsHeated){
         return {
-            title: 'Izolacja podłogi piwnicy',
-            description: 'Czy jest jakakolwiek izolacja podłogi piwnicy?',
-            selectTitle: 'Nieogrzewane piętro poniżej',
-            selectDescription: 'Jak wygląda sytuacja na nieogrzewanym piętrze poniżej? ',
+            title: 'Izolacja podłogi parteru',
+            description: 'Czy jest jakakolwiek izolacja podłogi parteru?',
+            selectTitle: 'Nieogrzewana piwnicy',
+            selectDescription: 'Jak wygląda sytuacja w nieogrzewanej piwnicy? ',
         }
     }
     else if(!isAllLevelsIsHeated && formData.heating_levels.indexOf('Parter') == -1){
