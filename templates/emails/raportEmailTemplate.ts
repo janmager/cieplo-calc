@@ -15,7 +15,7 @@ export const raportEmailTemplate = ({email, raport_url, raportId, type}: {email:
                 <tr>
                     <td>&nbsp;</td>
                     <td style="text-align: center;">
-                        <img src="https://cieplo-calc.vercel.app/logo.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
+                        <img src="https://kalkulator.gree.pl/logo.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -125,7 +125,7 @@ export const raportEmailTemplate = ({email, raport_url, raportId, type}: {email:
                 <tr>
                     <td>&nbsp;</td>
                     <td style="text-align: center;">
-                        <img src="https://cieplo-calc.vercel.app/logo.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
+                        <img src="https://kalkulator.gree.pl/logo.png" alt="logo" height="32" width="164" style="margin-bottom: 20px;" />
                     </td>
                     <td>&nbsp;</td>
                 </tr>
