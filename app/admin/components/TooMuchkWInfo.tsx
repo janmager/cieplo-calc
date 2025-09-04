@@ -15,7 +15,7 @@ function TooMuchkWInfo() {
             <ol>- większe bezpieczeństwo i niezawodność systemu.</ol>
         </ul>
 
-        <p className='mt-5'><b>Twój budynek ma duże potrzeby? Mamy gotowe rozwiązanie.</b> Skontaktuj się z nami – pomożemy dobrać optymalną konfigurację.</p>
+        <p className='mt-5'><b>Twój budynek ma duże potrzeby? Mamy gotowe rozwiązanie.</b> <a href="mailto:pompyciepla@gree.pl" className='underline'>Skontaktuj się z nami</a> – pomożemy dobrać optymalną konfigurację.</p>
     </div>
   )
 }

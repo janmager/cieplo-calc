@@ -169,7 +169,6 @@ export const apiDictionary: any = {
     "Pomieszczenie jest dość szczelne, ale ocieplone słabiej niż mieszkanie" : "medium",
     "To pomieszczenie mieszkalne ocieplone nie gorzej jak nasze, tylko chwilowo nikt tam nie mieszka" : "great",
 
-
     '' : null,
     '-' : null
 }

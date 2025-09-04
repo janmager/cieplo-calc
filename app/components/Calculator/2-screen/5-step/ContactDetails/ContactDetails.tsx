@@ -46,27 +46,25 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
             return false;
         }
 
+        let toAdd = {};
         // rules under checking
         if(!formData.rule_privacy_policy){
             valid = false;
-            setErrors({...errors, 'rule_privacy_policy' : true});
-            return false;
+            toAdd = {...toAdd, 'rule_privacy_policy' : true};
         }
         if(formData.send_raport_to_email.indexOf('Chcę') >= 0 && !formData.rule_mail_raport){
             valid = false;
-            setErrors({...errors, 'rule_mail_raport' : true});
-            return false;
+            toAdd = {...toAdd, 'rule_mail_raport' : true};
         }
         if(formData.send_raport_to_near_companies.indexOf('Chcę') >= 0 && !formData.rule_other_company_contact){
             valid = false;
-            setErrors({...errors, 'rule_other_company_contact' : true});
-            return false;
+            toAdd = {...toAdd, 'rule_other_company_contact' : true};
         }
         if(formData.send_raport_accept_24h.indexOf('Tak') >= 0 && !formData.rule_expert_gree){
             valid = false;
-            setErrors({...errors, 'rule_expert_gree' : true});
-            return false;
+            toAdd = {...toAdd, 'rule_expert_gree' : true};
         }
+
 
         if(valid){
             setStep(step+1)
@@ -76,6 +74,10 @@ function ContactDetails({formData, setFormData, step, setStep, errors, setErrors
                 const targetOrigin: string = process.env.NEXT_PUBLIC_TARGET_PAGE as string; 
                 window.parent.postMessage(message, targetOrigin);
             }
+        }
+        else{
+            let newErrors = {...errors, ...toAdd};
+            setErrors(newErrors);
         }
     }
     
