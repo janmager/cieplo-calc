@@ -165,6 +165,7 @@ export const apiDictionary: any = {
     "Brak izolacji, ale bez przeciągów, odczuwalna jest niska temperatura" : "poor",
     "Ocieplenie dachu jest, ale słabej jakości" : "medium",
     "Dach jest dobrze ocieplony" : "great",
+    "Brak izolacji lub jej słaba jakość. Nie występują przeciągi" : "poor",
 
     "Pomieszczenie jest dość szczelne, ale ocieplone słabiej niż mieszkanie" : "medium",
     "To pomieszczenie mieszkalne ocieplone nie gorzej jak nasze, tylko chwilowo nikt tam nie mieszka" : "great",
